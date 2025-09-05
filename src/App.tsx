@@ -10,6 +10,10 @@ import DetectorHambre from "./pages/DetectorHambre";
 import Recursos from "./pages/Recursos";
 import Perfil from "./pages/Perfil";
 import NotFound from "./pages/NotFound";
+import Onboarding from "./pages/Onboarding";
+import CheckIn from "./pages/CheckIn";
+import Pausa from "./pages/Pausa";
+import Progreso from "./pages/Progreso";
 
 const queryClient = new QueryClient();
 
@@ -20,10 +24,15 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <Routes>
+          <Route path="/onboarding" element={<Onboarding />} />
           <Route path="/" element={<Dashboard />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/check-in" element={<CheckIn />} />
+          <Route path="/pausa" element={<Pausa />} />
           <Route path="/diario" element={<DiarioEmocional />} />
           <Route path="/detector" element={<DetectorHambre />} />
           <Route path="/recursos" element={<Recursos />} />
+          <Route path="/progreso" element={<Progreso />} />
           <Route path="/perfil" element={<Perfil />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
