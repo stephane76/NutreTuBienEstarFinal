@@ -14,6 +14,9 @@ import Onboarding from "./pages/Onboarding";
 import CheckIn from "./pages/CheckIn";
 import Pausa from "./pages/Pausa";
 import Progreso from "./pages/Progreso";
+import Talleres from "./pages/Talleres";
+import Cuestionarios from "./pages/Cuestionarios";
+import Comunidad from "./pages/Comunidad";
 
 const queryClient = new QueryClient();
 
@@ -34,6 +37,9 @@ const App = () => (
           <Route path="/recursos" element={<Recursos />} />
           <Route path="/progreso" element={<Progreso />} />
           <Route path="/perfil" element={<Perfil />} />
+          <Route path="/talleres" element={<Talleres />} />
+          <Route path="/cuestionarios" element={<Cuestionarios />} />
+          <Route path="/comunidad" element={<Comunidad />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

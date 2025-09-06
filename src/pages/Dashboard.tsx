@@ -1,7 +1,7 @@
 import { Avatar } from '@/components/Avatar';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { BookOpen, Lightbulb, Heart, TrendingUp, Smile } from 'lucide-react';
+import { BookOpen, Lightbulb, Heart, TrendingUp, Smile, FileText, Users } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import heroImage from '@/assets/hero-wellbeing.jpg';
 
@@ -23,6 +23,22 @@ const quickActions = [
     bgColor: 'bg-warning-soft'
   },
   {
+    title: 'Talleres Interactivos',
+    description: 'Aprende técnicas prácticas de autocuidado',
+    icon: BookOpen,
+    path: '/talleres',
+    color: 'accent',
+    bgColor: 'bg-accent-soft'
+  },
+  {
+    title: 'Cuestionarios',
+    description: 'Evalúa tu bienestar y patrones alimentarios',
+    icon: FileText,
+    path: '/cuestionarios',
+    color: 'secondary',
+    bgColor: 'bg-secondary-soft'
+  },
+  {
     title: 'Emocionario',
     description: 'Explora y comprende tus emociones',
     icon: Smile,
@@ -30,6 +46,14 @@ const quickActions = [
     color: 'primary',
     bgColor: 'bg-primary-soft',
     external: true
+  },
+  {
+    title: 'Comunidad',
+    description: 'Conecta con otras personas en procesos similares',
+    icon: Users,
+    path: '/comunidad',
+    color: 'warning',
+    bgColor: 'bg-warning-soft'
   },
   {
     title: 'Recursos de Apoyo',
