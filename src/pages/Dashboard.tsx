@@ -23,6 +23,15 @@ const quickActions = [
     bgColor: 'bg-warning-soft'
   },
   {
+    title: 'Emocionario',
+    description: 'Explora y comprende tus emociones',
+    icon: Smile,
+    path: 'https://emocionar-ezleya.manus.space',
+    color: 'primary',
+    bgColor: 'bg-primary-soft',
+    external: true
+  },
+  {
     title: 'Recursos de Apoyo',
     description: 'Herramientas para tu autocuidado',
     icon: Heart,
@@ -91,27 +100,58 @@ export default function Dashboard() {
             ¿Qué te gustaría hacer hoy?
           </h2>
           
-          {quickActions.map((action) => (
-            <Link key={action.path} to={action.path}>
-              <Card className="bg-gradient-card border-0 shadow-card hover:shadow-warm transition-all duration-300 hover:scale-[1.02]">
-                <CardContent className="p-4">
-                  <div className="flex items-center gap-4">
-                    <div className={`p-3 rounded-lg ${action.bgColor}`}>
-                      <action.icon className={`w-6 h-6 text-${action.color}`} />
-                    </div>
-                    <div className="flex-1">
-                      <h3 className="font-semibold text-foreground mb-1">
-                        {action.title}
-                      </h3>
-                      <p className="text-sm text-muted-foreground">
-                        {action.description}
-                      </p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </Link>
-          ))}
+          {quickActions.map((action) => {
+            if (action.external) {
+              return (
+                <a 
+                  key={action.path} 
+                  href={action.path} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                >
+                  <Card className="bg-gradient-card border-0 shadow-card hover:shadow-warm transition-all duration-300 hover:scale-[1.02]">
+                    <CardContent className="p-4">
+                      <div className="flex items-center gap-4">
+                        <div className={`p-3 rounded-lg ${action.bgColor}`}>
+                          <action.icon className={`w-6 h-6 text-${action.color}`} />
+                        </div>
+                        <div className="flex-1">
+                          <h3 className="font-semibold text-foreground mb-1">
+                            {action.title}
+                          </h3>
+                          <p className="text-sm text-muted-foreground">
+                            {action.description}
+                          </p>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </a>
+              );
+            } else {
+              return (
+                <Link key={action.path} to={action.path}>
+                  <Card className="bg-gradient-card border-0 shadow-card hover:shadow-warm transition-all duration-300 hover:scale-[1.02]">
+                    <CardContent className="p-4">
+                      <div className="flex items-center gap-4">
+                        <div className={`p-3 rounded-lg ${action.bgColor}`}>
+                          <action.icon className={`w-6 h-6 text-${action.color}`} />
+                        </div>
+                        <div className="flex-1">
+                          <h3 className="font-semibold text-foreground mb-1">
+                            {action.title}
+                          </h3>
+                          <p className="text-sm text-muted-foreground">
+                            {action.description}
+                          </p>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </Link>
+              );
+            }
+          })}
         </div>
 
         {/* Daily Motivation */}
