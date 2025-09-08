@@ -6,6 +6,8 @@ import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { ArrowLeft, TrendingUp, Calendar, Award, Target } from 'lucide-react';
 import { Avatar } from '@/components/Avatar';
+import { GamificationPanel } from '@/components/GamificationPanel';
+import { useGamification } from '@/hooks/useGamification';
 
 interface CheckInData {
   timestamp: number;
@@ -39,6 +41,7 @@ export default function Progreso() {
   const navigate = useNavigate();
   const [checkIns, setCheckIns] = useState<CheckInData[]>([]);
   const [currentStreak, setCurrentStreak] = useState(0);
+  const { progress, checkAchievements } = useGamification();
 
   useEffect(() => {
     const data = JSON.parse(localStorage.getItem('checkIns') || '[]');
@@ -46,7 +49,19 @@ export default function Progreso() {
     
     // Calcular racha actual
     calculateStreak(data);
-  }, []);
+    const streak = currentStreak;
+    
+    // Check achievements with current data
+    const diaryEntries = JSON.parse(localStorage.getItem('diaryEntries') || '[]');
+    const meditations = parseInt(localStorage.getItem('totalMeditations') || '0');
+    
+    checkAchievements({
+      checkIns: data,
+      diaryEntries,
+      meditations,
+      streak
+    });
+  }, [checkAchievements]);
 
   const calculateStreak = (data: CheckInData[]) => {
     if (data.length === 0) {
@@ -140,10 +155,11 @@ export default function Progreso() {
         </div>
 
         <Tabs defaultValue="overview" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-3">
+          <TabsList className="grid w-full grid-cols-4">
             <TabsTrigger value="overview" className="font-body">Resumen</TabsTrigger>
             <TabsTrigger value="emotions" className="font-body">Emociones</TabsTrigger>
             <TabsTrigger value="achievements" className="font-body">Logros</TabsTrigger>
+            <TabsTrigger value="gamification" className="font-body">Progreso</TabsTrigger>
           </TabsList>
 
           <TabsContent value="overview" className="space-y-4">
@@ -317,6 +333,10 @@ export default function Progreso() {
                 Sigue usando la aplicación para desbloquear más logros y celebrar tu progreso.
               </p>
             </div>
+          </TabsContent>
+
+          <TabsContent value="gamification" className="space-y-4">
+            <GamificationPanel />
           </TabsContent>
         </Tabs>
       </div>

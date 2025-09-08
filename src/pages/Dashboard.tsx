@@ -1,8 +1,13 @@
 import { Avatar } from '@/components/Avatar';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { BookOpen, Lightbulb, Heart, TrendingUp, Smile, FileText, Users } from 'lucide-react';
+import { BookOpen, Lightbulb, Heart, TrendingUp, Smile, FileText, Users, AlertTriangle } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { GamificationPanel } from '@/components/GamificationPanel';
+import { RiskAlerts } from '@/components/RiskAlerts';
+import { MotivationalMessages } from '@/components/MotivationalMessages';
+import { useGamification } from '@/hooks/useGamification';
+import { useRiskDetection } from '@/hooks/useRiskDetection';
 import heroImage from '@/assets/hero-wellbeing.jpg';
 
 const quickActions = [
@@ -66,6 +71,10 @@ const quickActions = [
 ];
 
 export default function Dashboard() {
+  const { progress } = useGamification();
+  const { getActiveAlerts } = useRiskDetection();
+  const activeAlerts = getActiveAlerts();
+
   return (
     <div className="min-h-screen bg-gradient-calm pb-20">
       {/* Hero Section */}
@@ -89,34 +98,24 @@ export default function Dashboard() {
 
       <div className="px-6 py-6 space-y-6">
         {/* Avatar Greeting */}
-        <Avatar mood="encouraging" />
+        <Avatar 
+          mood="encouraging"
+          message={progress.level > 1 ? 
+            `¡Nivel ${progress.level}! Estás progresando increíblemente.` : 
+            "¡Bienvenida! Cada paso cuenta en tu camino de bienestar."
+          }
+        />
 
-        {/* Progress Summary */}
-        <Card className="bg-gradient-card shadow-card border-0">
-          <CardHeader className="pb-3">
-            <CardTitle className="flex items-center gap-2 text-lg">
-              <TrendingUp className="w-5 h-5 text-primary" />
-              Tu Progreso Hoy
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="flex items-center justify-between">
-              <span className="text-sm text-muted-foreground">Registro emocional</span>
-              <span className="text-sm font-medium text-success">2/3 veces</span>
-            </div>
-            <div className="flex items-center justify-between">
-              <span className="text-sm text-muted-foreground">Ejercicios de calma</span>
-              <span className="text-sm font-medium text-primary">1 completado</span>
-            </div>
-            <div className="flex items-center justify-between">
-              <span className="text-sm text-muted-foreground">Estado de ánimo</span>
-              <div className="flex items-center gap-1">
-                <Smile className="w-4 h-4 text-warning" />
-                <span className="text-sm font-medium">Tranquilo</span>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+        {/* Risk Alerts */}
+        {activeAlerts.length > 0 && (
+          <RiskAlerts />
+        )}
+
+        {/* Motivational Message */}
+        <MotivationalMessages />
+
+        {/* Gamification Panel */}
+        <GamificationPanel />
 
         {/* Quick Actions */}
         <div className="space-y-3">
@@ -178,16 +177,27 @@ export default function Dashboard() {
           })}
         </div>
 
-        {/* Daily Motivation */}
-        <Card className="bg-gradient-warm shadow-warm border-0">
-          <CardContent className="p-6 text-center">
-            <h3 className="font-semibold text-foreground mb-2">
-              💙 Pensamiento del Día
-            </h3>
-            <p className="text-foreground/80 italic">
-              "Cada día es una nueva oportunidad para cuidarte con amor y compasión. 
-              Tus emociones son válidas, tu bienestar importa."
-            </p>
+        {/* TCA Module Access */}
+        <Card className="bg-gradient-primary shadow-warm border-0">
+          <CardContent className="p-6">
+            <div className="flex items-center gap-3">
+              <div className="p-3 bg-white/20 rounded-lg">
+                <Heart className="w-6 h-6 text-white" />
+              </div>
+              <div className="flex-1">
+                <h3 className="font-semibold text-white mb-1">
+                  Módulo TCA Especializado
+                </h3>
+                <p className="text-white/80 text-sm">
+                  Herramientas avanzadas para tu tratamiento de TCA
+                </p>
+              </div>
+              <Link to="/tca-module">
+                <Button variant="secondary" size="sm">
+                  Acceder
+                </Button>
+              </Link>
+            </div>
           </CardContent>
         </Card>
       </div>

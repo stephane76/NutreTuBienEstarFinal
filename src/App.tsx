@@ -18,6 +18,7 @@ import Talleres from "./pages/Talleres";
 import Cuestionarios from "./pages/Cuestionarios";
 import Comunidad from "./pages/Comunidad";
 import RegistroAlimentario from "./pages/RegistroAlimentario";
+import TCAModule from "./pages/TCAModule";
 
 const queryClient = new QueryClient();
 
@@ -42,6 +43,7 @@ const App = () => (
           <Route path="/cuestionarios" element={<Cuestionarios />} />
           <Route path="/comunidad" element={<Comunidad />} />
           <Route path="/registro-alimentario" element={<RegistroAlimentario />} />
+          <Route path="/tca-module" element={<TCAModule />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
