@@ -12,7 +12,7 @@ Todas las variables HSL para máxima flexibilidad
 
 @layer base {
   :root {
-    /* Modern color palette - Updated for contemporary design */
+    /* Vibrant modern color palette with orange accents */
     --background: 248 250 252; /* slate-50 */
     --foreground: 15 23 42; /* slate-800 */
     --card: 255 255 255; /* white */
@@ -20,11 +20,25 @@ Todas las variables HSL para máxima flexibilidad
     --popover: 255 255 255;
     --popover-foreground: 15 23 42;
     
-    /* Modern purple-based primary colors */
+    /* Primary colors - violet/purple */
     --primary: 139 92 246; /* violet-500 */
     --primary-light: 168 85 247; /* violet-400 */
     --primary-glow: 196 181 253; /* violet-300 */
     --primary-foreground: 255 255 255;
+    
+    /* Orange accent colors */
+    --orange: 249 115 22; /* orange-500 */
+    --orange-light: 251 146 60; /* orange-400 */
+    --orange-glow: 253 186 116; /* orange-300 */
+    --orange-foreground: 255 255 255;
+    
+    /* Additional vibrant colors */
+    --coral: 255 127 80; /* coral */
+    --coral-light: 255 160 122; /* light coral */
+    --turquoise: 6 182 212; /* cyan-500 */
+    --turquoise-light: 34 197 94; /* emerald-500 */
+    --lime: 163 230 53; /* lime-400 */
+    --magenta: 236 72 153; /* pink-500 */
     
     /* Contemporary accent colors */
     --secondary: 241 245 249; /* slate-100 */
@@ -48,31 +62,40 @@ Todas las variables HSL para máxima flexibilidad
     --warning: 245 158 11; /* amber-500 */
     --warning-foreground: 255 255 255;
     
-    /* Crisis - updated */
-    --crisis: 244 63 94; /* pink-500 */ 
+    /* Crisis - updated with warm orange tones */
+    --crisis: 249 115 22; /* orange-500 for urgency but warmer */ 
     --crisis-foreground: 255 255 255;
     
-    /* Modern color palette extensions */
+    /* Vibrant color palette extensions */
     --serenity: 219 234 254; /* blue-100 */
     --warmth: 254 215 170; /* orange-200 */
     --growth: 187 247 208; /* green-200 */
+    --energy: 252 211 77; /* yellow-300 */
     
     /* Borders and inputs */
     --border: 226 232 240; /* slate-200 */
     --input: 241 245 249; /* slate-100 */
     --ring: 139 92 246; /* violet-500 */
     
-    /* Modern gradients */
+    /* Vibrant gradients with orange */
     --gradient-primary: linear-gradient(135deg, hsl(139 92% 66%), hsl(168 85% 74%));
+    --gradient-orange: linear-gradient(135deg, hsl(249 115% 50%), hsl(251 146% 60%));
+    --gradient-coral: linear-gradient(135deg, hsl(255 127% 60%), hsl(255 160% 70%));
+    --gradient-turquoise: linear-gradient(135deg, hsl(6 182% 60%), hsl(34 197% 55%));
+    --gradient-lime: linear-gradient(135deg, hsl(163 230% 50%), hsl(34 197% 55%));
+    --gradient-magenta: linear-gradient(135deg, hsl(236 72% 60%), hsl(251 207% 75%));
     --gradient-warm: linear-gradient(135deg, hsl(251 207% 85%), hsl(254 215% 80%));
     --gradient-serene: linear-gradient(135deg, hsl(219 234% 90%), hsl(187 247% 85%));
     --gradient-card: linear-gradient(145deg, hsl(255 255% 100% / 0.9), hsl(248 250% 98% / 0.8));
+    --gradient-rainbow: linear-gradient(135deg, hsl(249 115% 50%), hsl(236 72% 60%), hsl(139 92% 66%), hsl(6 182% 60%));
     
-    /* Modern shadows */
+    /* Interactive shadows with colors */
     --shadow-soft: 0 4px 6px -1px hsl(0 0% 0% / 0.1), 0 2px 4px -2px hsl(0 0% 0% / 0.1);
     --shadow-medium: 0 10px 15px -3px hsl(0 0% 0% / 0.1), 0 4px 6px -4px hsl(0 0% 0% / 0.1);
     --shadow-strong: 0 20px 25px -5px hsl(0 0% 0% / 0.1), 0 8px 10px -6px hsl(0 0% 0% / 0.1);
     --shadow-glow: 0 0 30px hsl(var(--primary) / 0.3);
+    --shadow-orange-glow: 0 0 30px hsl(var(--orange) / 0.4);
+    --shadow-rainbow: 0 8px 32px hsl(249 115% 50% / 0.2), 0 0 0 1px hsl(249 115% 50% / 0.05);
 
     --radius: 0.75rem;
     

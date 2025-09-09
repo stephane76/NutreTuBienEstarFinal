@@ -27,15 +27,23 @@ import {
   Sparkles,
   ArrowRight,
   Play,
-  ChevronRight
+  ChevronRight,
+  Zap,
+  Sun
 } from 'lucide-react';
 
-// Import images
+// Import all images including new colorful ones
 import heroWellness from '@/assets/hero-wellness.jpg';
 import mentalHealthSupport from '@/assets/mental-health-support.jpg';
 import mindfulEating from '@/assets/mindful-eating.jpg';
 import communitySupport from '@/assets/community-support.jpg';
 import progressTracking from '@/assets/progress-tracking.jpg';
+import vibrantNutrition from '@/assets/vibrant-nutrition.jpg';
+import interactiveGames from '@/assets/interactive-games.jpg';
+import crisisSupportWarm from '@/assets/crisis-support-warm.jpg';
+import audioColorful from '@/assets/audio-colorful.jpg';
+import breathingColorful from '@/assets/breathing-colorful.jpg';
+import interactiveBackground from '@/assets/interactive-background.jpg';
 
 interface MenuOption {
   id: string;
@@ -49,10 +57,11 @@ interface MenuOption {
   image?: string;
   badge?: string;
   featured?: boolean;
+  interactive?: boolean;
 }
 
 const menuOptions: MenuOption[] = [
-  // Featured options
+  // Featured options with vibrant colors
   {
     id: 'apoyo-ia',
     title: 'Acompañante IA',
@@ -64,7 +73,8 @@ const menuOptions: MenuOption[] = [
     gradient: 'bg-gradient-to-br from-violet-500 to-purple-600',
     image: mentalHealthSupport,
     badge: '24/7',
-    featured: true
+    featured: true,
+    interactive: true
   },
   {
     id: 'diario-emocional',
@@ -79,7 +89,7 @@ const menuOptions: MenuOption[] = [
     featured: true
   },
 
-  // Principal tools
+  // Principal tools with orange and vibrant colors
   {
     id: 'registro-alimentario',
     title: 'Registro Alimentario',
@@ -87,9 +97,10 @@ const menuOptions: MenuOption[] = [
     icon: Utensils,
     path: '/registro-alimentario',
     category: 'principal',
-    color: 'from-emerald-500 to-teal-500',
-    gradient: 'bg-gradient-to-br from-emerald-500 to-teal-500',
-    image: mindfulEating
+    color: 'from-orange-500 to-red-500',
+    gradient: 'bg-gradient-to-br from-orange-500 to-red-500',
+    image: vibrantNutrition,
+    interactive: true
   },
   {
     id: 'crisis',
@@ -98,9 +109,11 @@ const menuOptions: MenuOption[] = [
     icon: AlertCircle,
     path: '/crisis',
     category: 'principal',
-    color: 'from-red-500 to-pink-500',
-    gradient: 'bg-gradient-to-br from-red-500 to-pink-500',
-    badge: 'Urgente'
+    color: 'from-orange-600 to-red-600',
+    gradient: 'bg-gradient-to-br from-orange-600 to-red-600',
+    image: crisisSupportWarm,
+    badge: 'Urgente',
+    interactive: true
   },
   {
     id: 'recursos-audio',
@@ -109,11 +122,13 @@ const menuOptions: MenuOption[] = [
     icon: Headphones,
     path: '/recursos',
     category: 'principal',
-    color: 'from-indigo-500 to-blue-500',
-    gradient: 'bg-gradient-to-br from-indigo-500 to-blue-500'
+    color: 'from-cyan-500 to-blue-500',
+    gradient: 'bg-gradient-to-br from-cyan-500 to-blue-500',
+    image: audioColorful,
+    interactive: true
   },
 
-  // Wellness tools
+  // Wellness tools with lime and turquoise
   {
     id: 'pausa-mindful',
     title: 'Pausa Mindful',
@@ -121,8 +136,10 @@ const menuOptions: MenuOption[] = [
     icon: Pause,
     path: '/pausa',
     category: 'bienestar',
-    color: 'from-cyan-500 to-blue-500',
-    gradient: 'bg-gradient-to-br from-cyan-500 to-blue-500'
+    color: 'from-teal-500 to-cyan-500',
+    gradient: 'bg-gradient-to-br from-teal-500 to-cyan-500',
+    image: breathingColorful,
+    interactive: true
   },
   {
     id: 'detector-hambre',
@@ -131,8 +148,8 @@ const menuOptions: MenuOption[] = [
     icon: Brain,
     path: '/detector-hambre',
     category: 'bienestar',
-    color: 'from-purple-500 to-indigo-500',
-    gradient: 'bg-gradient-to-br from-purple-500 to-indigo-500'
+    color: 'from-lime-500 to-green-500',
+    gradient: 'bg-gradient-to-br from-lime-500 to-green-500'
   },
   {
     id: 'check-in',
@@ -145,7 +162,7 @@ const menuOptions: MenuOption[] = [
     gradient: 'bg-gradient-to-br from-amber-500 to-orange-500'
   },
 
-  // Community
+  // Community with coral and magenta
   {
     id: 'comunidad',
     title: 'Comunidad',
@@ -153,8 +170,8 @@ const menuOptions: MenuOption[] = [
     icon: Users,
     path: '/comunidad',
     category: 'comunidad',
-    color: 'from-green-500 to-emerald-500',
-    gradient: 'bg-gradient-to-br from-green-500 to-emerald-500',
+    color: 'from-emerald-500 to-teal-500',
+    gradient: 'bg-gradient-to-br from-emerald-500 to-teal-500',
     image: communitySupport
   },
   {
@@ -164,8 +181,8 @@ const menuOptions: MenuOption[] = [
     icon: PenTool,
     path: '/talleres',
     category: 'comunidad',
-    color: 'from-rose-500 to-pink-500',
-    gradient: 'bg-gradient-to-br from-rose-500 to-pink-500'
+    color: 'from-pink-500 to-rose-500',
+    gradient: 'bg-gradient-to-br from-pink-500 to-rose-500'
   },
   {
     id: 'juegos-educativos',
@@ -174,11 +191,13 @@ const menuOptions: MenuOption[] = [
     icon: GamepadIcon,
     path: '/juegos',
     category: 'comunidad',
-    color: 'from-yellow-500 to-amber-500',
-    gradient: 'bg-gradient-to-br from-yellow-500 to-amber-500'
+    color: 'from-yellow-500 to-orange-500',
+    gradient: 'bg-gradient-to-br from-yellow-500 to-orange-500',
+    image: interactiveGames,
+    interactive: true
   },
 
-  // Progress tracking
+  // Progress tracking with rainbow colors
   {
     id: 'progreso',
     title: 'Mi Progreso',
@@ -186,8 +205,8 @@ const menuOptions: MenuOption[] = [
     icon: TrendingUp,
     path: '/progreso',
     category: 'seguimiento',
-    color: 'from-blue-500 to-cyan-500',
-    gradient: 'bg-gradient-to-br from-blue-500 to-cyan-500',
+    color: 'from-blue-500 to-purple-500',
+    gradient: 'bg-gradient-to-br from-blue-500 to-purple-500',
     image: progressTracking
   },
   {
@@ -206,6 +225,7 @@ export default function MainMenu() {
   const navigate = useNavigate();
   const [greeting, setGreeting] = useState('');
   const [hoveredCard, setHoveredCard] = useState<string | null>(null);
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
     const hour = new Date().getHours();
@@ -216,6 +236,15 @@ export default function MainMenu() {
     } else {
       setGreeting('Buenas noches');
     }
+  }, []);
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      setMousePosition({ x: e.clientX, y: e.clientY });
+    };
+    
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
 
   const handleNavigation = (path: string) => {
@@ -229,14 +258,41 @@ export default function MainMenu() {
   const regularOptions = menuOptions.filter(option => !option.featured);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 pb-24">
-      {/* Modern Header */}
-      <div className="relative overflow-hidden bg-white border-b border-slate-200">
-        <div className="absolute inset-0 bg-gradient-to-r from-violet-500/5 to-purple-500/5"></div>
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-orange-50 to-purple-50 pb-24 relative overflow-hidden">
+      {/* Interactive Background Elements */}
+      <div className="fixed inset-0 pointer-events-none">
+        <div 
+          className="absolute w-96 h-96 bg-gradient-to-br from-orange-400/20 to-pink-400/20 rounded-full blur-3xl transition-transform duration-1000 ease-out"
+          style={{
+            transform: `translate(${mousePosition.x * 0.02}px, ${mousePosition.y * 0.02}px)`
+          }}
+        ></div>
+        <div 
+          className="absolute top-1/3 right-0 w-80 h-80 bg-gradient-to-br from-cyan-400/20 to-blue-400/20 rounded-full blur-3xl transition-transform duration-700 ease-out"
+          style={{
+            transform: `translate(${mousePosition.x * -0.01}px, ${mousePosition.y * -0.01}px)`
+          }}
+        ></div>
+        <div 
+          className="absolute bottom-0 left-1/4 w-64 h-64 bg-gradient-to-br from-lime-400/20 to-emerald-400/20 rounded-full blur-3xl transition-transform duration-500 ease-out"
+          style={{
+            transform: `translate(${mousePosition.x * 0.015}px, ${mousePosition.y * 0.015}px)`
+          }}
+        ></div>
+      </div>
+
+      {/* Modern Header with Rainbow Accent */}
+      <div className="relative overflow-hidden bg-white/80 backdrop-blur-md border-b border-slate-200">
+        <div className="absolute inset-0 bg-gradient-to-r from-orange-500/5 via-pink-500/5 to-purple-500/5"></div>
         <div className="container mx-auto px-4 py-6 relative">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-3xl font-bold bg-gradient-to-r from-violet-600 to-purple-600 bg-clip-text text-transparent">
+              <div className="flex items-center gap-2 mb-1">
+                <div className="w-2 h-2 bg-orange-500 rounded-full animate-pulse"></div>
+                <div className="w-2 h-2 bg-pink-500 rounded-full animate-pulse" style={{animationDelay: '0.2s'}}></div>
+                <div className="w-2 h-2 bg-purple-500 rounded-full animate-pulse" style={{animationDelay: '0.4s'}}></div>
+              </div>
+              <h1 className="text-3xl font-bold bg-gradient-to-r from-orange-600 via-pink-600 to-purple-600 bg-clip-text text-transparent">
                 {greeting} ✨
               </h1>
               <p className="text-slate-600 mt-1">¿En qué te puedo acompañar hoy?</p>
@@ -246,28 +302,32 @@ export default function MainMenu() {
         </div>
       </div>
 
-      {/* Hero Section */}
+      {/* Dynamic Hero Section */}
       <div className="relative overflow-hidden">
         <div className="absolute inset-0">
           <img 
-            src={heroWellness} 
-            alt="Wellness hero" 
-            className="w-full h-full object-cover opacity-20"
+            src={interactiveBackground} 
+            alt="Interactive background" 
+            className="w-full h-full object-cover opacity-30"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-violet-500/10 to-transparent"></div>
+          <div className="absolute inset-0 bg-gradient-to-br from-orange-500/20 via-transparent to-purple-500/20"></div>
         </div>
         <div className="relative container mx-auto px-4 py-16 text-center">
           <div className="max-w-3xl mx-auto">
-            <h2 className="text-4xl md:text-5xl font-bold text-slate-800 mb-6 leading-tight">
-              Tu espacio de <span className="bg-gradient-to-r from-violet-600 to-purple-600 bg-clip-text text-transparent">cuidado personal</span>
-            </h2>
+            <div className="flex justify-center items-center gap-4 mb-6">
+              <Sun className="w-8 h-8 text-orange-500 animate-spin" style={{animationDuration: '8s'}} />
+              <h2 className="text-4xl md:text-5xl font-bold text-slate-800 leading-tight">
+                Tu espacio de <span className="bg-gradient-to-r from-orange-600 via-pink-600 to-purple-600 bg-clip-text text-transparent">cuidado personal</span>
+              </h2>
+              <Zap className="w-8 h-8 text-purple-500 animate-bounce" />
+            </div>
             <p className="text-xl text-slate-600 leading-relaxed mb-8">
-              Herramientas diseñadas con amor para acompañarte en cada paso de tu proceso de recuperación y bienestar
+              Herramientas vibrantes y dinámicas diseñadas con amor para acompañarte en cada paso de tu proceso de recuperación y bienestar
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button 
                 onClick={() => handleNavigation('/apoyo')}
-                className="bg-gradient-to-r from-violet-500 to-purple-600 hover:from-violet-600 hover:to-purple-700 text-white px-8 py-3 text-lg rounded-xl shadow-lg hover:shadow-xl transition-all duration-300"
+                className="bg-gradient-to-r from-orange-500 via-pink-500 to-purple-600 hover:from-orange-600 hover:via-pink-600 hover:to-purple-700 text-white px-8 py-3 text-lg rounded-xl shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:scale-105"
               >
                 <MessageSquare className="mr-2 h-5 w-5" />
                 Hablar ahora
@@ -275,7 +335,7 @@ export default function MainMenu() {
               <Button 
                 variant="outline" 
                 onClick={() => handleNavigation('/diario-emocional')}
-                className="border-2 border-violet-200 hover:border-violet-300 text-violet-700 px-8 py-3 text-lg rounded-xl hover:bg-violet-50 transition-all duration-300"
+                className="border-2 border-orange-300 hover:border-orange-400 text-orange-700 px-8 py-3 text-lg rounded-xl hover:bg-orange-50 transition-all duration-300 transform hover:scale-105"
               >
                 <Heart className="mr-2 h-5 w-5" />
                 Registrar emociones
@@ -285,13 +345,13 @@ export default function MainMenu() {
         </div>
       </div>
 
-      <div className="container mx-auto px-4 py-12 space-y-16">
-        {/* Featured Tools */}
+      <div className="container mx-auto px-4 py-12 space-y-16 relative z-10">
+        {/* Featured Tools with Interactive Elements */}
         <section>
           <div className="text-center mb-12">
-            <div className="inline-flex items-center gap-2 bg-gradient-to-r from-violet-100 to-purple-100 px-4 py-2 rounded-full mb-4">
-              <Sparkles className="h-5 w-5 text-violet-600" />
-              <span className="text-violet-700 font-semibold">Herramientas Destacadas</span>
+            <div className="inline-flex items-center gap-2 bg-gradient-to-r from-orange-100 via-pink-100 to-purple-100 px-4 py-2 rounded-full mb-4">
+              <Sparkles className="h-5 w-5 text-orange-600" />
+              <span className="text-orange-700 font-semibold">Herramientas Destacadas</span>
             </div>
             <h3 className="text-2xl font-bold text-slate-800">Tus aliados principales</h3>
           </div>
@@ -304,14 +364,14 @@ export default function MainMenu() {
               return (
                 <Card 
                   key={option.id}
-                  className="group relative cursor-pointer overflow-hidden border-0 shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:scale-105"
+                  className="group relative cursor-pointer overflow-hidden border-0 shadow-lg hover:shadow-2xl transition-all duration-700 transform hover:scale-105 hover:rotate-1"
                   onClick={() => handleNavigation(option.path)}
                   onMouseEnter={() => setHoveredCard(option.id)}
                   onMouseLeave={() => setHoveredCard(null)}
                 >
                   <div className={`absolute inset-0 ${option.gradient} opacity-90`}></div>
                   {option.image && (
-                    <div className="absolute inset-0 opacity-20">
+                    <div className="absolute inset-0 opacity-30 group-hover:opacity-50 transition-opacity duration-500">
                       <img 
                         src={option.image} 
                         alt={option.title}
@@ -319,13 +379,16 @@ export default function MainMenu() {
                       />
                     </div>
                   )}
+                  {option.interactive && (
+                    <div className="absolute inset-0 bg-gradient-to-br from-transparent via-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                  )}
                   <div className="relative z-10 p-8 text-white">
                     <div className="flex items-start justify-between mb-6">
-                      <div className="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                      <div className="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center group-hover:scale-125 group-hover:rotate-12 transition-transform duration-500">
                         <Icon className="w-8 h-8" />
                       </div>
                       {option.badge && (
-                        <Badge className="bg-white/20 backdrop-blur-sm text-white border-white/30">
+                        <Badge className="bg-white/20 backdrop-blur-sm text-white border-white/30 animate-pulse">
                           {option.badge}
                         </Badge>
                       )}
@@ -334,7 +397,7 @@ export default function MainMenu() {
                     <p className="text-white/90 leading-relaxed mb-6">{option.description}</p>
                     <div className="flex items-center gap-2 text-white/80 group-hover:text-white transition-colors">
                       <span className="font-medium">Comenzar</span>
-                      <ArrowRight className={`h-4 w-4 transition-transform duration-300 ${isHovered ? 'translate-x-1' : ''}`} />
+                      <ArrowRight className={`h-4 w-4 transition-transform duration-500 ${isHovered ? 'translate-x-2 scale-125' : ''}`} />
                     </div>
                   </div>
                 </Card>
@@ -343,63 +406,71 @@ export default function MainMenu() {
           </div>
         </section>
 
-        {/* Regular Tools Grid */}
+        {/* Regular Tools Grid with Rainbow Colors */}
         <section>
           <div className="text-center mb-12">
-            <h3 className="text-2xl font-bold text-slate-800 mb-2">Todas las herramientas</h3>
+            <h3 className="text-2xl font-bold bg-gradient-to-r from-orange-600 via-pink-600 to-purple-600 bg-clip-text text-transparent mb-2">
+              Todas las herramientas
+            </h3>
             <p className="text-slate-600">Descubre todo lo que tenemos para acompañarte</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {regularOptions.map((option) => {
+            {regularOptions.map((option, index) => {
               const Icon = option.icon;
               const isHovered = hoveredCard === option.id;
               
               return (
                 <Card 
                   key={option.id}
-                  className="group cursor-pointer hover:shadow-xl transition-all duration-300 transform hover:scale-105 border-0 shadow-md overflow-hidden bg-white"
+                  className="group cursor-pointer hover:shadow-2xl transition-all duration-500 transform hover:scale-110 hover:rotate-2 border-0 shadow-md overflow-hidden bg-white/80 backdrop-blur-sm"
                   onClick={() => handleNavigation(option.path)}
                   onMouseEnter={() => setHoveredCard(option.id)}
                   onMouseLeave={() => setHoveredCard(null)}
+                  style={{
+                    animationDelay: `${index * 100}ms`
+                  }}
                 >
                   {option.image && (
-                    <div className="h-32 overflow-hidden">
+                    <div className="h-32 overflow-hidden relative">
                       <img 
                         src={option.image} 
                         alt={option.title}
-                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                        className="w-full h-full object-cover group-hover:scale-125 transition-transform duration-700"
                       />
+                      {option.interactive && (
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                      )}
                     </div>
                   )}
                   <CardContent className="p-6">
                     <div className="flex items-start justify-between mb-4">
-                      <div className={`w-12 h-12 rounded-xl ${option.gradient} flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300`}>
+                      <div className={`w-12 h-12 rounded-xl ${option.gradient} flex items-center justify-center shadow-lg group-hover:scale-125 group-hover:rotate-45 transition-transform duration-500`}>
                         <Icon className="w-6 h-6 text-white" />
                       </div>
                       {option.badge && (
                         <Badge 
                           variant={option.badge === 'Urgente' ? 'destructive' : 'secondary'}
-                          className="text-xs"
+                          className="text-xs animate-bounce"
                         >
                           {option.badge}
                         </Badge>
                       )}
                     </div>
-                    <h4 className="text-lg font-bold text-slate-800 mb-2 group-hover:text-violet-600 transition-colors">
+                    <h4 className="text-lg font-bold text-slate-800 mb-2 group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:from-orange-600 group-hover:to-purple-600 group-hover:bg-clip-text transition-all duration-300">
                       {option.title}
                     </h4>
                     <p className="text-slate-600 text-sm leading-relaxed mb-4">
                       {option.description}
                     </p>
                     <div className="flex items-center justify-between">
-                      <span className="text-xs text-slate-500 font-medium">
+                      <span className="text-xs font-medium bg-gradient-to-r from-slate-500 to-slate-600 bg-clip-text text-transparent">
                         {option.category === 'principal' && 'Herramienta Principal'}
                         {option.category === 'bienestar' && 'Bienestar'}
                         {option.category === 'comunidad' && 'Comunidad'}
                         {option.category === 'seguimiento' && 'Seguimiento'}
                       </span>
-                      <ChevronRight className={`h-4 w-4 text-slate-400 group-hover:text-violet-600 transition-all duration-300 ${isHovered ? 'translate-x-1' : ''}`} />
+                      <ChevronRight className={`h-4 w-4 text-slate-400 group-hover:text-orange-600 transition-all duration-500 ${isHovered ? 'translate-x-2 scale-125' : ''}`} />
                     </div>
                   </CardContent>
                 </Card>
@@ -408,10 +479,11 @@ export default function MainMenu() {
           </div>
         </section>
 
-        {/* Call to Action */}
+        {/* Rainbow Call to Action */}
         <section className="text-center">
-          <Card className="max-w-4xl mx-auto bg-gradient-to-br from-violet-50 to-purple-50 border-violet-200 overflow-hidden">
-            <CardContent className="p-12">
+          <Card className="max-w-4xl mx-auto bg-gradient-to-br from-orange-50 via-pink-50 to-purple-50 border-orange-200 overflow-hidden relative">
+            <div className="absolute inset-0 bg-gradient-to-r from-orange-500/10 via-pink-500/10 to-purple-500/10"></div>
+            <CardContent className="p-12 relative z-10">
               <div className="flex flex-col md:flex-row items-center gap-8">
                 <div className="flex-1 text-left">
                   <h3 className="text-3xl font-bold text-slate-800 mb-4">
@@ -424,7 +496,7 @@ export default function MainMenu() {
                   <div className="flex flex-col sm:flex-row gap-4">
                     <Button 
                       onClick={() => handleNavigation('/apoyo')}
-                      className="bg-gradient-to-r from-violet-500 to-purple-600 hover:from-violet-600 hover:to-purple-700 text-white px-6 py-3 rounded-xl"
+                      className="bg-gradient-to-r from-orange-500 via-pink-500 to-purple-600 hover:from-orange-600 hover:via-pink-600 hover:to-purple-700 text-white px-6 py-3 rounded-xl transform hover:scale-105 transition-all duration-300"
                     >
                       <MessageSquare className="mr-2 h-5 w-5" />
                       Empezar conversación
@@ -432,15 +504,15 @@ export default function MainMenu() {
                     <Button 
                       variant="outline" 
                       onClick={() => handleNavigation('/recursos')}
-                      className="border-violet-200 text-violet-700 hover:bg-violet-50 px-6 py-3 rounded-xl"
+                      className="border-orange-200 text-orange-700 hover:bg-orange-50 px-6 py-3 rounded-xl transform hover:scale-105 transition-all duration-300"
                     >
                       <Play className="mr-2 h-4 w-4" />
                       Ver recursos
                     </Button>
                   </div>
                 </div>
-                <div className="w-32 h-32 bg-gradient-to-br from-violet-400 to-purple-500 rounded-full flex items-center justify-center shadow-2xl">
-                  <Heart className="w-16 h-16 text-white animate-pulse" />
+                <div className="w-32 h-32 bg-gradient-to-br from-orange-400 via-pink-500 to-purple-500 rounded-full flex items-center justify-center shadow-2xl animate-pulse">
+                  <Heart className="w-16 h-16 text-white" />
                 </div>
               </div>
             </CardContent>
