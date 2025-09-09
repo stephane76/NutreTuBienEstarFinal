@@ -49,6 +49,123 @@ const recursos = [
     duracion: '5 min',
     compartidoPor: 'Usuario anónimo',
     fecha: '2024-01-20'
+  },
+  {
+    id: 3,
+    tipo: 'Audio',
+    titulo: 'Respiración consciente para la ansiedad',
+    descripcion: 'Ejercicio de respiración guiada para momentos de ansiedad antes de comer',
+    duracion: '8 min',
+    compartidoPor: 'María L.',
+    fecha: '2024-01-19'
+  },
+  {
+    id: 4,
+    tipo: 'Ejercicio',
+    titulo: 'Check-in corporal de 3 minutos',
+    descripcion: 'Una práctica rápida para conectar con las sensaciones de hambre y saciedad',
+    duracion: '3 min',
+    compartidoPor: 'Comunidad',
+    fecha: '2024-01-18'
+  },
+  {
+    id: 5,
+    tipo: 'Guía',
+    titulo: 'Cómo hacer las paces con el espejo',
+    descripcion: 'Pasos gentiles para mejorar tu relación con tu imagen corporal',
+    duracion: '7 min',
+    compartidoPor: 'Ana Sofia',
+    fecha: '2024-01-17'
+  },
+  {
+    id: 6,
+    tipo: 'Audio',
+    titulo: 'Mantras para momentos difíciles',
+    descripcion: 'Frases poderosas para repetir cuando sientes culpa o vergüenza por comer',
+    duracion: '6 min',
+    compartidoPor: 'Comunidad',
+    fecha: '2024-01-16'
+  },
+  {
+    id: 7,
+    tipo: 'Lista',
+    titulo: 'Alternativas para el comer emocional',
+    descripcion: '20 actividades que puedes hacer cuando sientes ganas de comer por emociones',
+    duracion: '2 min',
+    compartidoPor: 'Claudia M.',
+    fecha: '2024-01-15'
+  },
+  {
+    id: 8,
+    tipo: 'Ejercicio',
+    titulo: 'La práctica de la uva pasa',
+    descripcion: 'Ejercicio completo de mindful eating que cambió mi relación con la comida',
+    duracion: '12 min',
+    compartidoPor: 'Usuario anónimo',
+    fecha: '2024-01-14'
+  },
+  {
+    id: 9,
+    tipo: 'Audio',
+    titulo: 'Meditación para la autocompasión',
+    descripcion: 'Cultivar una voz interna más amable y comprensiva hacia ti misma',
+    duracion: '15 min',
+    compartidoPor: 'Comunidad',
+    fecha: '2024-01-13'
+  },
+  {
+    id: 10,
+    tipo: 'Guía',
+    titulo: 'Mi rutina nocturna de autocuidado',
+    descripcion: 'Cómo termino cada día honrando mi cuerpo y mis emociones',
+    duracion: '8 min',
+    compartidoPor: 'Valentina R.',
+    fecha: '2024-01-12'
+  },
+  {
+    id: 11,
+    tipo: 'Reflexión',
+    titulo: 'Preguntas para conocer tu hambre emocional',
+    descripcion: 'Una serie de preguntas que me ayudaron a identificar mis patrones',
+    duracion: '5 min',
+    compartidoPor: 'Laura C.',
+    fecha: '2024-01-11'
+  },
+  {
+    id: 12,
+    tipo: 'Audio',
+    titulo: 'Visualización: Mi cuerpo sabio',
+    descripcion: 'Un ejercicio para reconectar con la sabiduría natural de tu cuerpo',
+    duracion: '11 min',
+    compartidoPor: 'Comunidad',
+    fecha: '2024-01-10'
+  },
+  {
+    id: 13,
+    tipo: 'Lista',
+    titulo: 'Afirmaciones para cada comida',
+    descripcion: 'Frases positivas que me repito antes de desayunar, almorzar y cenar',
+    duracion: '3 min',
+    compartidoPor: 'Sofía P.',
+    fecha: '2024-01-09'
+  },
+  {
+    id: 14,
+    tipo: 'Ejercicio',
+    titulo: 'La técnica del semáforo emocional',
+    descripcion: 'Un método simple para pausar antes de comer impulsivamente',
+    duracion: '4 min',
+    compartidoPor: 'Usuario anónimo',
+    fecha: '2024-01-08'
+  },
+  {
+    id: 15,
+    tipo: 'Guía',
+    titulo: 'Cómo crear un espacio seguro para comer',
+    descripcion: 'Tips para transformar tu entorno y hacer de cada comida un momento de paz',
+    duracion: '6 min',
+    compartidoPor: 'Isabella M.',
+    fecha: '2024-01-07'
   }
 ];
 
