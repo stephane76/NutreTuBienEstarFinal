@@ -62,15 +62,15 @@ Todas las variables HSL para máxima flexibilidad
     --warning: 245 158 11; /* amber-500 */
     --warning-foreground: 255 255 255;
     
-    /* Crisis - updated with warm orange tones */
-    --crisis: 249 115 22; /* orange-500 for urgency but warmer */ 
+    /* Crisis - updated with neutral/calming colors instead of orange */
+    --crisis: 71 85 105; /* slate-500 for neutral urgency */ 
     --crisis-foreground: 255 255 255;
     
-    /* Vibrant color palette extensions */
+    /* Vibrant color palette extensions - neutralized */
     --serenity: 219 234 254; /* blue-100 */
-    --warmth: 254 215 170; /* orange-200 */
+    --warmth: 226 232 240; /* slate-200 - neutral instead of orange */
     --growth: 187 247 208; /* green-200 */
-    --energy: 252 211 77; /* yellow-300 */
+    --energy: 241 245 249; /* slate-100 - neutral instead of yellow */
     
     /* Borders and inputs */
     --border: 226 232 240; /* slate-200 */

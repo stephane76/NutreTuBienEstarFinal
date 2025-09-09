@@ -19,7 +19,7 @@ const crisisOptions = [
     title: 'Escribir al bot de apoyo',
     description: 'Conversa con nuestro asistente de crisis',
     icon: MessageCircle,
-    color: 'bg-warm-green',
+    color: 'bg-slate-600',
     action: () => {
       // Aquí se abriría el chat de crisis
       console.log('Abrir chat de crisis');
@@ -127,7 +127,7 @@ export default function NewCrisis() {
       <div className="container mx-auto px-4 pt-8 space-y-8">
         {/* Header urgente pero calmado */}
         <div className="text-center space-y-4 animate-fade-in">
-          <div className="w-16 h-16 bg-crisis/10 text-crisis rounded-full flex items-center justify-center mx-auto mb-4">
+          <div className="w-16 h-16 bg-slate-100 text-slate-600 rounded-full flex items-center justify-center mx-auto mb-4">
             <Heart className="w-8 h-8" />
           </div>
           <h1 className="text-2xl font-medium text-foreground">
@@ -251,21 +251,21 @@ export default function NewCrisis() {
         </div>
 
         {/* Números de emergencia */}
-        <Card className="bg-crisis/5 border-crisis/20">
+        <Card className="bg-slate-50 border-slate-200">
           <CardContent className="p-6">
-            <h3 className="font-medium text-crisis mb-4 text-center">
+            <h3 className="font-medium text-slate-700 mb-4 text-center">
               Líneas de crisis 24/7
             </h3>
             <div className="space-y-2 text-sm">
               <div className="flex justify-between items-center">
                 <span className="text-foreground">Teléfono de la Esperanza:</span>
-                <a href="tel:717003717" className="text-crisis font-medium">
+                <a href="tel:717003717" className="text-slate-700 font-medium">
                   717 003 717
                 </a>
               </div>
               <div className="flex justify-between items-center">
                 <span className="text-foreground">Emergencias:</span>
-                <a href="tel:112" className="text-crisis font-medium">
+                <a href="tel:112" className="text-slate-700 font-medium">
                   112
                 </a>
               </div>
