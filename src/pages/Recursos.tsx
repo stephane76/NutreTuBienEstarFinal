@@ -9,6 +9,7 @@ import { RespuestasConscientes } from '@/components/RespuestasConscientes';
 import { RetosAutocuidado } from '@/components/RetosAutocuidado';
 import { SpotifyIntegration } from '@/components/SpotifyIntegration';
 import { ProgramaHipnosis } from '@/components/ProgramaHipnosis';
+import { MandalasParaColorear } from '@/components/MandalasParaColorear';
 
 type SeccionRecurso = 'menu' | 'meditaciones' | 'escritura' | 'respuestas' | 'retos' | 'mandalas' | 'musica' | 'hipnosis';
 
@@ -163,28 +164,3 @@ export default function Recursos() {
     </div>
   );
 }
-
-// Componente placeholder para Mandalas
-const MandalasParaColorear: React.FC = () => (
-  <div className="text-center space-y-6">
-    <div className="space-y-2">
-      <h2 className="text-2xl font-bold text-foreground flex items-center justify-center gap-2">
-        <Palette className="text-orange-500" size={24} />
-        Mandalas para Colorear
-      </h2>
-      <p className="text-muted-foreground">
-        Encuentra calma y creatividad coloreando hermosos mandalas
-      </p>
-    </div>
-    
-    <Card className="max-w-md mx-auto">
-      <CardContent className="p-8 text-center">
-        <Sparkles className="mx-auto mb-4 text-orange-500" size={48} />
-        <h3 className="text-lg font-semibold mb-2">Próximamente</h3>
-        <p className="text-muted-foreground">
-          Esta sección estará disponible muy pronto con una colección de mandalas terapéuticos.
-        </p>
-      </CardContent>
-    </Card>
-  </div>
-);
