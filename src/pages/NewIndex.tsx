@@ -56,30 +56,39 @@ export default function NewIndex() {
   };
 
   return (
-    <div className="min-h-screen bg-background pb-24">
-      <div className="container mx-auto px-4 pt-8 space-y-8">
-        {/* Saludo dinámico */}
-        <div className="text-center space-y-4 animate-fade-in">
-          <h1 className="text-2xl font-medium text-foreground">
-            {greeting}{userName && `, ${userName}`} 💚
+    <div className="min-h-screen bg-background pb-24 relative overflow-hidden">
+      {/* Elementos decorativos de fondo */}
+      <div className="absolute top-20 right-10 w-24 h-24 bg-primary/5 rounded-full blur-xl animate-float"></div>
+      <div className="absolute bottom-40 left-8 w-32 h-32 bg-secondary/5 rounded-full blur-2xl animate-float" style={{animationDelay: '1s'}}></div>
+      
+      <div className="container mx-auto px-6 pt-12 space-y-10">
+        {/* Saludo dinámico mejorado */}
+        <div className="text-center space-y-6 animate-fade-in-up">
+          <h1 className="text-4xl font-poppins font-bold gradient-text">
+            {greeting}{userName && `, ${userName}`} 
           </h1>
-          <p className="text-lg text-muted-foreground">
-            Hoy es un buen día para cuidarte
+          <p className="text-xl text-muted-foreground font-light">
+            Hoy es un buen día para <span className="text-primary font-medium">cuidarte</span>
           </p>
         </div>
 
-        {/* Ilustración abstracta */}
-        <div className="flex justify-center py-6">
-          <div className="w-32 h-32 bg-gradient-to-br from-primary/20 to-secondary/20 rounded-full flex items-center justify-center animate-scale-in">
-            <div className="w-20 h-20 bg-gradient-to-br from-primary/30 to-secondary/30 rounded-full flex items-center justify-center">
-              <Heart className="w-10 h-10 text-primary" />
+        {/* Ilustración central mejorada */}
+        <div className="flex justify-center py-8">
+          <div className="relative">
+            <div className="w-40 h-40 bg-gradient-primary rounded-full flex items-center justify-center animate-scale-in glow-primary">
+              <div className="w-28 h-28 glass-card rounded-full flex items-center justify-center border-2 border-white/20">
+                <Heart className="w-12 h-12 text-white animate-heart-beat" />
+              </div>
             </div>
+            {/* Efectos decorativos alrededor */}
+            <div className="absolute -top-2 -right-2 w-8 h-8 bg-secondary rounded-full animate-bounce-gentle"></div>
+            <div className="absolute -bottom-2 -left-2 w-6 h-6 bg-tertiary rounded-full animate-bounce-gentle" style={{animationDelay: '0.5s'}}></div>
           </div>
         </div>
 
-        {/* Accesos rápidos */}
-        <div className="space-y-4">
-          <h2 className="text-lg font-medium text-center text-foreground mb-6">
+        {/* Accesos rápidos mejorados */}
+        <div className="space-y-6">
+          <h2 className="text-2xl font-poppins font-semibold text-center text-foreground">
             ¿Qué necesitas ahora?
           </h2>
           
@@ -87,40 +96,56 @@ export default function NewIndex() {
             {quickActions.map((action, index) => {
               const Icon = action.icon;
               return (
-                <Card 
+                <div 
                   key={action.id}
-                  className="card-soft cursor-pointer hover:shadow-lg transition-all duration-200 animate-fade-in"
-                  style={{ animationDelay: `${index * 100}ms` }}
+                  className="card-interactive animate-fade-in hover-lift"
+                  style={{ animationDelay: `${index * 150}ms` }}
                   onClick={() => handleQuickAction(action.path)}
                 >
-                  <CardContent className="flex items-center space-x-4 p-6">
-                    <div className={`w-14 h-14 rounded-2xl ${action.color} flex items-center justify-center`}>
-                      <Icon size={24} />
+                  <div className="flex items-center space-x-6 p-6">
+                    <div className={`w-16 h-16 rounded-3xl ${action.color} flex items-center justify-center hover-scale shadow-soft`}>
+                      <Icon size={28} className="drop-shadow-sm" />
                     </div>
                     <div className="flex-1">
-                      <h3 className="font-medium text-foreground mb-1">
+                      <h3 className="font-poppins font-semibold text-lg text-foreground mb-2">
                         {action.title}
                       </h3>
-                      <p className="text-sm text-muted-foreground">
+                      <p className="text-muted-foreground leading-relaxed">
                         {action.description}
                       </p>
                     </div>
-                  </CardContent>
-                </Card>
+                  </div>
+                </div>
               );
             })}
           </div>
         </div>
 
-        {/* Mensaje de apoyo */}
-        <div className="text-center py-6">
-          <Card className="bg-primary/5 border-primary/20">
-            <CardContent className="p-6">
-              <p className="text-sm text-primary font-medium">
+        {/* Mensaje de apoyo mejorado */}
+        <div className="text-center py-8">
+          <div className="card-feature max-w-md mx-auto">
+            <div className="text-center">
+              <div className="w-12 h-12 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Heart className="w-6 h-6 text-primary" />
+              </div>
+              <p className="text-primary font-poppins font-medium text-lg leading-relaxed">
                 "Este es tu espacio seguro. Aquí no hay juicios, solo comprensión y cuidado."
               </p>
-            </CardContent>
-          </Card>
+            </div>
+          </div>
+        </div>
+
+        {/* CTA suave al final */}
+        <div className="text-center pb-8">
+          <p className="text-sm text-muted-foreground mb-4">
+            ¿Primera vez aquí?
+          </p>
+          <button 
+            onClick={() => navigate('/recursos')}
+            className="btn-ghost text-sm px-6 py-3"
+          >
+            Descubre todas las herramientas
+          </button>
         </div>
       </div>
     </div>

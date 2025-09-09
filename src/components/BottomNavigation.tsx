@@ -54,8 +54,8 @@ export function BottomNavigation() {
   };
 
   return (
-    <nav className="bottom-nav">
-      <div className="flex justify-around items-center max-w-md mx-auto">
+    <nav className="bottom-nav glass-nav">
+      <div className="flex justify-around items-center max-w-lg mx-auto px-2 py-2">
         {navigationItems.map((item) => {
           const Icon = item.icon;
           const isActive = location.pathname === item.path;
@@ -65,16 +65,26 @@ export function BottomNavigation() {
             <button
               key={item.id}
               onClick={() => handleNavigation(item.path)}
-              className={`nav-item ${isActive ? 'active' : ''} ${
+              className={`nav-item relative ${isActive ? 'active' : ''} ${
                 isCrisis ? 'text-crisis hover:text-crisis' : ''
               }`}
               aria-label={item.label}
             >
-              <Icon 
-                size={20} 
-                className={`mb-1 ${isActive ? 'animate-scale-in' : ''}`}
-              />
-              <span className="text-xs font-medium">{item.label}</span>
+              <div className="relative z-10">
+                <Icon 
+                  size={22} 
+                  className={`mb-1 transition-transform duration-300 ${
+                    isActive ? 'animate-bounce-gentle' : ''
+                  } ${
+                    isCrisis ? 'drop-shadow-lg' : ''
+                  }`}
+                />
+                <span className={`text-xs font-medium transition-all duration-300 ${
+                  isActive ? 'font-semibold' : ''
+                }`}>
+                  {item.label}
+                </span>
+              </div>
             </button>
           );
         })}
