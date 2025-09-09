@@ -32,18 +32,12 @@ import {
   Sun
 } from 'lucide-react';
 
-// Import all images including new colorful ones
-import heroWellness from '@/assets/hero-wellness.jpg';
-import mentalHealthSupport from '@/assets/mental-health-support.jpg';
-import mindfulEating from '@/assets/mindful-eating.jpg';
-import communitySupport from '@/assets/community-support.jpg';
-import progressTracking from '@/assets/progress-tracking.jpg';
-import vibrantNutrition from '@/assets/vibrant-nutrition.jpg';
-import interactiveGames from '@/assets/interactive-games.jpg';
-import crisisSupportWarm from '@/assets/crisis-support-warm.jpg';
-import audioColorful from '@/assets/audio-colorful.jpg';
-import breathingColorful from '@/assets/breathing-colorful.jpg';
-import interactiveBackground from '@/assets/interactive-background.jpg';
+// Import zen images
+import zenHero from '@/assets/zen-hero.jpg';
+import zenNature from '@/assets/zen-nature.jpg';
+import zenMeditation from '@/assets/zen-meditation.jpg';
+import zenOcean from '@/assets/zen-ocean.jpg';
+import zenLavender from '@/assets/zen-lavender.jpg';
 
 interface MenuOption {
   id: string;
@@ -61,7 +55,7 @@ interface MenuOption {
 }
 
 const menuOptions: MenuOption[] = [
-  // Featured options with vibrant colors
+  // Featured options with zen colors
   {
     id: 'apoyo-ia',
     title: 'Acompañante IA',
@@ -69,9 +63,9 @@ const menuOptions: MenuOption[] = [
     icon: MessageSquare,
     path: '/apoyo',
     category: 'featured',
-    color: 'from-violet-500 to-purple-600',
-    gradient: 'bg-gradient-to-br from-violet-500 to-purple-600',
-    image: mentalHealthSupport,
+    color: 'from-sage-400 to-sage-500',
+    gradient: 'bg-gradient-to-br from-sage-400 to-sage-500',
+    image: zenMeditation,
     badge: '24/7',
     featured: true,
     interactive: true
@@ -83,13 +77,13 @@ const menuOptions: MenuOption[] = [
     icon: Heart,
     path: '/diario-emocional',
     category: 'featured',
-    color: 'from-pink-500 to-rose-500',
-    gradient: 'bg-gradient-to-br from-pink-500 to-rose-500',
+    color: 'from-blue-300 to-blue-400',
+    gradient: 'bg-gradient-to-br from-blue-300 to-blue-400',
     badge: 'Esencial',
     featured: true
   },
 
-  // Principal tools with orange and vibrant colors
+  // Principal tools with zen colors
   {
     id: 'registro-alimentario',
     title: 'Registro Alimentario',
@@ -97,9 +91,9 @@ const menuOptions: MenuOption[] = [
     icon: Utensils,
     path: '/registro-alimentario',
     category: 'principal',
-    color: 'from-slate-500 to-slate-600',
-    gradient: 'bg-gradient-to-br from-slate-500 to-slate-600',
-    image: vibrantNutrition,
+    color: 'from-green-400 to-green-500',
+    gradient: 'bg-gradient-to-br from-green-400 to-green-500',
+    image: zenNature,
     interactive: true
   },
   {
@@ -109,9 +103,9 @@ const menuOptions: MenuOption[] = [
     icon: AlertCircle,
     path: '/crisis',
     category: 'principal',
-    color: 'from-slate-600 to-slate-700',
-    gradient: 'bg-gradient-to-br from-slate-600 to-slate-700',
-    image: crisisSupportWarm,
+    color: 'from-purple-300 to-purple-400',
+    gradient: 'bg-gradient-to-br from-purple-300 to-purple-400',
+    image: zenLavender,
     badge: 'Urgente',
     interactive: true
   },
@@ -122,13 +116,13 @@ const menuOptions: MenuOption[] = [
     icon: Headphones,
     path: '/recursos',
     category: 'principal',
-    color: 'from-cyan-500 to-blue-500',
-    gradient: 'bg-gradient-to-br from-cyan-500 to-blue-500',
-    image: audioColorful,
+    color: 'from-teal-300 to-teal-400',
+    gradient: 'bg-gradient-to-br from-teal-300 to-teal-400',
+    image: zenOcean,
     interactive: true
   },
 
-  // Wellness tools with lime and turquoise
+  // Wellness tools with zen colors
   {
     id: 'pausa-mindful',
     title: 'Pausa Mindful',
@@ -136,9 +130,9 @@ const menuOptions: MenuOption[] = [
     icon: Pause,
     path: '/pausa',
     category: 'bienestar',
-    color: 'from-teal-500 to-cyan-500',
-    gradient: 'bg-gradient-to-br from-teal-500 to-cyan-500',
-    image: breathingColorful,
+    color: 'from-stone-300 to-stone-400',
+    gradient: 'bg-gradient-to-br from-stone-300 to-stone-400',
+    image: zenMeditation,
     interactive: true
   },
   {
@@ -148,8 +142,8 @@ const menuOptions: MenuOption[] = [
     icon: Brain,
     path: '/detector-hambre',
     category: 'bienestar',
-    color: 'from-lime-500 to-green-500',
-    gradient: 'bg-gradient-to-br from-lime-500 to-green-500'
+    color: 'from-emerald-300 to-emerald-400',
+    gradient: 'bg-gradient-to-br from-emerald-300 to-emerald-400'
   },
   {
     id: 'check-in',
@@ -158,11 +152,11 @@ const menuOptions: MenuOption[] = [
     icon: CheckCircle,
     path: '/check-in',
     category: 'bienestar',
-    color: 'from-slate-500 to-slate-600',
-    gradient: 'bg-gradient-to-br from-slate-500 to-slate-600'
+    color: 'from-gray-300 to-gray-400',
+    gradient: 'bg-gradient-to-br from-gray-300 to-gray-400'
   },
 
-  // Community with coral and magenta
+  // Community with zen colors
   {
     id: 'comunidad',
     title: 'Comunidad',
@@ -170,9 +164,9 @@ const menuOptions: MenuOption[] = [
     icon: Users,
     path: '/comunidad',
     category: 'comunidad',
-    color: 'from-emerald-500 to-teal-500',
-    gradient: 'bg-gradient-to-br from-emerald-500 to-teal-500',
-    image: communitySupport
+    color: 'from-green-300 to-green-400',
+    gradient: 'bg-gradient-to-br from-green-300 to-green-400',
+    image: zenNature
   },
   {
     id: 'talleres',
@@ -181,8 +175,8 @@ const menuOptions: MenuOption[] = [
     icon: PenTool,
     path: '/talleres',
     category: 'comunidad',
-    color: 'from-pink-500 to-rose-500',
-    gradient: 'bg-gradient-to-br from-pink-500 to-rose-500'
+    color: 'from-lavender-300 to-lavender-400',
+    gradient: 'bg-gradient-to-br from-lavender-300 to-lavender-400'
   },
   {
     id: 'juegos-educativos',
@@ -191,13 +185,13 @@ const menuOptions: MenuOption[] = [
     icon: GamepadIcon,
     path: '/juegos',
     category: 'comunidad',
-    color: 'from-slate-600 to-slate-700',
-    gradient: 'bg-gradient-to-br from-slate-600 to-slate-700',
-    image: interactiveGames,
+    color: 'from-blue-300 to-blue-400',
+    gradient: 'bg-gradient-to-br from-blue-300 to-blue-400',
+    image: zenMeditation,
     interactive: true
   },
 
-  // Progress tracking with rainbow colors
+  // Progress tracking with zen colors
   {
     id: 'progreso',
     title: 'Mi Progreso',
@@ -205,9 +199,9 @@ const menuOptions: MenuOption[] = [
     icon: TrendingUp,
     path: '/progreso',
     category: 'seguimiento',
-    color: 'from-blue-500 to-purple-500',
-    gradient: 'bg-gradient-to-br from-blue-500 to-purple-500',
-    image: progressTracking
+    color: 'from-teal-300 to-teal-400',
+    gradient: 'bg-gradient-to-br from-teal-300 to-teal-400',
+    image: zenHero
   },
   {
     id: 'cuestionarios',
@@ -216,8 +210,8 @@ const menuOptions: MenuOption[] = [
     icon: HelpCircle,
     path: '/cuestionarios',
     category: 'seguimiento',
-    color: 'from-violet-500 to-purple-500',
-    gradient: 'bg-gradient-to-br from-violet-500 to-purple-500'
+    color: 'from-purple-300 to-purple-400',
+    gradient: 'bg-gradient-to-br from-purple-300 to-purple-400'
   }
 ];
 
@@ -258,23 +252,23 @@ export default function MainMenu() {
   const regularOptions = menuOptions.filter(option => !option.featured);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-slate-100 to-slate-200 pb-24 relative overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-stone-50 via-green-50 to-blue-50 pb-24 relative overflow-hidden">
       {/* Interactive Background Elements */}
       <div className="fixed inset-0 pointer-events-none">
         <div 
-          className="absolute w-96 h-96 bg-gradient-to-br from-slate-400/20 to-slate-500/20 rounded-full blur-3xl transition-transform duration-1000 ease-out"
+          className="absolute w-96 h-96 bg-gradient-to-br from-green-300/20 to-blue-300/20 rounded-full blur-3xl transition-transform duration-1000 ease-out"
           style={{
             transform: `translate(${mousePosition.x * 0.02}px, ${mousePosition.y * 0.02}px)`
           }}
         ></div>
         <div 
-          className="absolute top-1/3 right-0 w-80 h-80 bg-gradient-to-br from-cyan-400/20 to-blue-400/20 rounded-full blur-3xl transition-transform duration-700 ease-out"
+          className="absolute top-1/3 right-0 w-80 h-80 bg-gradient-to-br from-purple-300/20 to-teal-300/20 rounded-full blur-3xl transition-transform duration-700 ease-out"
           style={{
             transform: `translate(${mousePosition.x * -0.01}px, ${mousePosition.y * -0.01}px)`
           }}
         ></div>
         <div 
-          className="absolute bottom-0 left-1/4 w-64 h-64 bg-gradient-to-br from-lime-400/20 to-emerald-400/20 rounded-full blur-3xl transition-transform duration-500 ease-out"
+          className="absolute bottom-0 left-1/4 w-64 h-64 bg-gradient-to-br from-stone-300/20 to-green-300/20 rounded-full blur-3xl transition-transform duration-500 ease-out"
           style={{
             transform: `translate(${mousePosition.x * 0.015}px, ${mousePosition.y * 0.015}px)`
           }}
@@ -283,17 +277,17 @@ export default function MainMenu() {
 
       {/* Modern Header with Rainbow Accent */}
       <div className="relative overflow-hidden bg-white/80 backdrop-blur-md border-b border-slate-200">
-        <div className="absolute inset-0 bg-gradient-to-r from-slate-500/5 via-slate-400/5 to-slate-500/5"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-green-400/5 via-blue-300/5 to-purple-300/5"></div>
         <div className="container mx-auto px-4 py-6 relative">
           <div className="flex items-center justify-between">
             <div>
               <div className="flex items-center gap-2 mb-1">
-                <div className="w-2 h-2 bg-slate-500 rounded-full animate-pulse"></div>
-                <div className="w-2 h-2 bg-slate-600 rounded-full animate-pulse" style={{animationDelay: '0.2s'}}></div>
-                <div className="w-2 h-2 bg-slate-700 rounded-full animate-pulse" style={{animationDelay: '0.4s'}}></div>
+                <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse" style={{animationDelay: '0.2s'}}></div>
+                <div className="w-2 h-2 bg-purple-400 rounded-full animate-pulse" style={{animationDelay: '0.4s'}}></div>
               </div>
-              <h1 className="text-3xl font-bold bg-gradient-to-r from-slate-600 via-slate-700 to-slate-800 bg-clip-text text-transparent">
-                {greeting} ✨
+              <h1 className="text-3xl font-bold bg-gradient-to-r from-green-600 via-blue-600 to-purple-600 bg-clip-text text-transparent">
+                {greeting} 🌸
               </h1>
               <p className="text-slate-600 mt-1">¿En qué te puedo acompañar hoy?</p>
             </div>
@@ -306,36 +300,36 @@ export default function MainMenu() {
       <div className="relative overflow-hidden">
         <div className="absolute inset-0">
           <img 
-            src={interactiveBackground} 
-            alt="Interactive background" 
+            src={zenHero} 
+            alt="Zen peaceful background" 
             className="w-full h-full object-cover opacity-30"
           />
-          <div className="absolute inset-0 bg-gradient-to-br from-slate-500/20 via-transparent to-slate-600/20"></div>
+          <div className="absolute inset-0 bg-gradient-to-br from-green-400/20 via-transparent to-blue-400/20"></div>
         </div>
         <div className="relative container mx-auto px-4 py-16 text-center">
           <div className="max-w-3xl mx-auto">
             <div className="flex justify-center items-center gap-4 mb-6">
-              <Sun className="w-8 h-8 text-slate-500 animate-spin" style={{animationDuration: '8s'}} />
-              <h2 className="text-4xl md:text-5xl font-bold text-slate-800 leading-tight">
-                Tu espacio de <span className="bg-gradient-to-r from-slate-600 via-slate-700 to-slate-800 bg-clip-text text-transparent">cuidado personal</span>
+              <Sun className="w-8 h-8 text-green-500 animate-spin" style={{animationDuration: '8s'}} />
+              <h2 className="text-4xl md:text-5xl font-bold text-gray-800 leading-tight">
+                Tu espacio de <span className="bg-gradient-to-r from-green-600 via-blue-600 to-purple-600 bg-clip-text text-transparent">paz interior</span>
               </h2>
-              <Zap className="w-8 h-8 text-purple-500 animate-bounce" />
+              <Zap className="w-8 h-8 text-blue-500 animate-bounce" />
             </div>
-            <p className="text-xl text-slate-600 leading-relaxed mb-8">
-              Herramientas vibrantes y dinámicas diseñadas con amor para acompañarte en cada paso de tu proceso de recuperación y bienestar
+            <p className="text-xl text-gray-600 leading-relaxed mb-8">
+              Herramientas diseñadas con serenidad para acompañarte en un camino de calma, mindfulness y bienestar
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button 
                 onClick={() => handleNavigation('/apoyo')}
-                className="bg-gradient-to-r from-slate-500 via-slate-600 to-slate-700 hover:from-slate-600 hover:via-slate-700 hover:to-slate-800 text-white px-8 py-3 text-lg rounded-xl shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:scale-105"
+                className="bg-gradient-to-r from-green-400 via-blue-400 to-purple-400 hover:from-green-500 hover:via-blue-500 hover:to-purple-500 text-white px-8 py-3 text-lg rounded-xl shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:scale-105"
               >
                 <MessageSquare className="mr-2 h-5 w-5" />
-                Hablar ahora
+                Encontrar calma
               </Button>
               <Button 
                 variant="outline" 
                 onClick={() => handleNavigation('/diario-emocional')}
-                className="border-2 border-slate-300 hover:border-slate-400 text-slate-700 px-8 py-3 text-lg rounded-xl hover:bg-slate-50 transition-all duration-300 transform hover:scale-105"
+                className="border-2 border-green-300 hover:border-green-400 text-green-700 px-8 py-3 text-lg rounded-xl hover:bg-green-50 transition-all duration-300 transform hover:scale-105"
               >
                 <Heart className="mr-2 h-5 w-5" />
                 Registrar emociones
@@ -349,11 +343,11 @@ export default function MainMenu() {
         {/* Featured Tools with Interactive Elements */}
         <section>
           <div className="text-center mb-12">
-            <div className="inline-flex items-center gap-2 bg-gradient-to-r from-slate-100 via-slate-200 to-slate-100 px-4 py-2 rounded-full mb-4">
-              <Sparkles className="h-5 w-5 text-slate-600" />
-              <span className="text-slate-700 font-semibold">Herramientas Destacadas</span>
+            <div className="inline-flex items-center gap-2 bg-gradient-to-r from-green-100 via-blue-100 to-purple-100 px-4 py-2 rounded-full mb-4">
+              <Sparkles className="h-5 w-5 text-green-600" />
+              <span className="text-green-700 font-semibold">Herramientas de Paz</span>
             </div>
-            <h3 className="text-2xl font-bold text-slate-800">Tus aliados principales</h3>
+            <h3 className="text-2xl font-bold text-gray-800">Tus aliados para la serenidad</h3>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -409,10 +403,10 @@ export default function MainMenu() {
         {/* Regular Tools Grid with Rainbow Colors */}
         <section>
           <div className="text-center mb-12">
-            <h3 className="text-2xl font-bold bg-gradient-to-r from-slate-600 via-slate-700 to-slate-800 bg-clip-text text-transparent mb-2">
-              Todas las herramientas
+            <h3 className="text-2xl font-bold bg-gradient-to-r from-green-600 via-blue-600 to-purple-600 bg-clip-text text-transparent mb-2">
+              Todas las herramientas zen
             </h3>
-            <p className="text-slate-600">Descubre todo lo que tenemos para acompañarte</p>
+            <p className="text-gray-600">Descubre todo lo que tenemos para acompañarte hacia la calma</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -457,20 +451,20 @@ export default function MainMenu() {
                         </Badge>
                       )}
                     </div>
-                    <h4 className="text-lg font-bold text-slate-800 mb-2 group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:from-slate-600 group-hover:to-slate-800 group-hover:bg-clip-text transition-all duration-300">
+                    <h4 className="text-lg font-bold text-gray-800 mb-2 group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:from-green-600 group-hover:to-blue-600 group-hover:bg-clip-text transition-all duration-300">
                       {option.title}
                     </h4>
-                    <p className="text-slate-600 text-sm leading-relaxed mb-4">
+                    <p className="text-gray-600 text-sm leading-relaxed mb-4">
                       {option.description}
                     </p>
                     <div className="flex items-center justify-between">
-                      <span className="text-xs font-medium bg-gradient-to-r from-slate-500 to-slate-600 bg-clip-text text-transparent">
+                      <span className="text-xs font-medium bg-gradient-to-r from-green-500 to-blue-500 bg-clip-text text-transparent">
                         {option.category === 'principal' && 'Herramienta Principal'}
                         {option.category === 'bienestar' && 'Bienestar'}
                         {option.category === 'comunidad' && 'Comunidad'}
                         {option.category === 'seguimiento' && 'Seguimiento'}
                       </span>
-                      <ChevronRight className={`h-4 w-4 text-slate-400 group-hover:text-slate-600 transition-all duration-500 ${isHovered ? 'translate-x-2 scale-125' : ''}`} />
+                      <ChevronRight className={`h-4 w-4 text-gray-400 group-hover:text-green-600 transition-all duration-500 ${isHovered ? 'translate-x-2 scale-125' : ''}`} />
                     </div>
                   </CardContent>
                 </Card>
@@ -481,22 +475,22 @@ export default function MainMenu() {
 
         {/* Rainbow Call to Action */}
         <section className="text-center">
-          <Card className="max-w-4xl mx-auto bg-gradient-to-br from-slate-50 via-slate-100 to-slate-200 border-slate-200 overflow-hidden relative">
-            <div className="absolute inset-0 bg-gradient-to-r from-slate-500/10 via-slate-400/10 to-slate-500/10"></div>
+          <Card className="max-w-4xl mx-auto bg-gradient-to-br from-green-50 via-blue-50 to-purple-50 border-green-200 overflow-hidden relative">
+            <div className="absolute inset-0 bg-gradient-to-r from-green-400/10 via-blue-400/10 to-purple-400/10"></div>
             <CardContent className="p-12 relative z-10">
               <div className="flex flex-col md:flex-row items-center gap-8">
                 <div className="flex-1 text-left">
-                  <h3 className="text-3xl font-bold text-slate-800 mb-4">
+                  <h3 className="text-3xl font-bold text-gray-800 mb-4">
                     ¿Primera vez aquí?
                   </h3>
-                  <p className="text-slate-600 text-lg leading-relaxed mb-6">
+                  <p className="text-gray-600 text-lg leading-relaxed mb-6">
                     Te recomendamos empezar hablando con tu Acompañante IA. Está entrenado específicamente 
-                    para ayudarte a navegar por todas las herramientas según tus necesidades del momento.
+                    para ayudarte a encontrar la calma y navegar por todas las herramientas según tus necesidades del momento.
                   </p>
                   <div className="flex flex-col sm:flex-row gap-4">
                     <Button 
                       onClick={() => handleNavigation('/apoyo')}
-                      className="bg-gradient-to-r from-slate-500 via-slate-600 to-slate-700 hover:from-slate-600 hover:via-slate-700 hover:to-slate-800 text-white px-6 py-3 rounded-xl transform hover:scale-105 transition-all duration-300"
+                      className="bg-gradient-to-r from-green-400 via-blue-400 to-purple-400 hover:from-green-500 hover:via-blue-500 hover:to-purple-500 text-white px-6 py-3 rounded-xl transform hover:scale-105 transition-all duration-300"
                     >
                       <MessageSquare className="mr-2 h-5 w-5" />
                       Empezar conversación
@@ -504,14 +498,14 @@ export default function MainMenu() {
                     <Button 
                       variant="outline" 
                       onClick={() => handleNavigation('/recursos')}
-                      className="border-slate-200 text-slate-700 hover:bg-slate-50 px-6 py-3 rounded-xl transform hover:scale-105 transition-all duration-300"
+                      className="border-green-200 text-green-700 hover:bg-green-50 px-6 py-3 rounded-xl transform hover:scale-105 transition-all duration-300"
                     >
                       <Play className="mr-2 h-4 w-4" />
-                      Ver recursos
+                      Ver recursos zen
                     </Button>
                   </div>
                 </div>
-                <div className="w-32 h-32 bg-gradient-to-br from-slate-400 via-slate-500 to-slate-600 rounded-full flex items-center justify-center shadow-2xl animate-pulse">
+                <div className="w-32 h-32 bg-gradient-to-br from-green-400 via-blue-400 to-purple-400 rounded-full flex items-center justify-center shadow-2xl animate-pulse">
                   <Heart className="w-16 h-16 text-white" />
                 </div>
               </div>

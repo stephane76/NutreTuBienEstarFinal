@@ -12,90 +12,90 @@ Todas las variables HSL para máxima flexibilidad
 
 @layer base {
   :root {
-    /* Vibrant modern color palette with orange accents */
-    --background: 248 250 252; /* slate-50 */
-    --foreground: 15 23 42; /* slate-800 */
-    --card: 255 255 255; /* white */
-    --card-foreground: 15 23 42;
+    /* Zen & Calm color palette - soft, peaceful tones */
+    --background: 249 250 251; /* warm white */
+    --foreground: 55 65 81; /* soft dark gray */
+    --card: 255 255 255; /* pure white */
+    --card-foreground: 55 65 81;
     --popover: 255 255 255;
-    --popover-foreground: 15 23 42;
+    --popover-foreground: 55 65 81;
     
-    /* Primary colors - violet/purple */
-    --primary: 139 92 246; /* violet-500 */
-    --primary-light: 168 85 247; /* violet-400 */
-    --primary-glow: 196 181 253; /* violet-300 */
+    /* Primary colors - sage green for tranquility */
+    --primary: 110 161 133; /* sage green */
+    --primary-light: 134 173 150; /* lighter sage */
+    --primary-glow: 167 199 179; /* very light sage */
     --primary-foreground: 255 255 255;
     
-    /* Orange accent colors */
-    --orange: 249 115 22; /* orange-500 */
-    --orange-light: 251 146 60; /* orange-400 */
-    --orange-glow: 253 186 116; /* orange-300 */
-    --orange-foreground: 255 255 255;
+    /* Soft blue accent for serenity */
+    --blue-zen: 147 197 209; /* soft blue */
+    --blue-light: 171 209 220; /* lighter blue */
+    --blue-glow: 195 221 231; /* very light blue */
+    --blue-foreground: 255 255 255;
     
-    /* Additional vibrant colors */
-    --coral: 255 127 80; /* coral */
-    --coral-light: 255 160 122; /* light coral */
-    --turquoise: 6 182 212; /* cyan-500 */
-    --turquoise-light: 34 197 94; /* emerald-500 */
-    --lime: 163 230 53; /* lime-400 */
-    --magenta: 236 72 153; /* pink-500 */
+    /* Additional peaceful colors */
+    --lavender: 196 181 253; /* soft lavender */
+    --lavender-light: 221 214 254; /* lighter lavender */
+    --beige: 245 235 220; /* warm beige */
+    --beige-light: 250 246 237; /* lighter beige */
+    --stone: 168 162 158; /* warm stone */
+    --stone-light: 196 190 186; /* lighter stone */
     
-    /* Contemporary accent colors */
-    --secondary: 241 245 249; /* slate-100 */
-    --secondary-dark: 226 232 240; /* slate-200 */
-    --secondary-foreground: 51 65 85; /* slate-600 */
+    /* Contemporary calm accent colors */
+    --secondary: 243 244 246; /* gray-100 */
+    --secondary-dark: 229 231 235; /* gray-200 */
+    --secondary-foreground: 75 85 99; /* gray-600 */
     
-    --tertiary: 251 207 232; /* pink-200 */
-    --tertiary-foreground: 15 23 42;
+    --tertiary: 250 246 237; /* warm off-white */
+    --tertiary-foreground: 55 65 81;
     
     /* Updated utilities */
-    --muted: 248 250 252; /* slate-50 */
-    --muted-foreground: 100 116 139; /* slate-500 */
-    --accent: 168 85 247; /* violet-400 */
+    --muted: 249 250 251; /* warm white */
+    --muted-foreground: 107 114 128; /* gray-500 */
+    --accent: 134 173 150; /* light sage */
     --accent-foreground: 255 255 255;
     
-    /* Status colors - modernized */
-    --destructive: 239 68 68; /* red-500 */
+    /* Status colors - soft and calming */
+    --destructive: 185 124 124; /* soft red */
     --destructive-foreground: 255 255 255;
-    --success: 34 197 94; /* green-500 */
+    --success: 134 173 150; /* sage green */
     --success-foreground: 255 255 255;
-    --warning: 71 85 105; /* slate-600 */
-    --warning-foreground: 255 255 255;
+    --warning: 196 190 186; /* warm stone */
+    --warning-foreground: 55 65 81;
     
-    /* Crisis - updated with neutral/calming colors instead of orange */
-    --crisis: 71 85 105; /* slate-500 for neutral urgency */ 
+    /* Crisis - calming purple for gentle urgency */
+    --crisis: 147 147 189; /* soft purple */ 
     --crisis-foreground: 255 255 255;
     
-    /* Vibrant color palette extensions - neutralized */
-    --serenity: 219 234 254; /* blue-100 */
-    --warmth: 226 232 240; /* slate-200 - neutral instead of orange */
-    --growth: 187 247 208; /* green-200 */
-    --energy: 241 245 249; /* slate-100 - neutral instead of yellow */
+    /* Zen color palette extensions */
+    --serenity: 234 244 255; /* very light blue */
+    --warmth: 250 246 237; /* warm beige */
+    --growth: 240 253 244; /* very light green */
+    --energy: 254 252 232; /* very light yellow */
     
     /* Borders and inputs */
-    --border: 226 232 240; /* slate-200 */
-    --input: 241 245 249; /* slate-100 */
-    --ring: 139 92 246; /* violet-500 */
+    --border: 229 231 235; /* gray-200 */
+    --input: 243 244 246; /* gray-100 */
+    --ring: 110 161 133; /* sage green */
     
-    /* Vibrant gradients with orange */
-    --gradient-primary: linear-gradient(135deg, hsl(139 92% 66%), hsl(168 85% 74%));
-    --gradient-orange: linear-gradient(135deg, hsl(249 115% 50%), hsl(251 146% 60%));
-    --gradient-coral: linear-gradient(135deg, hsl(255 127% 60%), hsl(255 160% 70%));
-    --gradient-turquoise: linear-gradient(135deg, hsl(6 182% 60%), hsl(34 197% 55%));
-    --gradient-lime: linear-gradient(135deg, hsl(163 230% 50%), hsl(34 197% 55%));
-    --gradient-magenta: linear-gradient(135deg, hsl(236 72% 60%), hsl(251 207% 75%));
-    --gradient-warm: linear-gradient(135deg, hsl(251 207% 85%), hsl(254 215% 80%));
-    --gradient-serene: linear-gradient(135deg, hsl(219 234% 90%), hsl(187 247% 85%));
-    --gradient-card: linear-gradient(145deg, hsl(255 255% 100% / 0.9), hsl(248 250% 98% / 0.8));
-    --gradient-rainbow: linear-gradient(135deg, hsl(249 115% 50%), hsl(236 72% 60%), hsl(139 92% 66%), hsl(6 182% 60%));
+    /* Zen gradients - soft, calming transitions */
+    --gradient-primary: linear-gradient(135deg, hsl(110 30% 52%), hsl(134 30% 59%));
+    --gradient-sage: linear-gradient(135deg, hsl(110 30% 52%), hsl(167 20% 60%));
+    --gradient-lavender: linear-gradient(135deg, hsl(196 69% 76%), hsl(221 87% 85%));
+    --gradient-serenity: linear-gradient(135deg, hsl(147 35% 65%), hsl(171 35% 70%));
+    --gradient-calm: linear-gradient(135deg, hsl(250 15% 85%), hsl(245 15% 92%));
+    --gradient-warm: linear-gradient(135deg, hsl(245 20% 85%), hsl(250 25% 95%));
+    --gradient-soft: linear-gradient(135deg, hsl(196 20% 75%), hsl(110 20% 70%));
+    --gradient-zen: linear-gradient(135deg, hsl(234 50% 95%), hsl(240 47% 85%));
+    --gradient-card: linear-gradient(145deg, hsl(255 255% 100% / 0.95), hsl(249 250% 99% / 0.9));
+    --gradient-nature: linear-gradient(135deg, hsl(110 30% 52%), hsl(147 35% 65%), hsl(196 69% 76%));
     
-    /* Interactive shadows with colors */
-    --shadow-soft: 0 4px 6px -1px hsl(0 0% 0% / 0.1), 0 2px 4px -2px hsl(0 0% 0% / 0.1);
-    --shadow-medium: 0 10px 15px -3px hsl(0 0% 0% / 0.1), 0 4px 6px -4px hsl(0 0% 0% / 0.1);
-    --shadow-strong: 0 20px 25px -5px hsl(0 0% 0% / 0.1), 0 8px 10px -6px hsl(0 0% 0% / 0.1);
-    --shadow-glow: 0 0 30px hsl(var(--primary) / 0.3);
-    --shadow-orange-glow: 0 0 30px hsl(var(--orange) / 0.4);
-    --shadow-rainbow: 0 8px 32px hsl(249 115% 50% / 0.2), 0 0 0 1px hsl(249 115% 50% / 0.05);
+    /* Soft shadows for zen aesthetic */
+    --shadow-soft: 0 2px 8px -1px hsl(0 0% 0% / 0.06), 0 1px 3px -1px hsl(0 0% 0% / 0.08);
+    --shadow-medium: 0 4px 12px -2px hsl(0 0% 0% / 0.08), 0 2px 6px -2px hsl(0 0% 0% / 0.1);
+    --shadow-strong: 0 8px 20px -3px hsl(0 0% 0% / 0.1), 0 4px 8px -4px hsl(0 0% 0% / 0.12);
+    --shadow-glow: 0 0 20px hsl(var(--primary) / 0.2);
+    --shadow-zen-glow: 0 0 25px hsl(110 30% 52% / 0.3);
+    --shadow-nature: 0 6px 24px hsl(110 30% 52% / 0.15), 0 0 0 1px hsl(110 30% 52% / 0.05);
 
     --radius: 0.75rem;
     
