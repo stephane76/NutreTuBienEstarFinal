@@ -82,6 +82,14 @@ const recursos = [
     descripcion: 'Sesiones profesionales de hipnosis para transformar tu relación con la comida',
     icono: BrainIcon,
     color: 'bg-purple-50 text-purple-600'
+  },
+  {
+    id: 'juegos-educativos',
+    categoria: 'Crecimiento Personal',
+    titulo: 'Juegos Educativos para Fortalecer tu Autocuidado',
+    descripcion: 'Dinámicas interactivas para el autodescubrimiento en un espacio seguro de reflexión',
+    icono: SparklesIcon,
+    color: 'bg-teal-50 text-teal-600'
   }
 ];
 
@@ -106,6 +114,8 @@ export default function Recursos() {
         return <SpotifyIntegration />;
       case 'hipnosis':
         return <ProgramaHipnosis />;
+      case 'juegos-educativos':
+        return <JuegosEducativos />;
       default:
         return null;
     }
