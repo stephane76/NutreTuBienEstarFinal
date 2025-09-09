@@ -12,69 +12,69 @@ Todas las variables HSL para máxima flexibilidad
 
 @layer base {
   :root {
-    /* Colores primarios - Verde sereno y beiges cálidos */
-    --background: 48 43% 98%; /* Beige muy claro #FDFBF7 */
-    --foreground: 140 25% 20%; /* Verde oscuro elegante */
-    --card: 0 0% 100%; /* Blanco puro para tarjetas */
-    --card-foreground: 140 25% 20%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 140 25% 20%;
+    /* Modern color palette - Updated for contemporary design */
+    --background: 248 250 252; /* slate-50 */
+    --foreground: 15 23 42; /* slate-800 */
+    --card: 255 255 255; /* white */
+    --card-foreground: 15 23 42;
+    --popover: 255 255 255;
+    --popover-foreground: 15 23 42;
     
-    /* Verde principal más sofisticado */
-    --primary: 145 35% 28%; /* Verde profundo #2D5F3F */
-    --primary-light: 145 35% 45%; /* Verde medio #4A8F66 */
-    --primary-glow: 145 35% 65%; /* Verde claro luminoso */
-    --primary-foreground: 48 43% 98%;
+    /* Modern purple-based primary colors */
+    --primary: 139 92 246; /* violet-500 */
+    --primary-light: 168 85 247; /* violet-400 */
+    --primary-glow: 196 181 253; /* violet-300 */
+    --primary-foreground: 255 255 255;
     
-    /* Acentos cálidos */
-    --secondary: 35 45% 82%; /* Beige dorado #F0E4C7 */
-    --secondary-dark: 35 45% 75%; /* Beige más oscuro */
-    --secondary-foreground: 140 25% 20%;
+    /* Contemporary accent colors */
+    --secondary: 241 245 249; /* slate-100 */
+    --secondary-dark: 226 232 240; /* slate-200 */
+    --secondary-foreground: 51 65 85; /* slate-600 */
     
-    --tertiary: 25 65% 85%; /* Melocotón suave #F4D7C5 */
-    --tertiary-foreground: 140 25% 20%;
+    --tertiary: 251 207 232; /* pink-200 */
+    --tertiary-foreground: 15 23 42;
     
-    /* Utilidades */
-    --muted: 48 25% 94%; /* Beige muy sutil */
-    --muted-foreground: 140 15% 50%;
-    --accent: 145 25% 88%; /* Verde muy claro */
-    --accent-foreground: 140 25% 20%;
+    /* Updated utilities */
+    --muted: 248 250 252; /* slate-50 */
+    --muted-foreground: 100 116 139; /* slate-500 */
+    --accent: 168 85 247; /* violet-400 */
+    --accent-foreground: 255 255 255;
     
-    /* Estados especiales */
-    --destructive: 0 65% 55%; /* Rojo suave pero visible */
-    --destructive-foreground: 0 0% 100%;
-    --success: 145 50% 45%; /* Verde éxito */
-    --success-foreground: 0 0% 100%;
-    --warning: 35 85% 60%; /* Amarillo cálido */
-    --warning-foreground: 140 25% 20%;
+    /* Status colors - modernized */
+    --destructive: 239 68 68; /* red-500 */
+    --destructive-foreground: 255 255 255;
+    --success: 34 197 94; /* green-500 */
+    --success-foreground: 255 255 255;
+    --warning: 245 158 11; /* amber-500 */
+    --warning-foreground: 255 255 255;
     
-    /* Crisis - Rojo más suave pero urgente */
-    --crisis: 0 70% 60%; 
-    --crisis-foreground: 0 0% 100%;
+    /* Crisis - updated */
+    --crisis: 244 63 94; /* pink-500 */ 
+    --crisis-foreground: 255 255 255;
     
-    /* Colores especiales para bienestar */
-    --serenity: 200 25% 85%; /* Azul sereno */
-    --warmth: 25 65% 88%; /* Naranja cálido */
-    --growth: 145 30% 85%; /* Verde crecimiento */
+    /* Modern color palette extensions */
+    --serenity: 219 234 254; /* blue-100 */
+    --warmth: 254 215 170; /* orange-200 */
+    --growth: 187 247 208; /* green-200 */
     
-    /* Bordes y inputs mejorados */
-    --border: 48 25% 88%; /* Más sutil */
-    --input: 48 25% 92%;
-    --ring: 145 35% 28%; /* Mismo que primary */
+    /* Borders and inputs */
+    --border: 226 232 240; /* slate-200 */
+    --input: 241 245 249; /* slate-100 */
+    --ring: 139 92 246; /* violet-500 */
     
-    /* Gradientes y efectos */
-    --gradient-primary: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary-light)));
-    --gradient-warm: linear-gradient(135deg, hsl(var(--tertiary)), hsl(var(--secondary)));
-    --gradient-serene: linear-gradient(135deg, hsl(var(--serenity)), hsl(var(--accent)));
-    --gradient-card: linear-gradient(145deg, hsl(0 0% 100% / 0.9), hsl(48 43% 98% / 0.8));
+    /* Modern gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(139 92% 66%), hsl(168 85% 74%));
+    --gradient-warm: linear-gradient(135deg, hsl(251 207% 85%), hsl(254 215% 80%));
+    --gradient-serene: linear-gradient(135deg, hsl(219 234% 90%), hsl(187 247% 85%));
+    --gradient-card: linear-gradient(145deg, hsl(255 255% 100% / 0.9), hsl(248 250% 98% / 0.8));
     
-    /* Sombras elegantes */
-    --shadow-soft: 0 4px 20px hsl(140 25% 20% / 0.06);
-    --shadow-medium: 0 8px 30px hsl(140 25% 20% / 0.08);
-    --shadow-strong: 0 15px 40px hsl(140 25% 20% / 0.12);
-    --shadow-glow: 0 0 30px hsl(var(--primary-glow) / 0.3);
-    
-    --radius: 1.2rem;
+    /* Modern shadows */
+    --shadow-soft: 0 4px 6px -1px hsl(0 0% 0% / 0.1), 0 2px 4px -2px hsl(0 0% 0% / 0.1);
+    --shadow-medium: 0 10px 15px -3px hsl(0 0% 0% / 0.1), 0 4px 6px -4px hsl(0 0% 0% / 0.1);
+    --shadow-strong: 0 20px 25px -5px hsl(0 0% 0% / 0.1), 0 8px 10px -6px hsl(0 0% 0% / 0.1);
+    --shadow-glow: 0 0 30px hsl(var(--primary) / 0.3);
+
+    --radius: 0.75rem;
     
     /* Sidebar */
     --sidebar-background: 0 0% 99%;
@@ -88,59 +88,59 @@ Todas las variables HSL para máxima flexibilidad
   }
 
   .dark {
-    /* Modo oscuro elegante y cálido */
-    --background: 140 25% 6%; /* Verde muy oscuro */
-    --foreground: 48 43% 95%;
-    --card: 140 20% 8%; /* Tarjetas oscuras con tinte verde */
-    --card-foreground: 48 43% 95%;
-    --popover: 140 20% 8%;
-    --popover-foreground: 48 43% 95%;
+    /* Dark mode - modern purple theme */
+    --background: 15 23 42; /* slate-800 */
+    --foreground: 248 250 252; /* slate-50 */
+    --card: 30 41 59; /* slate-700 */
+    --card-foreground: 248 250 252;
+    --popover: 30 41 59;
+    --popover-foreground: 248 250 252;
     
-    --primary: 145 40% 65%; /* Verde claro para contraste */
-    --primary-light: 145 40% 75%;
-    --primary-glow: 145 40% 85%;
-    --primary-foreground: 140 25% 6%;
+    --primary: 168 85 247; /* violet-400 */
+    --primary-light: 196 181 253; /* violet-300 */
+    --primary-glow: 221 214 254; /* violet-200 */
+    --primary-foreground: 15 23 42;
     
-    --secondary: 35 30% 25%; /* Beige oscuro */
-    --secondary-dark: 35 30% 20%;
-    --secondary-foreground: 48 43% 95%;
+    --secondary: 51 65 85; /* slate-600 */
+    --secondary-dark: 30 41 59; /* slate-700 */
+    --secondary-foreground: 248 250 252;
     
-    --tertiary: 25 35% 20%; /* Melocotón oscuro */
-    --tertiary-foreground: 48 43% 95%;
+    --tertiary: 190 24 93; /* rose-800 */
+    --tertiary-foreground: 248 250 252;
     
-    --muted: 140 15% 12%;
-    --muted-foreground: 48 25% 70%;
-    --accent: 140 15% 15%;
-    --accent-foreground: 48 43% 95%;
+    --muted: 51 65 85; /* slate-600 */
+    --muted-foreground: 148 163 184; /* slate-400 */
+    --accent: 139 92 246; /* violet-500 */
+    --accent-foreground: 248 250 252;
     
-    --destructive: 0 65% 60%;
-    --destructive-foreground: 0 0% 100%;
-    --success: 145 50% 55%;
-    --success-foreground: 0 0% 100%;
-    --warning: 35 85% 65%;
-    --warning-foreground: 140 25% 6%;
+    --destructive: 220 38 38; /* red-700 */
+    --destructive-foreground: 248 250 252;
+    --success: 21 128 61; /* green-700 */
+    --success-foreground: 248 250 252;
+    --warning: 180 83 9; /* amber-700 */
+    --warning-foreground: 248 250 252;
     
-    --crisis: 0 70% 65%;
-    --crisis-foreground: 0 0% 100%;
+    --crisis: 190 18 60; /* pink-900 */
+    --crisis-foreground: 248 250 252;
     
-    --serenity: 200 20% 25%;
-    --warmth: 25 35% 25%;
-    --growth: 145 25% 25%;
+    --serenity: 30 58 138; /* blue-800 */
+    --warmth: 154 52 18; /* orange-800 */
+    --growth: 20 83 45; /* green-800 */
     
-    --border: 140 15% 18%;
-    --input: 140 15% 15%;
-    --ring: 145 40% 65%;
+    --border: 51 65 85; /* slate-600 */
+    --input: 30 41 59; /* slate-700 */
+    --ring: 168 85 247; /* violet-400 */
     
-    /* Gradientes oscuros */
-    --gradient-primary: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary-light)));
-    --gradient-warm: linear-gradient(135deg, hsl(var(--tertiary)), hsl(var(--secondary)));
-    --gradient-serene: linear-gradient(135deg, hsl(var(--serenity)), hsl(var(--accent)));
-    --gradient-card: linear-gradient(145deg, hsl(140 20% 8% / 0.9), hsl(140 15% 10% / 0.8));
+    /* Modern dark gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(168 85% 74%), hsl(196 181% 76%));
+    --gradient-warm: linear-gradient(135deg, hsl(190 24% 40%), hsl(51 65% 40%));
+    --gradient-serene: linear-gradient(135deg, hsl(30 58% 50%), hsl(51 65% 45%));
+    --gradient-card: linear-gradient(145deg, hsl(30 41% 20% / 0.9), hsl(51 65% 25% / 0.8));
     
-    /* Sombras para modo oscuro */
-    --shadow-soft: 0 4px 20px hsl(0 0% 0% / 0.3);
-    --shadow-medium: 0 8px 30px hsl(0 0% 0% / 0.4);
-    --shadow-strong: 0 15px 40px hsl(0 0% 0% / 0.5);
+    /* Dark mode shadows */
+    --shadow-soft: 0 4px 6px -1px hsl(0 0% 0% / 0.3), 0 2px 4px -2px hsl(0 0% 0% / 0.3);
+    --shadow-medium: 0 10px 15px -3px hsl(0 0% 0% / 0.4), 0 4px 6px -4px hsl(0 0% 0% / 0.4);
+    --shadow-strong: 0 20px 25px -5px hsl(0 0% 0% / 0.5), 0 8px 10px -6px hsl(0 0% 0% / 0.5);
     --shadow-glow: 0 0 30px hsl(var(--primary) / 0.4);
     
     --sidebar-background: 140 25% 4%;
