@@ -10,6 +10,7 @@ import { RetosAutocuidado } from '@/components/RetosAutocuidado';
 import { SpotifyIntegration } from '@/components/SpotifyIntegration';
 import { ProgramaHipnosis } from '@/components/ProgramaHipnosis';
 import { MandalasParaColorear } from '@/components/MandalasParaColorear';
+import { JuegosEducativos } from '@/components/JuegosEducativos';
 
 // Import icons separately to avoid conflicts
 import { 
@@ -24,7 +25,7 @@ import {
   Brain as BrainIcon 
 } from 'lucide-react';
 
-type SeccionRecurso = 'menu' | 'meditaciones' | 'escritura' | 'respuestas' | 'retos' | 'mandalas' | 'musica' | 'hipnosis';
+type SeccionRecurso = 'menu' | 'meditaciones' | 'escritura' | 'respuestas' | 'retos' | 'mandalas' | 'musica' | 'hipnosis' | 'juegos-educativos';
 
 const recursos = [
   {
