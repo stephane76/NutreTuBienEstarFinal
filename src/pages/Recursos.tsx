@@ -7,6 +7,7 @@ import { MeditacionesGuiadas } from '@/components/MeditacionesGuiadas';
 import { EscrituraTerapeutica } from '@/components/EscrituraTerapeutica';
 import { RespuestasConscientes } from '@/components/RespuestasConscientes';
 import { RetosAutocuidado } from '@/components/RetosAutocuidado';
+import { SpotifyIntegration } from '@/components/SpotifyIntegration';
 
 type SeccionRecurso = 'menu' | 'meditaciones' | 'escritura' | 'respuestas' | 'retos' | 'mandalas' | 'musica';
 
@@ -79,7 +80,7 @@ export default function Recursos() {
       case 'mandalas':
         return <MandalasParaColorear />;
       case 'musica':
-        return <PlaylistsBienestar />;
+        return <SpotifyIntegration />;
       default:
         return null;
     }
@@ -172,34 +173,6 @@ const MandalasParaColorear: React.FC = () => (
         <p className="text-muted-foreground">
           Esta sección estará disponible muy pronto con una colección de mandalas terapéuticos.
         </p>
-      </CardContent>
-    </Card>
-  </div>
-);
-
-// Componente placeholder para Playlists
-const PlaylistsBienestar: React.FC = () => (
-  <div className="text-center space-y-6">
-    <div className="space-y-2">
-      <h2 className="text-2xl font-bold text-foreground flex items-center justify-center gap-2">
-        <Music className="text-indigo-500" size={24} />
-        Playlists de Bienestar
-      </h2>
-      <p className="text-muted-foreground">
-        Música curativa para acompañar tu proceso de sanación
-      </p>
-    </div>
-    
-    <Card className="max-w-md mx-auto">
-      <CardContent className="p-8 text-center">
-        <Music className="mx-auto mb-4 text-indigo-500" size={48} />
-        <h3 className="text-lg font-semibold mb-2">Integración con Spotify</h3>
-        <p className="text-muted-foreground mb-4">
-          Conectaremos con Spotify para ofrecerte playlists personalizadas según tu estado emocional.
-        </p>
-        <Button variant="outline" disabled>
-          Conectar con Spotify
-        </Button>
       </CardContent>
     </Card>
   </div>
