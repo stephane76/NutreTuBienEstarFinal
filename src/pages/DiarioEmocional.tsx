@@ -10,6 +10,135 @@ import { useEmotionalAnalysis } from '@/hooks/useEmotionalAnalysis';
 import { ContextualRecommendations } from '@/components/ContextualRecommendations';
 import { ImageUpload } from '@/components/ImageUpload';
 
+const motivationalPhrases = [
+  // Self-compassion & Acceptance
+  "Tu valor no depende de lo que comes, sino de quien eres",
+  "Eres digno de amor y cuidado, especialmente de ti mismo",
+  "Cada día es una nueva oportunidad para tratarte con bondad",
+  "Tu cuerpo es tu hogar, trátalo con respeto y cariño",
+  "No eres tus pensamientos, eres el observador de tus pensamientos",
+  "Permítete sentir sin juzgar, todas las emociones son válidas",
+  "La sanación no es lineal, sé paciente contigo mismo",
+  "Tu progreso importa, sin importar cuán pequeño parezca",
+  "Mereces ocupar espacio en este mundo",
+  "La autocompasión es el primer paso hacia la transformación",
+  
+  // Strength & Resilience  
+  "Has superado días difíciles antes, puedes hacerlo de nuevo",
+  "Tu fuerza interior es más poderosa de lo que imaginas",
+  "Cada respiración consciente es un acto de valentía",
+  "No tienes que ser perfecto para ser suficiente",
+  "Tu capacidad de sanar está dentro de ti",
+  "Eres más fuerte que tus miedos",
+  "Cada pequeño paso cuenta en tu camino de bienestar",
+  "Tu resiliencia te ha traído hasta aquí",
+  "Confía en tu proceso, aunque no veas el final del camino",
+  "Tu historia de superación está escribiéndose ahora",
+  
+  // Mindful Eating & Body Wisdom
+  "Tu cuerpo sabe lo que necesita, aprende a escucharlo",
+  "Comer con conciencia es un acto de amor propio",
+  "No hay alimentos buenos o malos, solo decisiones conscientes",
+  "Tu hambre física es una señal sabia de tu cuerpo",
+  "Come cuando tengas hambre, para cuando te sientas satisfecho",
+  "La comida es nutrición para tu cuerpo y placer para tu alma",
+  "Cada bocado consciente es una práctica de presencia",
+  "Tu cuerpo merece ser alimentado, no castigado",
+  "La verdadera nutrición incluye alimentar tu alma",
+  "Honra las señales de tu cuerpo sin juicio",
+  
+  // Emotional Growth
+  "Tus emociones son mensajeras, no enemigas",
+  "Sentir profundamente es un regalo, no una carga",
+  "La vulnerabilidad es la cuna de la valentía",
+  "Cada lágrima te acerca más a tu auténtico ser",
+  "No tienes que cargar solo con tus emociones",
+  "Tu sensibilidad es una fortaleza, no una debilidad",
+  "Está bien no estar bien todo el tiempo",
+  "Tu corazón sabe cómo sanar, dale tiempo",
+  "Cada emoción tiene algo que enseñarte",
+  "Eres capaz de sostener tu propia ternura",
+  
+  // Inner Peace & Mindfulness
+  "En este momento, todo lo que necesitas está dentro de ti",
+  "La paz no está en la perfección, sino en la aceptación",
+  "Respira. Este momento es todo lo que tienes",
+  "Tu presencia es el regalo más valioso que puedes darte",
+  "La calma vive en tu respiración",
+  "Cada momento consciente es una victoria",
+  "El silencio interior contiene todas las respuestas",
+  "Tu mente puede ser tu refugio de paz",
+  "La atención plena transforma lo ordinario en sagrado",
+  "En la quietud encuentras tu verdadero poder",
+  
+  // Growth & Healing
+  "Crecer duele, pero estancarse duele más",
+  "Tu sanación beneficia a todos los que te rodean",
+  "No tienes que ser quien eras ayer",
+  "Cada día puedes elegir comenzar de nuevo",
+  "El cambio verdadero nace del amor, no del miedo",
+  "Tu herida puede convertirse en tu sabiduría",
+  "Sanar no significa olvidar, significa integrar",
+  "Eres tanto la tormenta como la calma que viene después",
+  "Tu crecimiento no tiene límites",
+  "La transformación es tu derecho de nacimiento",
+  
+  // Hope & Future
+  "Tu futuro yo te agradecerá el cuidado que te das hoy",
+  "Cada amanecer trae nuevas posibilidades",
+  "Siembras esperanza cada vez que eliges el amor sobre el miedo",
+  "Tu historia está llena de capítulos hermosos por escribir",
+  "El mejor momento para plantar un árbol fue hace 20 años, el segundo mejor momento es ahora",
+  "Tu luz brilla más fuerte después de la oscuridad",
+  "Confía en el proceso, incluso cuando no entiendas el plan",
+  "Mañana será diferente, y tú tienes el poder de influir en cómo",
+  "Tu esperanza es más fuerte que cualquier miedo",
+  "El universo conspira a favor de tu bienestar",
+  
+  // Self-Love & Worth
+  "Te amas cuando te das lo que necesitas, no lo que quieres",
+  "Tu amor propio no es negociable",
+  "Eres suficiente, exactamente como eres ahora",
+  "No necesitas ganarte tu propio amor",
+  "Tu relación más importante es contigo mismo",
+  "Mírate con los mismos ojos con que miras a quien más amas",
+  "Tu corazón merece la gentileza que das a otros",
+  "Eres tanto el jardín como el jardinero de tu vida",
+  "Tu presencia en este mundo hace la diferencia",
+  "Te mereces toda la felicidad que puedas crear",
+  
+  // Connection & Support
+  "No estás solo en este camino, hay manos tendidas hacia ti",
+  "Pedir ayuda es un acto de valentía, no de debilidad",
+  "Tu vulnerabilidad crea puentes hacia otros corazones",
+  "Compartir tu carga la hace más ligera",
+  "Hay personas que entienden tu lucha sin palabras",
+  "Tu historia puede ser el bálsamo que alguien más necesita",
+  "En comunidad somos más fuertes",
+  "Tu sanación inspira la sanación de otros",
+  "No tienes que fingir que estás bien para ser amado",
+  "Existe un lugar en este mundo donde encajas perfectamente",
+  
+  // Progress & Celebration
+  "Celebra cada pequeña victoria, todas cuentan",
+  "El progreso no siempre es visible, pero siempre es real",
+  "Has llegado más lejos de lo que creías posible",
+  "Cada 'no' que te das es un 'sí' a tu bienestar",
+  "Tu esfuerzo de hoy es la base de tu libertad de mañana",
+  "No subestimes el poder de los cambios pequeños y constantes",
+  "Cada vez que eliges el cuidado sobre la crítica, creces",
+  "Tu determinación es más fuerte que cualquier obstáculo",
+  "Mírate con orgullo: has elegido sanar",
+  "Eres prueba viviente de que la transformación es posible"
+];
+
+const getDailyMotivationalPhrase = (): string => {
+  const today = new Date();
+  const dayOfYear = Math.floor((today.getTime() - new Date(today.getFullYear(), 0, 0).getTime()) / (1000 * 60 * 60 * 24));
+  const phraseIndex = dayOfYear % motivationalPhrases.length;
+  return motivationalPhrases[phraseIndex];
+};
+
 export default function DiarioEmocional() {
   const [selectedEmotion, setSelectedEmotion] = useState<string>('');
   const [diaryText, setDiaryText] = useState('');
@@ -86,6 +215,25 @@ export default function DiarioEmocional() {
           mood="supportive" 
           message="Este es tu espacio seguro. Comparte lo que sientes sin juicios."
         />
+
+        {/* Daily Motivational Phrase */}
+        <Card className="bg-gradient-warm shadow-card border-0">
+          <CardContent className="p-6 text-center">
+            <div className="space-y-3">
+              <div className="inline-flex items-center justify-center w-10 h-10 bg-white/20 rounded-full">
+                <span className="text-xl">✨</span>
+              </div>
+              <div>
+                <h3 className="text-sm font-semibold text-accent-foreground/80 mb-2 uppercase tracking-wider">
+                  Frase del día {new Date().getDate()} de {new Date().toLocaleDateString('es-ES', { month: 'long' })}
+                </h3>
+                <p className="text-lg font-medium text-accent-foreground leading-relaxed">
+                  {getDailyMotivationalPhrase()}
+                </p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
 
         {/* Emotion Selection */}
         <Card className="bg-gradient-card shadow-card border-0">
