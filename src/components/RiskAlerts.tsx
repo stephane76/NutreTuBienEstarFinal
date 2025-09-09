@@ -40,7 +40,6 @@ interface RiskAlertsProps {
 
 export const RiskAlerts = ({ className }: RiskAlertsProps) => {
   const { getActiveAlerts, dismissAlert, getRiskSummary } = useRiskDetection();
-  const [showCrisisSupport, setShowCrisisSupport] = useState(false);
   
   const activeAlerts = getActiveAlerts();
   const riskSummary = getRiskSummary();
@@ -48,10 +47,6 @@ export const RiskAlerts = ({ className }: RiskAlertsProps) => {
 
   const handleDismiss = (alertId: string) => {
     dismissAlert(alertId);
-  };
-
-  const handleCrisisSupport = () => {
-    setShowCrisisSupport(true);
   };
 
   const AlertCard = ({ alert }: { alert: RiskAlert }) => {
@@ -80,14 +75,17 @@ export const RiskAlerts = ({ className }: RiskAlertsProps) => {
                   })}
                 </Badge>
                 {alert.severity === 'critical' && (
-                  <Button
-                    size="sm"
-                    onClick={handleCrisisSupport}
-                    className="text-xs h-6 px-2"
-                  >
-                    <Heart className="w-3 h-3 mr-1" />
-                    Necesito apoyo
-                  </Button>
+                  <CrisisSupport 
+                    trigger={
+                      <Button
+                        size="sm"
+                        className="text-xs h-6 px-2"
+                      >
+                        <Heart className="w-3 h-3 mr-1" />
+                        Necesito apoyo
+                      </Button>
+                    }
+                  />
                 )}
               </div>
             </div>
@@ -126,15 +124,18 @@ export const RiskAlerts = ({ className }: RiskAlertsProps) => {
                     Detectamos que podrías necesitar apoyo inmediato.
                   </p>
                 </div>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={handleCrisisSupport}
-                  className="border-destructive text-destructive hover:bg-destructive hover:text-destructive-foreground"
-                >
-                  <Phone className="w-4 h-4 mr-1" />
-                  Ayuda
-                </Button>
+                <CrisisSupport 
+                  trigger={
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="border-destructive text-destructive hover:bg-destructive hover:text-destructive-foreground"
+                    >
+                      <Phone className="w-4 h-4 mr-1" />
+                      Ayuda
+                    </Button>
+                  }
+                />
               </div>
             </CardContent>
           </Card>
@@ -194,11 +195,6 @@ export const RiskAlerts = ({ className }: RiskAlertsProps) => {
           </Card>
         )}
       </div>
-
-      <CrisisSupport 
-        isVisible={showCrisisSupport} 
-        onClose={() => setShowCrisisSupport(false)} 
-      />
     </>
   );
 };
