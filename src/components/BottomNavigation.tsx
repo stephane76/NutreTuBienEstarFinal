@@ -1,6 +1,6 @@
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Home, BookOpen, Users, Wrench, AlertCircle } from 'lucide-react';
+import { Home, BookOpen, Users, Wrench, AlertCircle, MessageSquare } from 'lucide-react';
 
 const navigationItems = [
   {
@@ -14,6 +14,12 @@ const navigationItems = [
     label: 'Diario',
     icon: BookOpen,
     path: '/diario-emocional',
+  },
+  {
+    id: 'apoyo',
+    label: 'Apoyo',
+    icon: MessageSquare,
+    path: '/apoyo',
   },
   {
     id: 'comunidad',

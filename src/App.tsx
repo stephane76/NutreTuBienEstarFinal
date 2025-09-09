@@ -23,6 +23,7 @@ import TCAModule from "./pages/TCAModule";
 import NotFound from "./pages/NotFound";
 import { BottomNavigation } from "./components/BottomNavigation";
 import { CrisisButton } from "./components/CrisisButton";
+import { TherapistChat } from "./components/TherapistChat";
 
 const queryClient = new QueryClient();
 
@@ -37,6 +38,7 @@ const App = () => (
           <Routes>
             <Route path="/" element={<NewIndex />} />
             <Route path="/diario-emocional" element={<NewDiario />} />
+            <Route path="/apoyo" element={<TherapistChat />} />
             <Route path="/comunidad" element={<Comunidad />} />
             <Route path="/recursos" element={<Recursos />} />
             <Route path="/crisis" element={<NewCrisis />} />
