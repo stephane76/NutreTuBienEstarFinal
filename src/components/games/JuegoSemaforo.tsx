@@ -14,7 +14,7 @@ const coloresDefinicion = {
   amarillo: {
     titulo: "Amarillo - Atenta", 
     descripcion: "Empiezas a sentirte incómoda, ansiosa o surgen pensamientos críticos. Es una señal de alerta para prestar atención.",
-    color: "bg-yellow-50 text-yellow-600 border-yellow-200"
+    color: "bg-slate-50 text-slate-600 border-slate-200"
   },
   rojo: {
     titulo: "Rojo - Bloqueada",
@@ -72,14 +72,14 @@ export function JuegoSemaforo() {
                 </CardContent>
               </Card>
 
-              <Card className="bg-yellow-50 border-yellow-200">
+              <Card className="bg-slate-50 border-slate-200">
                 <CardContent className="p-4">
                   <div className="flex items-center gap-2 mb-2">
-                    <Circle className="w-4 h-4 fill-yellow-500 text-yellow-500" />
-                    <span className="font-semibold text-yellow-800">Amarillo - Momento de alerta</span>
+                    <Circle className="w-4 h-4 fill-slate-500 text-slate-500" />
+                    <span className="font-semibold text-slate-800">Gris - Momento de alerta</span>
                   </div>
-                  <p className="text-sm text-yellow-700 mb-2">{momentoAmarillo}</p>
-                  <div className="bg-yellow-100 p-2 rounded text-xs">
+                  <p className="text-sm text-slate-700 mb-2">{momentoAmarillo}</p>
+                  <div className="bg-slate-100 p-2 rounded text-xs">
                     <strong>Estrategias para volver al verde:</strong> {estrategiasAmarillo}
                   </div>
                 </CardContent>
@@ -108,8 +108,8 @@ export function JuegoSemaforo() {
               </div>
             </div>
 
-            <div className="bg-yellow-50 p-4 rounded-lg">
-              <p className="text-sm text-yellow-800">
+            <div className="bg-slate-50 p-4 rounded-lg">
+              <p className="text-sm text-slate-800">
                 <Lightbulb className="w-4 h-4 inline mr-2" />
                 <strong>Recuerda:</strong> Puedes usar esta herramienta varias veces al día. 
                 Simplemente pregúntate: "¿En qué color estoy ahora?". Este chequeo aumenta 
@@ -206,13 +206,13 @@ export function JuegoSemaforo() {
                 Identificando momentos - Amarillo
               </Badge>
 
-              <Card className="bg-yellow-50 border-yellow-200">
+              <Card className="bg-slate-50 border-slate-200">
                 <CardContent className="p-4">
                   <div className="flex items-center gap-2 mb-2">
-                    <Circle className="w-4 h-4 fill-yellow-500 text-yellow-500" />
-                    <span className="font-semibold text-yellow-800">Momento Amarillo</span>
+                    <Circle className="w-4 h-4 fill-slate-500 text-slate-500" />
+                    <span className="font-semibold text-slate-800">Momento Gris</span>
                   </div>
-                  <p className="text-sm text-yellow-700 mb-3">
+                  <p className="text-sm text-slate-700 mb-3">
                     ¿Qué situación te puso en "amarillo"? ¿Cuándo empezaste a sentirte incómoda o ansiosa?
                   </p>
                 </CardContent>
@@ -278,7 +278,7 @@ export function JuegoSemaforo() {
 
               <div className="space-y-4">
                 <div>
-                  <label className="text-sm font-medium text-yellow-700 mb-2 block">
+                  <label className="text-sm font-medium text-slate-700 mb-2 block">
                     Cuando estés en amarillo, ¿qué podrías hacer para volver al verde?
                   </label>
                   <Textarea

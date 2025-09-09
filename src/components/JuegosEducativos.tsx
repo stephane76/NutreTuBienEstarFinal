@@ -53,7 +53,7 @@ const juegos = [
     titulo: 'Juego del semáforo',
     descripcion: 'Identifica tus señales emocionales internas para gestionar mejor tus respuestas',
     icono: Lightbulb,
-    color: 'bg-yellow-50 text-yellow-600',
+    color: 'bg-slate-50 text-slate-600',
     categoria: 'Autorregulación'
   },
   {

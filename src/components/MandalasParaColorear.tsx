@@ -120,7 +120,7 @@ export const MandalasParaColorear: React.FC = () => {
   const getDifficultyColor = (difficulty: string) => {
     switch (difficulty) {
       case 'Fácil': return 'bg-green-500/10 border-green-500/20 text-green-600';
-      case 'Intermedio': return 'bg-yellow-500/10 border-yellow-500/20 text-yellow-600';
+      case 'Intermedio': return 'bg-slate-500/10 border-slate-500/20 text-slate-600';
       case 'Avanzado': return 'bg-red-500/10 border-red-500/20 text-red-600';
       default: return 'bg-muted/30 border-muted';
     }

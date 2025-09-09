@@ -288,7 +288,7 @@ export const SpotifyIntegration: React.FC = () => {
 
   const getEmotionColor = (emotion: string) => {
     switch (emotion) {
-      case 'feliz': return 'bg-yellow-500/10 border-yellow-500/20';
+      case 'feliz': return 'bg-slate-500/10 border-slate-500/20';
       case 'triste': return 'bg-blue-500/10 border-blue-500/20';
       case 'ansioso': return 'bg-red-500/10 border-red-500/20';
       case 'enérgico': return 'bg-orange-500/10 border-orange-500/20';

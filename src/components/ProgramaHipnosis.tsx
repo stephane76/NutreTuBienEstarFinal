@@ -245,7 +245,7 @@ export const ProgramaHipnosis: React.FC = () => {
   const getSessionColor = (sessionId: string) => {
     switch (sessionId) {
       case 'eliminar-atracones': return 'bg-red-500/10 border-red-500/20 text-red-600';
-      case 'mentalidad-positiva': return 'bg-yellow-500/10 border-yellow-500/20 text-yellow-600';
+      case 'mentalidad-positiva': return 'bg-slate-500/10 border-slate-500/20 text-slate-600';
       case 'relacion-comida': return 'bg-green-500/10 border-green-500/20 text-green-600';
       default: return 'bg-blue-500/10 border-blue-500/20 text-blue-600';
     }

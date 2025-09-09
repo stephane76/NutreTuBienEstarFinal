@@ -277,7 +277,7 @@ export const AdvancedRiskDetection: React.FC = () => {
     switch (urgency) {
       case 'critical': return 'bg-destructive/10 border-destructive';
       case 'high': return 'bg-orange-500/10 border-orange-500';
-      case 'medium': return 'bg-yellow-500/10 border-yellow-500';
+      case 'medium': return 'bg-slate-500/10 border-slate-500';
       default: return 'bg-green-500/10 border-green-500';
     }
   };
