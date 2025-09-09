@@ -19,10 +19,12 @@ import {
   Headphones,
   Settings,
   Loader2,
-  Info
+  Info,
+  Download
 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { hypnosisScripts, formatScriptForTTS, type HypnosisSession } from '@/services/hypnosisScripts';
+import { hypnosisAudioService } from '@/services/hypnosisAudioService';
 
 interface SessionProgress {
   [sessionId: string]: {
@@ -41,13 +43,11 @@ export const ProgramaHipnosis: React.FC = () => {
   const [generatedAudios, setGeneratedAudios] = useState<Record<string, string>>({});
   const [isGenerating, setIsGenerating] = useState<Record<string, boolean>>({});
   const [sessionProgress, setSessionProgress] = useState<SessionProgress>({});
-  const [showInstructions, setShowInstructions] = useState(true);
+  const [showInstructions, setShowInstructions] = useState(false); // Changed to false since we have API key
+  const [isGeneratingAll, setIsGeneratingAll] = useState(false);
   
   const audioRef = useRef<HTMLAudioElement>(null);
   const { toast } = useToast();
-
-  // Placeholder for ElevenLabs - user needs to provide API key
-  const ELEVENLABS_API_KEY = ''; // Usuario debe proporcionar su API key
 
   useEffect(() => {
     loadProgress();
@@ -132,57 +132,68 @@ export const ProgramaHipnosis: React.FC = () => {
   };
 
   const generateAudio = async (session: HypnosisSession) => {
-    if (!ELEVENLABS_API_KEY) {
-      toast({
-        title: "API Key Requerida",
-        description: "Necesitas configurar tu API key de ElevenLabs para generar los audios.",
-        variant: "destructive"
-      });
-      return;
-    }
-
     setIsGenerating(prev => ({ ...prev, [session.id]: true }));
 
     try {
-      // Format script for better TTS
-      const formattedScript = formatScriptForTTS(session.script);
+      console.log(`Starting audio generation for: ${session.title}`);
       
-      // Call ElevenLabs API
-      const response = await fetch('https://api.elevenlabs.io/v1/text-to-speech/Aria', {
-        method: 'POST',
-        headers: {
-          'Accept': 'audio/mpeg',
-          'Content-Type': 'application/json',
-          'xi-api-key': ELEVENLABS_API_KEY
-        },
-        body: JSON.stringify({
-          text: formattedScript,
-          model_id: 'eleven_multilingual_v2',
-          voice_settings: session.voiceSettings
-        })
-      });
-
-      if (!response.ok) {
-        throw new Error('Error generando audio');
-      }
-
-      const audioBlob = await response.blob();
-      const audioUrl = URL.createObjectURL(audioBlob);
+      const audioUrl = await hypnosisAudioService.generateHypnosisAudio(
+        session.script,
+        session.title,
+        session.voiceSettings
+      );
       
       saveGeneratedAudio(session.id, audioUrl);
       
       toast({
-        title: "Audio Generado",
+        title: "✅ Audio Generado",
         description: `La sesión "${session.title}" está lista para reproducir.`,
       });
+      
     } catch (error) {
+      console.error('Error generating audio:', error);
       toast({
-        title: "Error",
-        description: "No pude generar el audio. Verifica tu API key e intenta de nuevo.",
+        title: "❌ Error de Generación",
+        description: error instanceof Error ? error.message : "No pude generar el audio. Intenta de nuevo.",
         variant: "destructive"
       });
     } finally {
       setIsGenerating(prev => ({ ...prev, [session.id]: false }));
+    }
+  };
+
+  const generateAllAudios = async () => {
+    setIsGeneratingAll(true);
+    
+    try {
+      toast({
+        title: "🎧 Iniciando Generación Masiva",
+        description: "Generando los audios de las 3 sesiones de hipnosis...",
+      });
+
+      const audioUrls = await hypnosisAudioService.generateAllSessionAudios(hypnosisScripts);
+      
+      // Save all generated audios
+      const allAudios = { ...generatedAudios, ...audioUrls };
+      localStorage.setItem('hypnosisAudios', JSON.stringify(allAudios));
+      setGeneratedAudios(allAudios);
+      
+      const generatedCount = Object.keys(audioUrls).length;
+      
+      toast({
+        title: "🎉 ¡Generación Completada!",
+        description: `Se generaron exitosamente ${generatedCount} de ${hypnosisScripts.length} sesiones de hipnosis.`,
+      });
+      
+    } catch (error) {
+      console.error('Error generating all audios:', error);
+      toast({
+        title: "❌ Error en Generación Masiva",
+        description: "Hubo un problema generando algunos audios. Intenta generar individualmente.",
+        variant: "destructive"
+      });
+    } finally {
+      setIsGeneratingAll(false);
     }
   };
 
@@ -245,7 +256,7 @@ export const ProgramaHipnosis: React.FC = () => {
     return Math.round((completed / hypnosisScripts.length) * 100);
   };
 
-  if (!ELEVENLABS_API_KEY && showInstructions) {
+  if (showInstructions) {
     return (
       <div className="space-y-6">
         <Card className="bg-gradient-card border-0 shadow-card">
@@ -259,15 +270,15 @@ export const ProgramaHipnosis: React.FC = () => {
             </p>
           </CardHeader>
           <CardContent className="space-y-4">
-            <Alert className="border-orange-500/20 bg-orange-500/10">
-              <Settings className="h-4 w-4" />
+            <Alert className="border-blue-500/20 bg-blue-500/10">
+              <Info className="h-4 w-4" />
               <AlertDescription>
-                <strong>Configuración requerida:</strong> Para generar los audios de hipnosis necesitas:
-                <ol className="list-decimal list-inside mt-2 space-y-1 text-sm">
-                  <li>Una cuenta en <a href="https://elevenlabs.io" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">ElevenLabs</a></li>
-                  <li>Tu API key de ElevenLabs</li>
-                  <li>Configúrala en el código reemplazando el campo ELEVENLABS_API_KEY</li>
-                </ol>
+                <strong>¡Tu API key está configurada!</strong> Ya puedes generar los audios de hipnosis profesionales.
+                <ul className="list-disc list-inside mt-2 space-y-1 text-sm">
+                  <li>Usa la voz "Aria" optimizada para contenido terapéutico</li>
+                  <li>Configuración especial para hipnosis con pausas naturales</li>
+                  <li>Calidad de audio profesional en español</li>
+                </ul>
               </AlertDescription>
             </Alert>
             
@@ -299,13 +310,32 @@ export const ProgramaHipnosis: React.FC = () => {
               })}
             </div>
             
-            <Button 
-              onClick={() => setShowInstructions(false)}
-              variant="outline" 
-              className="w-full"
-            >
-              Ver Programa Completo
-            </Button>
+            <div className="flex gap-2">
+              <Button 
+                onClick={generateAllAudios}
+                disabled={isGeneratingAll}
+                className="flex-1 bg-gradient-primary text-white"
+              >
+                {isGeneratingAll ? (
+                  <>
+                    <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                    Generando las 3 sesiones...
+                  </>
+                ) : (
+                  <>
+                    <Download className="w-4 h-4 mr-2" />
+                    Generar Todas las Sesiones
+                  </>
+                )}
+              </Button>
+              
+              <Button 
+                onClick={() => setShowInstructions(false)}
+                variant="outline"
+              >
+                Ver Programa
+              </Button>
+            </div>
           </CardContent>
         </Card>
       </div>
