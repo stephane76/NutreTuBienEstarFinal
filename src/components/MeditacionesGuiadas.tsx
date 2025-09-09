@@ -3,8 +3,11 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Slider } from '@/components/ui/slider';
-import { Play, Pause, SkipBack, SkipForward, Volume2, Heart } from 'lucide-react';
+import { Play, Pause, SkipBack, SkipForward, Volume2, Heart, Download, Loader2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { useToast } from '@/hooks/use-toast';
+import { meditationScripts, type MeditationId } from '@/services/meditationScripts';
+import { useElevenLabs } from '@/services/elevenLabsService';
 
 interface Meditacion {
   id: string;
@@ -57,13 +60,84 @@ export const MeditacionesGuiadas: React.FC = () => {
   const [progreso, setProgreso] = useState(0);
   const [duracionActual, setDuracionActual] = useState(0);
   const [favoritas, setFavoritas] = useState<string[]>([]);
+  const [generandoAudio, setGenerandoAudio] = useState<string | null>(null);
+  const [audiosGenerados, setAudiosGenerados] = useState<Record<string, string>>({});
   const audioRef = useRef<HTMLAudioElement>(null);
+  const { toast } = useToast();
+  const { generateMeditationAudio, getStoredAudioUrl } = useElevenLabs();
+
+  // Mapeo de IDs a scripts
+  const meditationIdToScriptId: Record<string, MeditationId> = {
+    '1': 'respiracion-ansiedad',
+    '2': 'aceptacion-corporal', 
+    '3': 'calma-comer'
+  };
+
+  useEffect(() => {
+    // Cargar audios generados previamente del localStorage
+    const stored: Record<string, string> = {};
+    meditaciones.forEach(med => {
+      const scriptId = meditationIdToScriptId[med.id];
+      const audioUrl = getStoredAudioUrl(scriptId);
+      if (audioUrl) {
+        stored[med.id] = audioUrl;
+      }
+    });
+    setAudiosGenerados(stored);
+  }, []);
+
+  const generarAudio = async (meditacion: Meditacion) => {
+    try {
+      setGenerandoAudio(meditacion.id);
+
+      const scriptId = meditationIdToScriptId[meditacion.id];
+      const script = meditationScripts[scriptId];
+
+      toast({
+        title: "Generando audio",
+        description: `Creando la meditación "${meditacion.titulo}"... Esto puede tomar unos minutos.`,
+      });
+
+      const { audioUrl } = await generateMeditationAudio(script.script, scriptId);
+
+      setAudiosGenerados(prev => ({
+        ...prev,
+        [meditacion.id]: audioUrl
+      }));
+
+      toast({
+        title: "Audio generado",
+        description: `La meditación "${meditacion.titulo}" está lista para reproducir.`,
+      });
+
+    } catch (error) {
+      console.error('Error generating audio:', error);
+      toast({
+        title: "Error al generar audio",
+        description: "No se pudo generar el audio. Verifica tu conexión a internet.",
+        variant: "destructive",
+      });
+    } finally {
+      setGenerandoAudio(null);
+    }
+  };
 
   const meditacionesFiltradas = meditaciones.filter(
     m => filtroObjetivo === 'todos' || m.objetivo === filtroObjetivo
   );
 
   const reproducir = (meditacion: Meditacion) => {
+    const audioUrl = audiosGenerados[meditacion.id];
+    
+    if (!audioUrl) {
+      toast({
+        title: "Audio no disponible",
+        description: "Primero debes generar el audio de esta meditación.",
+        variant: "destructive",
+      });
+      return;
+    }
+
     if (reproduciendo === meditacion.id) {
       if (audioRef.current?.paused) {
         audioRef.current.play();
@@ -73,7 +147,7 @@ export const MeditacionesGuiadas: React.FC = () => {
     } else {
       setReproduciendo(meditacion.id);
       if (audioRef.current) {
-        audioRef.current.src = meditacion.audioUrl;
+        audioRef.current.src = audioUrl;
         audioRef.current.play();
       }
     }
@@ -176,35 +250,67 @@ export const MeditacionesGuiadas: React.FC = () => {
             </CardHeader>
 
             <CardContent>
-              <div className="flex items-center gap-3">
-                <Button
-                  onClick={() => reproducir(meditacion)}
-                  size="icon"
-                  className="h-12 w-12 rounded-full"
-                >
-                  {reproduciendo === meditacion.id && !audioRef.current?.paused ? 
-                    <Pause size={20} /> : <Play size={20} />
-                  }
-                </Button>
-
-                {reproduciendo === meditacion.id && (
-                  <div className="flex-1 space-y-2">
-                    <div className="flex items-center justify-between text-sm text-muted-foreground">
-                      <span>{formatearTiempo(duracionActual)}</span>
-                      <span>{formatearTiempo(meditacion.duracion * 60)}</span>
-                    </div>
-                    <Slider
-                      value={[progreso]}
-                      max={100}
-                      step={1}
+              <div className="space-y-3">
+                {/* Audio Generation and Controls */}
+                <div className="flex items-center gap-3">
+                  {!audiosGenerados[meditacion.id] ? (
+                    <Button
+                      onClick={() => generarAudio(meditacion)}
+                      disabled={generandoAudio === meditacion.id}
+                      variant="outline"
                       className="flex-1"
-                      onValueChange={([value]) => {
-                        if (audioRef.current) {
-                          const newTime = (value / 100) * audioRef.current.duration;
-                          audioRef.current.currentTime = newTime;
-                        }
-                      }}
-                    />
+                    >
+                      {generandoAudio === meditacion.id ? (
+                        <>
+                          <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                          Generando...
+                        </>
+                      ) : (
+                        <>
+                          <Download className="w-4 h-4 mr-2" />
+                          Generar Audio
+                        </>
+                      )}
+                    </Button>
+                  ) : (
+                    <Button
+                      onClick={() => reproducir(meditacion)}
+                      size="icon"
+                      className="h-12 w-12 rounded-full"
+                    >
+                      {reproduciendo === meditacion.id && !audioRef.current?.paused ? 
+                        <Pause size={20} /> : <Play size={20} />
+                      }
+                    </Button>
+                  )}
+
+                  {audiosGenerados[meditacion.id] && reproduciendo === meditacion.id && (
+                    <div className="flex-1 space-y-2">
+                      <div className="flex items-center justify-between text-sm text-muted-foreground">
+                        <span>{formatearTiempo(duracionActual)}</span>
+                        <span>{formatearTiempo(meditacion.duracion * 60)}</span>
+                      </div>
+                      <Slider
+                        value={[progreso]}
+                        max={100}
+                        step={1}
+                        className="flex-1"
+                        onValueChange={([value]) => {
+                          if (audioRef.current) {
+                            const newTime = (value / 100) * audioRef.current.duration;
+                            audioRef.current.currentTime = newTime;
+                          }
+                        }}
+                      />
+                    </div>
+                  )}
+                </div>
+
+                {/* Status indicator */}
+                {audiosGenerados[meditacion.id] && (
+                  <div className="flex items-center gap-2 text-sm text-success">
+                    <div className="w-2 h-2 bg-success rounded-full"></div>
+                    Audio listo para reproducir
                   </div>
                 )}
               </div>
