@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Play, Pause, Volume2, Clock, Leaf, Heart, Utensils, CheckCircle } from 'lucide-react';
+import { Play, Pause, Volume2, Clock, Leaf, Heart, Utensils, CheckCircle, Loader2 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { MindfulAudioService } from '@/services/mindfulAudioService';
 
 interface AudioMindful {
   id: string;
@@ -154,38 +155,98 @@ const categorias = {
 export function MindfulEating() {
   const [audioActivo, setAudioActivo] = useState<string | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [isGenerating, setIsGenerating] = useState(false);
   const [audiosCompletados, setAudiosCompletados] = useState<string[]>([]);
+  const [audioUrls, setAudioUrls] = useState<Map<string, string>>(new Map());
+  const audioRef = useRef<HTMLAudioElement | null>(null);
   const { toast } = useToast();
 
   const handlePlayAudio = async (audioId: string) => {
     const audio = audiosMindfulEating.find(a => a.id === audioId);
     if (!audio) return;
 
-    // Por ahora simularemos la reproducción
-    // TODO: Implementar con ElevenLabs cuando tengamos la API key
-    setAudioActivo(audioId);
-    setIsPlaying(true);
-    
-    toast({
-      title: "Reproduciendo audio",
-      description: `${audio.titulo} - ${audio.duracion}`,
-    });
+    try {
+      setIsGenerating(true);
+      
+      // Verificar si ya tenemos el audio generado
+      let audioUrl = audioUrls.get(audioId);
+      
+      if (!audioUrl) {
+        toast({
+          title: "Generando audio personalizado",
+          description: "Creando tu sesión de mindful eating...",
+        });
 
-    // Simular reproducción
-    setTimeout(() => {
+        // Generar el audio con ElevenLabs
+        const response = await MindfulAudioService.generateAudio({
+          text: audio.contenido,
+          voiceId: 'Sarah' // Voz cálida y serena para mindful eating
+        });
+
+        audioUrl = MindfulAudioService.createAudioUrl(response.audio);
+        setAudioUrls(new Map(audioUrls.set(audioId, audioUrl)));
+      }
+
+      setIsGenerating(false);
+      setAudioActivo(audioId);
+      setIsPlaying(true);
+
+      // Reproducir el audio
+      if (audioRef.current) {
+        audioRef.current.pause();
+      }
+
+      const audioElement = new Audio(audioUrl);
+      audioRef.current = audioElement;
+      
+      audioElement.onended = () => {
+        setIsPlaying(false);
+        setAudioActivo(null);
+        if (!audiosCompletados.includes(audioId)) {
+          setAudiosCompletados([...audiosCompletados, audioId]);
+        }
+        toast({
+          title: "Sesión completada",
+          description: "¡Excelente práctica de mindful eating! 🌟",
+        });
+      };
+
+      audioElement.onerror = () => {
+        toast({
+          title: "Error de reproducción",
+          description: "No se pudo reproducir el audio. Intenta de nuevo.",
+          variant: "destructive"
+        });
+        setIsPlaying(false);
+        setAudioActivo(null);
+        setIsGenerating(false);
+      };
+
+      await audioElement.play();
+      
+      toast({
+        title: "Reproduciendo",
+        description: `${audio.titulo} - ${audio.duracion}`,
+      });
+
+    } catch (error) {
+      console.error('Error playing audio:', error);
+      setIsGenerating(false);
       setIsPlaying(false);
       setAudioActivo(null);
-      if (!audiosCompletados.includes(audioId)) {
-        setAudiosCompletados([...audiosCompletados, audioId]);
-      }
+      
       toast({
-        title: "Audio completado",
-        description: "¡Excelente práctica de mindful eating!",
+        title: "Error al generar audio",
+        description: "No se pudo crear el audio. Verifica tu conexión.",
+        variant: "destructive"
       });
-    }, 3000);
+    }
   };
 
   const handlePauseAudio = () => {
+    if (audioRef.current) {
+      audioRef.current.pause();
+    }
     setIsPlaying(false);
     setAudioActivo(null);
   };
@@ -325,10 +386,19 @@ export function MindfulEating() {
                               size="sm"
                               onClick={() => handlePlayAudio(audio.id)}
                               className="bg-primary text-primary-foreground hover:bg-primary/90"
-                              disabled={audioActivo !== null && audioActivo !== audio.id}
+                              disabled={(audioActivo !== null && audioActivo !== audio.id) || isGenerating}
                             >
-                              <Play className="w-4 h-4 mr-2" />
-                              {isCompleted ? 'Escuchar de nuevo' : 'Reproducir'}
+                              {isGenerating && audioActivo === audio.id ? (
+                                <>
+                                  <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                                  Generando...
+                                </>
+                              ) : (
+                                <>
+                                  <Play className="w-4 h-4 mr-2" />
+                                  {isCompleted ? 'Escuchar de nuevo' : 'Reproducir'}
+                                </>
+                              )}
                             </Button>
                           )}
                         </div>
@@ -361,15 +431,15 @@ export function MindfulEating() {
       </Card>
 
       {/* Nota sobre funcionalidad */}
-      <Card className="border-orange-200 bg-orange-50">
+      <Card className="border-green-200 bg-green-50">
         <CardContent className="p-6">
           <div className="flex items-start space-x-3">
-            <Volume2 className="w-5 h-5 text-orange-600 mt-0.5" />
+            <Volume2 className="w-5 h-5 text-green-600 mt-0.5" />
             <div>
-              <h4 className="font-medium text-orange-800 mb-2">Funcionalidad de Audio</h4>
-              <p className="text-orange-700 text-sm">
-                Los audios están siendo preparados con tecnología de voz AI para ofrecerte la mejor experiencia. 
-                Por ahora puedes leer el contenido de cada sesión. ¡Pronto tendrás audios completamente personalizados!
+              <h4 className="font-medium text-green-800 mb-2">🎵 Audios Activos</h4>
+              <p className="text-green-700 text-sm">
+                Los audios se generan con tecnología de voz AI ultra-natural de ElevenLabs. 
+                Cada sesión se crea personalmente para ti con una voz cálida y serena, perfecta para mindful eating.
               </p>
             </div>
           </div>
