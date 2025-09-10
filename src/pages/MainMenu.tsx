@@ -44,6 +44,9 @@ import audioColorful from '@/assets/audio-colorful.jpg';
 import breathingColorful from '@/assets/breathing-colorful.jpg';
 import interactiveGames from '@/assets/interactive-games.jpg';
 import mentalHealthSupport from '@/assets/mental-health-support.jpg';
+import virtualWorkshops from '@/assets/virtual-workshops.jpg';
+import evaluationTools from '@/assets/evaluation-tools.jpg';
+import hungerAwareness from '@/assets/hunger-awareness.jpg';
 
 interface MenuOption {
   id: string;
@@ -150,7 +153,8 @@ const menuOptions: MenuOption[] = [
     path: '/detector-hambre',
     category: 'bienestar',
     color: 'from-orange-300 to-orange-400',
-    gradient: 'bg-gradient-to-br from-orange-300 to-orange-400'
+    gradient: 'bg-gradient-to-br from-orange-300 to-orange-400',
+    image: hungerAwareness
   },
   {
     id: 'check-in',
@@ -184,7 +188,8 @@ const menuOptions: MenuOption[] = [
     path: '/talleres',
     category: 'comunidad',
     color: 'from-honey-300 to-honey-400',
-    gradient: 'bg-gradient-to-br from-honey-300 to-honey-400'
+    gradient: 'bg-gradient-to-br from-honey-300 to-honey-400',
+    image: virtualWorkshops
   },
   {
     id: 'juegos-educativos',
@@ -219,7 +224,8 @@ const menuOptions: MenuOption[] = [
     path: '/cuestionarios',
     category: 'seguimiento',
     color: 'from-peach-300 to-peach-400',
-    gradient: 'bg-gradient-to-br from-peach-300 to-peach-400'
+    gradient: 'bg-gradient-to-br from-peach-300 to-peach-400',
+    image: evaluationTools
   }
 ];
 
