@@ -6,6 +6,7 @@ import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import { ArrowLeft, Play, CheckCircle, Clock, Heart, Sparkles, ChevronRight, BookOpen } from 'lucide-react';
 import { Avatar } from '@/components/Avatar';
+import { BackButton } from '@/components/BackButton';
 
 const talleres = [
   {

@@ -8,6 +8,7 @@ import { ArrowLeft, TrendingUp, Calendar, Award, Target } from 'lucide-react';
 import { Avatar } from '@/components/Avatar';
 import { GamificationPanel } from '@/components/GamificationPanel';
 import { useGamification } from '@/hooks/useGamification';
+import { BackButton } from '@/components/BackButton';
 
 interface CheckInData {
   timestamp: number;
@@ -136,9 +137,7 @@ export default function Progreso() {
       <div className="max-w-md mx-auto">
         {/* Header */}
         <div className="flex items-center justify-between mb-6 pt-4">
-          <Button variant="ghost" size="sm" onClick={() => navigate(-1)}>
-            <ArrowLeft className="w-4 h-4" />
-          </Button>
+          <BackButton />
           <h1 className="font-heading text-lg font-medium text-foreground">Tu Progreso</h1>
           <div></div>
         </div>

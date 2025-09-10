@@ -3,6 +3,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft } from 'lucide-react';
+import { BackButton } from '@/components/BackButton';
 import { MeditacionesGuiadas } from '@/components/MeditacionesGuiadas';
 import { EscrituraTerapeutica } from '@/components/EscrituraTerapeutica';
 import { RespuestasConscientes } from '@/components/RespuestasConscientes';
@@ -166,7 +167,11 @@ export default function Recursos() {
 
   return (
     <div className="min-h-screen bg-background-subpage pb-20">
-      <div className="container mx-auto px-4 pt-8 space-y-8">
+      <div className="container mx-auto px-4 pt-6 space-y-8">
+        
+        {/* Back Button */}
+        <BackButton showHomeIcon={true} className="mb-4" />
+        
         <div className="text-center space-y-4">
           <h1 className="text-3xl font-bold text-foreground">Recursos de Bienestar</h1>
           <p className="text-muted-foreground max-w-2xl mx-auto">

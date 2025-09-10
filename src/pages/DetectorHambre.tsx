@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import { CheckCircle, Circle, Heart, Utensils } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { BackButton } from '@/components/BackButton';
 
 const questions = [
   {
@@ -141,6 +142,10 @@ export default function DetectorHambre() {
     return (
       <div className="min-h-screen bg-background-subpage pb-20">
         <div className="px-6 py-6 space-y-6">
+          
+          {/* Back Button */}
+          <BackButton showHomeIcon={true} className="mb-4" />
+          
           <div className="text-center pt-4">
             <h1 className="text-2xl font-bold text-foreground mb-2">
               Resultado del Detector
@@ -210,6 +215,10 @@ export default function DetectorHambre() {
   return (
     <div className="min-h-screen bg-background-subpage pb-20">
       <div className="px-6 py-6 space-y-6">
+        
+        {/* Back Button */}
+        <BackButton showHomeIcon={true} className="mb-4" />
+        
         <div className="text-center pt-4">
           <h1 className="text-2xl font-bold text-foreground mb-2">
             Detector de Hambre
@@ -219,7 +228,7 @@ export default function DetectorHambre() {
           </p>
         </div>
 
-        <Avatar 
+        <Avatar
           mood="calming" 
           message="Responde con sinceridad. No hay respuestas correctas o incorrectas."
         />

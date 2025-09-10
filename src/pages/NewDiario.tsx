@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Badge } from '@/components/ui/badge';
 import { Heart, Plus, Calendar } from 'lucide-react';
+import { BackButton } from '@/components/BackButton';
 
 const emotions = [
   { emoji: '😊', name: 'Alegría', color: 'bg-slate-100 text-slate-800' },
@@ -62,7 +63,11 @@ export default function NewDiario() {
 
   return (
     <div className="min-h-screen bg-background-subpage pb-24">
-      <div className="container mx-auto px-4 pt-8 space-y-6">
+      <div className="container mx-auto px-4 pt-6 space-y-6">
+        
+        {/* Back Button */}
+        <BackButton showHomeIcon={true} className="mb-4" />
+        
         {/* Header */}
         <div className="text-center space-y-2 animate-fade-in">
           <h1 className="text-2xl font-medium text-foreground">Tu Diario Emocional</h1>

@@ -14,6 +14,7 @@ import {
   Users,
   Lightbulb
 } from 'lucide-react';
+import { BackButton } from '@/components/BackButton';
 
 const games = [
   {
@@ -107,15 +108,7 @@ export default function JuegosPage() {
       <div className="bg-gradient-to-br from-primary/10 to-primary/5 border-b border-border">
         <div className="container mx-auto px-4 py-6">
           <div className="flex items-center gap-4 mb-4">
-            <Button 
-              variant="ghost" 
-              size="sm" 
-              onClick={() => navigate('/')}
-              className="flex items-center gap-2"
-            >
-              <ArrowLeft className="w-4 h-4" />
-              Volver al menú
-            </Button>
+            <BackButton showHomeIcon={true} />
           </div>
           
           <div className="flex items-center gap-4">

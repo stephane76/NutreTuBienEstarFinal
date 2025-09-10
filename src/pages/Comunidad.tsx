@@ -6,6 +6,7 @@ import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { ArrowLeft, Users, MessageCircle, Heart, Share2, Lock } from 'lucide-react';
 import { Avatar } from '@/components/Avatar';
+import { BackButton } from '@/components/BackButton';
 
 const testimonios = [
   {
@@ -178,9 +179,7 @@ export default function Comunidad() {
       <div className="min-h-screen bg-background-subpage p-4 pb-20">
         <div className="max-w-md mx-auto">
           <div className="flex items-center justify-between mb-6 pt-4">
-            <Button variant="ghost" size="sm" onClick={() => navigate(-1)}>
-              <ArrowLeft className="w-4 h-4" />
-            </Button>
+            <BackButton />
             <h1 className="font-heading text-lg font-medium text-foreground">
               Comunidad
             </h1>

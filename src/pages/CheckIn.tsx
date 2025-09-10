@@ -8,6 +8,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { ArrowLeft, Clock, Save } from 'lucide-react';
 import { EmotionWheel } from '@/components/EmotionWheel';
 import { Avatar } from '@/components/Avatar';
+import { BackButton } from '@/components/BackButton';
 
 const hungerTypes = [
   { id: 'fisica', label: 'Física', icon: '🍽️', desc: 'Tengo hambre real en el estómago' },
@@ -71,9 +72,7 @@ export default function CheckIn() {
       <div className="max-w-md mx-auto">
         {/* Header con tiempo */}
         <div className="flex items-center justify-between mb-6 pt-4">
-          <Button variant="ghost" size="sm" onClick={() => navigate(-1)}>
-            <ArrowLeft className="w-4 h-4" />
-          </Button>
+          <BackButton />
           <div className="flex items-center gap-2 text-sm text-muted-foreground">
             <Clock className="w-4 h-4" />
             <span className="font-mono">{Math.floor(elapsedTime / 60)}:{String(elapsedTime % 60).padStart(2, '0')}</span>
