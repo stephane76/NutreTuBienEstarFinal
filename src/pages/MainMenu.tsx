@@ -268,20 +268,14 @@ export default function MainMenu() {
           <div className="max-w-3xl mx-auto">
             <div className="flex justify-center items-center gap-4 mb-6">
               <div className="w-8 h-8 bg-ochre-500 rounded-full animate-pulse"></div>
-              <h1 className="text-3xl font-bold text-foreground mb-2">
-                ¿Cómo te acompaño ahora?
-              </h1>
-              <p className="text-xl text-muted-foreground leading-relaxed mb-8">
-                Un lugar para comer sin culpa y cuidarte con cariño
-              </p>
               <div className="w-8 h-8 bg-green-500 rounded-full animate-bounce"></div>
             </div>
-          <h1 className="text-3xl font-bold text-foreground mb-2">
-            ¿Cómo te acompaño ahora?
-          </h1>
-          <p className="text-xl text-muted-foreground leading-relaxed mb-8">
-            Tu espacio seguro para cultivar una relación saludable con la comida y las emociones
-          </p>
+            <h1 className="text-4xl md:text-5xl font-bold text-foreground leading-tight mb-4">
+              <span className="bg-gradient-brand bg-clip-text text-transparent">¿Cómo te acompaño ahora?</span>
+            </h1>
+            <p className="text-xl text-muted-foreground leading-relaxed mb-8">
+              Un lugar para comer sin culpa y cuidarte con cariño
+            </p>
             
             {/* Two main CTAs */}
             <div className="flex flex-col sm:flex-row gap-6 justify-center max-w-2xl mx-auto">
