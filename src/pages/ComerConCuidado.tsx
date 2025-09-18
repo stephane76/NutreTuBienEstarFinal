@@ -269,8 +269,8 @@ export default function ComerConCuidado() {
               </div>
 
               <ImageUpload
-                onImageSelect={(file) => analyzeFoodImage(file).then(handleFoodImageAnalysis)}
-                label="O toma una foto de tu comida"
+                type="food"
+                onAnalysisComplete={handleFoodImageAnalysis}
               />
 
               {analysisResult && (

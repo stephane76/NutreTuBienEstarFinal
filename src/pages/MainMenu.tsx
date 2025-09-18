@@ -66,11 +66,11 @@ interface MenuOption {
 const menuOptions: MenuOption[] = [
   // Core Loop Principal - Check-in → Pausa → Registrar → Recompensa → Progreso
   {
-    id: 'check-in',
-    title: 'Check-in (1 min)',
-    description: 'Evaluación rápida de tu estado emocional para comenzar el día',
+    id: 'check-in-diario',
+    title: 'Check-in Diario (60-90s)',
+    description: 'Conexión rápida contigo: emoción, hambre, intención',
     icon: CheckCircle,
-    path: '/check-in',
+    path: '/check-in-diario',
     category: 'core',
     color: 'from-ochre-400 to-ochre-500',
     gradient: 'bg-gradient-brand',
@@ -81,10 +81,10 @@ const menuOptions: MenuOption[] = [
   },
   {
     id: 'pausa-consciente',
-    title: 'Pausar',
-    description: 'Ejercicios de respiración y mindfulness para momentos de calma',
+    title: 'Pausa Consciente',
+    description: 'Técnicas de 2-3 min: respiración, grounding, anclaje somático',
     icon: Pause,
-    path: '/pausa',
+    path: '/pausa-consciente',
     category: 'core',
     color: 'from-green-400 to-green-500',
     gradient: 'bg-gradient-green',
@@ -124,10 +124,10 @@ const menuOptions: MenuOption[] = [
   // Apoyo esencial
   {
     id: 'apoyo-ia',
-    title: 'Acompañante IA',
-    description: 'Apoyo psicoeducativo disponible 24/7 (no sustituye terapia profesional)',
+    title: 'Acompañante IA (24/7)',
+    description: 'Apoyo inmediato con chips rápidos: ansiedad, pausar atracón, compañía',
     icon: MessageSquare,
-    path: '/apoyo',
+    path: '/ia-companion',
     category: 'apoyo',
     color: 'from-ochre-300 to-ochre-400',
     gradient: 'bg-gradient-primary',
@@ -277,7 +277,7 @@ export default function MainMenu() {
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Button 
-                  onClick={() => handleNavigation('/check-in')}
+                  onClick={() => handleNavigation('/check-in-diario')}
                   className="bg-gradient-brand hover:opacity-90 text-white px-8 py-3 text-lg rounded-xl shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:scale-105"
                 >
                   <CheckCircle className="mr-2 h-5 w-5" />

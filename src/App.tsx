@@ -11,6 +11,11 @@ import Dashboard from "./pages/Dashboard";
 import DiarioEmocional from "./pages/DiarioEmocional";
 import RegistroAlimentario from "./pages/RegistroAlimentario";
 import CheckIn from "./pages/CheckIn";
+import CheckInDiario from "./pages/CheckInDiario";
+import PausaConsciente from "./pages/PausaConsciente";
+import ComerConCuidado from "./pages/ComerConCuidado";
+import Laboratorio from "./pages/Laboratorio";
+import IACompanion from "./components/IACompanion";
 import Progreso from "./pages/Progreso";
 import Perfil from "./pages/Perfil";
 import Cuestionarios from "./pages/Cuestionarios";
@@ -47,6 +52,11 @@ const App = () => (
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/registro-alimentario" element={<RegistroAlimentario />} />
             <Route path="/check-in" element={<CheckIn />} />
+            <Route path="/check-in-diario" element={<CheckInDiario />} />
+            <Route path="/pausa-consciente" element={<PausaConsciente />} />
+            <Route path="/comer-con-cuidado" element={<ComerConCuidado />} />
+            <Route path="/laboratorio" element={<Laboratorio />} />
+            <Route path="/ia-companion" element={<IACompanion />} />
             <Route path="/progreso" element={<Progreso />} />
             <Route path="/perfil" element={<Perfil />} />
             <Route path="/cuestionarios" element={<Cuestionarios />} />
