@@ -15,11 +15,14 @@ export function CrisisButton() {
   return (
     <button
       onClick={handleCrisisClick}
-      className="fixed bottom-6 right-6 z-50 w-16 h-16 rounded-full bg-gradient-to-br from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white font-bold text-sm shadow-2xl hover:shadow-red-500/50 transition-all duration-300 transform hover:scale-110 animate-pulse border-4 border-red-400/30"
-      aria-label="Ayuda de crisis - S.O.S"
-      title="¡Necesito ayuda ahora! - S.O.S"
+      className="fixed top-4 right-4 z-50 w-20 h-20 rounded-2xl bg-gradient-to-br from-crisis to-crisis/90 hover:from-crisis hover:to-crisis/80 text-crisis-foreground font-bold text-sm shadow-2xl hover:shadow-crisis/50 transition-all duration-300 transform hover:scale-105 animate-pulse border-2 border-crisis/20"
+      aria-label="Ayuda de Crisis - 024 y 112"
+      title="Ayuda inmediata - 024 (Salud Mental) / 112 (Emergencias)"
     >
-      <span className="text-xs leading-tight">S.O.S</span>
+      <div className="flex flex-col items-center justify-center">
+        <span className="text-xs font-bold">CRISIS</span>
+        <span className="text-[10px] opacity-90">024•112</span>
+      </div>
     </button>
   );
 }

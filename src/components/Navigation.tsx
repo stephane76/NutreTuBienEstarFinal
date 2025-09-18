@@ -3,10 +3,10 @@ import { Heart, BookOpen, TrendingUp, Home, User, Plus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 const navItems = [
-  { path: '/', icon: Home, label: 'Inicio', color: 'primary' },
-  { path: '/diario', icon: BookOpen, label: 'Diario', color: 'accent' },
+  { path: '/', icon: Home, label: 'Início', color: 'primary' },
   { path: '/check-in', icon: Plus, label: 'Check-in', color: 'success' },
-  { path: '/progreso', icon: TrendingUp, label: 'Progreso', color: 'warning' },
+  { path: '/comer-con-cuidado', icon: Heart, label: 'Registrar', color: 'accent' },
+  { path: '/progreso', icon: TrendingUp, label: 'Logros', color: 'warning' },
   { path: '/perfil', icon: User, label: 'Perfil', color: 'secondary' },
 ];
 

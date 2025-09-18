@@ -64,168 +64,111 @@ interface MenuOption {
 }
 
 const menuOptions: MenuOption[] = [
-  // Featured options with warm food colors
+  // Core Loop Principal - Check-in → Pausa → Registrar → Recompensa → Progreso
   {
-    id: 'apoyo-ia',
-    title: 'Acompañante IA',
-    description: 'Tu compañero inteligente disponible 24/7 para apoyo emocional y guía personalizada',
-    icon: MessageSquare,
-    path: '/apoyo',
-    category: 'featured',
-    color: 'from-orange-400 to-orange-500',
-    gradient: 'bg-gradient-to-br from-orange-400 to-orange-500',
-    image: avatarCompanion,
-    badge: '24/7',
+    id: 'check-in',
+    title: 'Check-in (1 min)',
+    description: 'Evaluación rápida de tu estado emocional para comenzar el día',
+    icon: CheckCircle,
+    path: '/check-in',
+    category: 'core',
+    color: 'from-ochre-400 to-ochre-500',
+    gradient: 'bg-gradient-brand',
+    image: mindfulEating,
+    badge: 'Diario',
     featured: true,
     interactive: true
   },
   {
-    id: 'diario-emocional',
-    title: 'Diario Emocional',
-    description: 'Registra y comprende tus emociones con herramientas de análisis inteligente',
+    id: 'pausa-consciente',
+    title: 'Pausar',
+    description: 'Ejercicios de respiración y mindfulness para momentos de calma',
+    icon: Pause,
+    path: '/pausa',
+    category: 'core',
+    color: 'from-green-400 to-green-500',
+    gradient: 'bg-gradient-green',
+    image: breathingColorful,
+    badge: 'Calma',
+    featured: true,
+    interactive: true
+  },
+  {
+    id: 'comer-consciente',
+    title: 'Comer con Cuidado',
+    description: 'Registro unificado de emociones, hambre y alimentación consciente',
     icon: Heart,
-    path: '/diario-emocional',
-    category: 'featured',
-    color: 'from-peach-300 to-peach-400',
-    gradient: 'bg-gradient-to-br from-peach-300 to-peach-400',
-    image: mentalHealthSupport,
-    badge: 'Esencial',
+    path: '/comer-con-cuidado',
+    category: 'core',
+    color: 'from-yellow-400 to-yellow-500',
+    gradient: 'bg-gradient-yellow',
+    image: vibrantNutrition,
+    badge: 'Mindful',
+    featured: true,
+    interactive: true
+  },
+  {
+    id: 'progreso',
+    title: 'Mis Logros',
+    description: 'Visualiza tu evolución y celebra cada paso en tu camino de bienestar',
+    icon: TrendingUp,
+    path: '/progreso',
+    category: 'core',
+    color: 'from-green-300 to-green-400',
+    gradient: 'bg-gradient-green',
+    image: progressTracking,
+    badge: 'Logros',
     featured: true
   },
 
-  // Principal tools with warm food colors
+  // Apoyo esencial
   {
-    id: 'registro-alimentario',
-    title: 'Registro Alimentario',
-    description: 'Seguimiento consciente y sin juicios de tu relación con la comida',
-    icon: Utensils,
-    path: '/registro-alimentario',
-    category: 'principal',
-    color: 'from-green-400 to-green-500',
-    gradient: 'bg-gradient-to-br from-green-400 to-green-500',
-    image: vibrantNutrition,
-    interactive: true
-  },
-  {
-    id: 'crisis',
-    title: 'Apoyo de Crisis',
-    description: 'Ayuda inmediata y recursos de emergencia cuando más los necesitas',
-    icon: AlertCircle,
-    path: '/crisis',
-    category: 'principal',
-    color: 'from-coral-300 to-coral-400',
-    gradient: 'bg-gradient-to-br from-coral-300 to-coral-400',
-    image: crisisSupportWarm,
-    badge: 'Urgente',
-    interactive: true
+    id: 'apoyo-ia',
+    title: 'Acompañante IA',
+    description: 'Apoyo psicoeducativo disponible 24/7 (no sustituye terapia profesional)',
+    icon: MessageSquare,
+    path: '/apoyo',
+    category: 'apoyo',
+    color: 'from-ochre-300 to-ochre-400',
+    gradient: 'bg-gradient-primary',
+    image: avatarCompanion,
+    badge: '24/7'
   },
   {
     id: 'recursos-audio',
-    title: 'Recursos de Audio',
-    description: 'Meditaciones guiadas, ejercicios de respiración y contenido calmante',
+    title: 'Escuchar',
+    description: 'Meditaciones guiadas, ejercicios de respiración y audios relajantes',
     icon: Headphones,
     path: '/recursos',
-    category: 'principal',
-    color: 'from-honey-300 to-honey-400',
-    gradient: 'bg-gradient-to-br from-honey-300 to-honey-400',
-    image: audioColorful,
-    interactive: true
+    category: 'apoyo',
+    color: 'from-yellow-300 to-yellow-400',
+    gradient: 'bg-gradient-yellow',
+    image: audioColorful
   },
-
-  // Wellness tools with warm food colors
-  {
-    id: 'pausa-mindful',
-    title: 'Pausa Mindful',
-    description: 'Técnicas de respiración y mindfulness para momentos de calma',
-    icon: Pause,
-    path: '/pausa',
-    category: 'bienestar',
-    color: 'from-cream-300 to-cream-400',
-    gradient: 'bg-gradient-to-br from-cream-300 to-cream-400',
-    image: breathingColorful,
-    interactive: true
-  },
-  {
-    id: 'detector-hambre',
-    title: 'Detector de Hambre',
-    description: 'Aprende a diferenciar entre hambre física y emocional',
-    icon: Brain,
-    path: '/detector-hambre',
-    category: 'bienestar',
-    color: 'from-orange-300 to-orange-400',
-    gradient: 'bg-gradient-to-br from-orange-300 to-orange-400',
-    image: hungerAwareness
-  },
-  {
-    id: 'check-in',
-    title: 'Check-in Diario',
-    description: 'Evaluación rápida de tu estado emocional y físico',
-    icon: CheckCircle,
-    path: '/check-in',
-    category: 'bienestar',
-    color: 'from-peach-300 to-peach-400',
-    gradient: 'bg-gradient-to-br from-peach-300 to-peach-400',
-    image: mindfulEating
-  },
-
-  // Community with warm food colors
   {
     id: 'comunidad',
     title: 'Comunidad',
-    description: 'Conecta con personas que entienden tu proceso de recuperación',
+    description: 'Conecta con personas que comprenden tu proceso de recuperación',
     icon: Users,
     path: '/comunidad',
-    category: 'comunidad',
-    color: 'from-coral-300 to-coral-400',
-    gradient: 'bg-gradient-to-br from-coral-300 to-coral-400',
+    category: 'apoyo',
+    color: 'from-green-300 to-green-400',
+    gradient: 'bg-gradient-green',
     image: communitySupport
   },
-  {
-    id: 'talleres',
-    title: 'Talleres Virtuales',
-    description: 'Sesiones educativas y terapéuticas con expertos',
-    icon: PenTool,
-    path: '/talleres',
-    category: 'comunidad',
-    color: 'from-honey-300 to-honey-400',
-    gradient: 'bg-gradient-to-br from-honey-300 to-honey-400',
-    image: virtualWorkshops
-  },
-  {
-    id: 'juegos-educativos',
-    title: 'Actividades Interactivas',
-    description: 'Juegos terapéuticos diseñados para tu crecimiento personal',
-    icon: GamepadIcon,
-    path: '/juegos',
-    category: 'comunidad',
-    color: 'from-orange-300 to-orange-400',
-    gradient: 'bg-gradient-to-br from-orange-300 to-orange-400',
-    image: interactiveGames,
-    interactive: true
-  },
 
-  // Progress tracking with warm food colors
+  // Laboratorio - Herramientas adicionales
   {
-    id: 'progreso',
-    title: 'Mi Progreso',
-    description: 'Visualiza tu evolución y celebra cada logro en tu camino',
-    icon: TrendingUp,
-    path: '/progreso',
-    category: 'seguimiento',
-    color: 'from-green-300 to-green-400',
-    gradient: 'bg-gradient-to-br from-green-300 to-green-400',
-    image: progressTracking
-  },
-  {
-    id: 'cuestionarios',
-    title: 'Evaluaciones',
-    description: 'Herramientas de autoevaluación para conocerte mejor',
-    icon: HelpCircle,
-    path: '/cuestionarios',
-    category: 'seguimiento',
-    color: 'from-peach-300 to-peach-400',
-    gradient: 'bg-gradient-to-br from-peach-300 to-peach-400',
-    image: evaluationTools
+    id: 'laboratorio',
+    title: 'Laboratorio',
+    description: 'Herramientas experimentales: mandalas, cocina, talleres y más',
+    icon: Sparkles,
+    path: '/laboratorio',
+    category: 'extra',
+    color: 'from-ochre-200 to-ochre-300',
+    gradient: 'bg-gradient-warm',
+    image: interactiveGames,
+    badge: 'Extra'
   }
 ];
 
@@ -310,59 +253,62 @@ export default function MainMenu() {
         </div>
       </div>
 
-      {/* Dynamic Hero Section */}
-      <div className="relative overflow-hidden">
-        <div className="absolute inset-0">
-          <img 
-            src={heroWellbeing} 
-            alt="Healthy food and wellbeing" 
-            className="w-full h-full object-cover opacity-30"
-          />
-          <div className="absolute inset-0 bg-gradient-to-br from-orange-400/20 via-transparent to-peach-400/20"></div>
-        </div>
-        <div className="relative container mx-auto px-4 py-16 text-center">
-          <div className="max-w-3xl mx-auto">
-            <div className="flex justify-center items-center gap-4 mb-6">
-              <Sun className="w-8 h-8 text-orange-500 animate-spin" style={{animationDuration: '8s'}} />
-              <h2 className="text-4xl md:text-5xl font-bold text-foreground leading-tight">
-                Tu espacio de <span className="bg-gradient-to-r from-orange-600 via-peach-600 to-coral-600 bg-clip-text text-transparent">bienestar alimentario</span>
-              </h2>
-              <Zap className="w-8 h-8 text-peach-500 animate-bounce" />
-            </div>
-            <p className="text-xl text-muted-foreground leading-relaxed mb-8">
-              Herramientas diseñadas con calidez para acompañarte en una relación saludable con la comida y las emociones
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button 
-                onClick={() => handleNavigation('/apoyo')}
-                className="bg-gradient-to-r from-orange-400 via-peach-400 to-coral-400 hover:from-orange-500 hover:via-peach-500 hover:to-coral-500 text-white px-8 py-3 text-lg rounded-xl shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:scale-105"
-              >
-                <MessageSquare className="mr-2 h-5 w-5" />
-                Encontrar apoyo
-              </Button>
-              <Button 
-                variant="outline" 
-                onClick={() => handleNavigation('/diario-emocional')}
-                className="border-2 border-orange-300 hover:border-orange-400 text-orange-700 px-8 py-3 text-lg rounded-xl hover:bg-orange-50 transition-all duration-300 transform hover:scale-105"
-              >
-                <Heart className="mr-2 h-5 w-5" />
-                Registrar emociones
-              </Button>
+        {/* Hero Section marca comersinculpa */}
+        <div className="relative overflow-hidden">
+          <div className="absolute inset-0">
+            <img 
+              src={heroWellbeing} 
+              alt="Bienestar y alimentación consciente" 
+              className="w-full h-full object-cover opacity-25"
+            />
+            <div className="absolute inset-0 bg-gradient-brand/10"></div>
+          </div>
+          <div className="relative container mx-auto px-4 py-16 text-center">
+            <div className="max-w-3xl mx-auto">
+              <div className="flex justify-center items-center gap-4 mb-6">
+                <div className="w-8 h-8 bg-ochre-500 rounded-full animate-pulse"></div>
+                <h2 className="text-4xl md:text-5xl font-bold text-foreground leading-tight">
+                  <span className="bg-gradient-brand bg-clip-text text-transparent">Comer sin culpa</span>
+                </h2>
+                <div className="w-8 h-8 bg-green-500 rounded-full animate-bounce"></div>
+              </div>
+              <p className="text-xl text-muted-foreground leading-relaxed mb-8">
+                Tu compañero digital para una relación saludable con la comida y las emociones
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <Button 
+                  onClick={() => handleNavigation('/check-in')}
+                  className="bg-gradient-brand hover:opacity-90 text-white px-8 py-3 text-lg rounded-xl shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:scale-105"
+                >
+                  <CheckCircle className="mr-2 h-5 w-5" />
+                  Comenzar Check-in
+                </Button>
+                <Button 
+                  variant="outline" 
+                  onClick={() => handleNavigation('/comer-con-cuidado')}
+                  className="border-2 border-ochre-300 hover:border-ochre-400 text-ochre-700 px-8 py-3 text-lg rounded-xl hover:bg-ochre-50 transition-all duration-300 transform hover:scale-105"
+                >
+                  <Heart className="mr-2 h-5 w-5" />
+                  Registrar momento
+                </Button>
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <div className="container mx-auto px-4 py-12 space-y-16 relative z-10">
-        {/* Featured Tools with Interactive Elements */}
-        <section>
-          <div className="text-center mb-12">
-            <div className="inline-flex items-center gap-2 bg-gradient-to-r from-orange-100 via-peach-100 to-coral-100 px-4 py-2 rounded-full mb-4">
-              <Sparkles className="h-5 w-5 text-orange-600" />
-              <span className="text-orange-700 font-semibold">Herramientas Principales</span>
+        <div className="container mx-auto px-4 py-12 space-y-16 relative z-10">
+          {/* Core Loop - Herramientas principales */}
+          <section>
+            <div className="text-center mb-12">
+              <div className="inline-flex items-center gap-2 bg-gradient-brand/10 px-4 py-2 rounded-full mb-4">
+                <Heart className="h-5 w-5 text-ochre-600" />
+                <span className="text-ochre-700 font-semibold">Core Loop Diario</span>
+              </div>
+              <h3 className="text-2xl font-bold text-foreground">Tu rutina de bienestar</h3>
+              <p className="text-muted-foreground mt-2">
+                Check-in → Pausar → Registrar → Logros (1-5 minutos al día)
+              </p>
             </div>
-            <h3 className="text-2xl font-bold text-foreground">Tus aliados para el bienestar</h3>
-          </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             {featuredOptions.map((option) => {
@@ -414,14 +360,18 @@ export default function MainMenu() {
           </div>
         </section>
 
-        {/* Regular Tools Grid with Warm Food Colors */}
-        <section>
-          <div className="text-center mb-12">
-            <h3 className="text-2xl font-bold bg-gradient-to-r from-orange-600 via-peach-600 to-coral-600 bg-clip-text text-transparent mb-2">
-              Todas las herramientas de bienestar
-            </h3>
-            <p className="text-muted-foreground">Descubre todo lo que tenemos para acompañarte hacia una relación saludable con la comida</p>
-          </div>
+          {/* Herramientas de apoyo */}
+          <section>
+            <div className="text-center mb-12">
+              <div className="inline-flex items-center gap-2 bg-gradient-green/10 px-4 py-2 rounded-full mb-4">
+                <Users className="h-5 w-5 text-green-600" />
+                <span className="text-green-700 font-semibold">Apoyo y Recursos</span>
+              </div>
+              <h3 className="text-2xl font-bold bg-gradient-brand bg-clip-text text-transparent mb-2">
+                Herramientas de soporte
+              </h3>
+              <p className="text-muted-foreground">Acompañamiento cuando necesites apoyo adicional</p>
+            </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {regularOptions.map((option, index) => {
