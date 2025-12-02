@@ -1,241 +1,201 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { User, LogIn, LogOut, Settings, Upload } from 'lucide-react';
-import { toast } from 'sonner';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog';
+import { useAuth } from '@/hooks/useAuth';
+import { useToast } from '@/hooks/use-toast';
+import { supabase } from '@/integrations/supabase/client';
+import { User, LogOut, Settings, Camera, Loader2 } from 'lucide-react';
 
-interface UserData {
-  name: string;
-  email: string;
-  avatar?: string;
-  isLoggedIn: boolean;
-}
+export function UserProfile() {
+  const navigate = useNavigate();
+  const { user, profile, signOut, updateProfile, loading } = useAuth();
+  const { toast } = useToast();
+  const [isOpen, setIsOpen] = useState(false);
+  const [isUploading, setIsUploading] = useState(false);
 
-export const UserProfile: React.FC = () => {
-  const [user, setUser] = useState<UserData>({
-    name: '',
-    email: '',
-    avatar: '',
-    isLoggedIn: false
-  });
-  const [isLoginOpen, setIsLoginOpen] = useState(false);
-  const [loginForm, setLoginForm] = useState({ email: '', password: '' });
-  const [isLoading, setIsLoading] = useState(false);
-
-  const handleLogin = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsLoading(true);
-
-    // Simulación de login (aquí se conectaría con Supabase)
-    setTimeout(() => {
-      if (loginForm.email && loginForm.password) {
-        setUser({
-          name: loginForm.email.split('@')[0],
-          email: loginForm.email,
-          avatar: '',
-          isLoggedIn: true
-        });
-        setIsLoginOpen(false);
-        toast.success('¡Bienvenida! Has iniciado sesión correctamente');
-        // Guardar en localStorage para persistencia
-        localStorage.setItem('csc_user', JSON.stringify({
-          name: loginForm.email.split('@')[0],
-          email: loginForm.email,
-          isLoggedIn: true
-        }));
-      } else {
-        toast.error('Por favor completa todos los campos');
-      }
-      setIsLoading(false);
-    }, 1000);
-  };
-
-  const handleLogout = () => {
-    setUser({
-      name: '',
-      email: '',
-      avatar: '',
-      isLoggedIn: false
+  const handleLogout = async () => {
+    await signOut();
+    setIsOpen(false);
+    toast({
+      title: 'Sesión cerrada',
+      description: 'Has cerrado sesión correctamente'
     });
-    localStorage.removeItem('csc_user');
-    toast.success('Has cerrado sesión');
+    navigate('/');
   };
 
-  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleAvatarUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        const result = event.target?.result as string;
-        setUser(prev => ({ ...prev, avatar: result }));
-        // Guardar avatar en localStorage
-        const storedUser = JSON.parse(localStorage.getItem('csc_user') || '{}');
-        localStorage.setItem('csc_user', JSON.stringify({ ...storedUser, avatar: result }));
-        toast.success('Foto de perfil actualizada');
-      };
-      reader.readAsDataURL(file);
+    if (!file || !user) return;
+
+    // Validate file
+    if (!file.type.startsWith('image/')) {
+      toast({
+        title: 'Error',
+        description: 'Por favor selecciona una imagen',
+        variant: 'destructive'
+      });
+      return;
+    }
+
+    if (file.size > 2 * 1024 * 1024) {
+      toast({
+        title: 'Error',
+        description: 'La imagen debe ser menor a 2MB',
+        variant: 'destructive'
+      });
+      return;
+    }
+
+    setIsUploading(true);
+    try {
+      const fileExt = file.name.split('.').pop();
+      const filePath = `${user.id}/avatar.${fileExt}`;
+
+      const { error: uploadError } = await supabase.storage
+        .from('avatars')
+        .upload(filePath, file, { upsert: true });
+
+      if (uploadError) throw uploadError;
+
+      const { data: { publicUrl } } = supabase.storage
+        .from('avatars')
+        .getPublicUrl(filePath);
+
+      await updateProfile({ avatar_url: publicUrl });
+
+      toast({
+        title: 'Avatar actualizado',
+        description: 'Tu foto de perfil se ha actualizado'
+      });
+    } catch (error) {
+      console.error('Error uploading avatar:', error);
+      toast({
+        title: 'Error',
+        description: 'No se pudo subir la imagen',
+        variant: 'destructive'
+      });
+    } finally {
+      setIsUploading(false);
     }
   };
 
-  // Cargar usuario del localStorage al montar
-  React.useEffect(() => {
-    const storedUser = localStorage.getItem('csc_user');
-    if (storedUser) {
-      try {
-        const userData = JSON.parse(storedUser);
-        setUser(userData);
-      } catch (e) {
-        console.error('Error loading user data:', e);
-      }
-    }
-  }, []);
-
-  if (!user.isLoggedIn) {
+  // Not logged in - show login button
+  if (!user) {
     return (
-      <Dialog open={isLoginOpen} onOpenChange={setIsLoginOpen}>
-        <DialogTrigger asChild>
-          <Button variant="outline" className="flex items-center gap-2">
-            <User className="w-4 h-4" />
-            <span className="hidden sm:inline">Iniciar sesión</span>
-          </Button>
-        </DialogTrigger>
-        <DialogContent className="sm:max-w-md">
-          <DialogHeader>
-            <DialogTitle className="flex items-center gap-2">
-              <LogIn className="w-5 h-5 text-primary" />
-              Iniciar sesión
-            </DialogTitle>
-            <DialogDescription>
-              Accede a tu espacio personal de comersinculpa.blog
-            </DialogDescription>
-          </DialogHeader>
-          
-          <form onSubmit={handleLogin} className="space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
-              <Input
-                id="email"
-                type="email"
-                placeholder="tu@email.com"
-                value={loginForm.email}
-                onChange={(e) => setLoginForm(prev => ({ ...prev, email: e.target.value }))}
-                required
-              />
-            </div>
-            
-            <div className="space-y-2">
-              <Label htmlFor="password">Contraseña</Label>
-              <Input
-                id="password"
-                type="password"
-                placeholder="••••••••"
-                value={loginForm.password}
-                onChange={(e) => setLoginForm(prev => ({ ...prev, password: e.target.value }))}
-                required
-              />
-            </div>
-            
-            <Button type="submit" className="w-full" disabled={isLoading}>
-              {isLoading ? 'Iniciando sesión...' : 'Iniciar sesión'}
-            </Button>
-            
-            <div className="text-center text-sm text-muted-foreground">
-              <p>¿No tienes cuenta? <button type="button" className="text-primary hover:underline">Regístrate</button></p>
-            </div>
-          </form>
-        </DialogContent>
-      </Dialog>
+      <Button
+        variant="outline"
+        size="sm"
+        onClick={() => navigate('/auth')}
+        className="gap-2"
+      >
+        <User className="h-4 w-4" />
+        Iniciar sesión
+      </Button>
     );
   }
 
+  // Loading state
+  if (loading) {
+    return (
+      <div className="w-10 h-10 rounded-full bg-muted animate-pulse" />
+    );
+  }
+
+  const displayName = profile?.name || user.email?.split('@')[0] || 'Usuario';
+  const initials = displayName.slice(0, 2).toUpperCase();
+
   return (
-    <div className="flex items-center gap-3">
-      <Badge variant="secondary" className="hidden sm:flex">
-        ¡Hola, {user.name}!
-      </Badge>
+    <Dialog open={isOpen} onOpenChange={setIsOpen}>
+      <DialogTrigger asChild>
+        <button className="flex items-center gap-2 hover:opacity-80 transition-opacity">
+          <Avatar className="h-10 w-10 border-2 border-primary/20">
+            <AvatarImage src={profile?.avatar_url || undefined} alt={displayName} />
+            <AvatarFallback className="bg-primary/10 text-primary font-medium">
+              {initials}
+            </AvatarFallback>
+          </Avatar>
+        </button>
+      </DialogTrigger>
       
-      <Dialog>
-        <DialogTrigger asChild>
-          <button className="flex items-center gap-2 hover:opacity-80 transition-opacity">
-            <Avatar className="w-8 h-8 border-2 border-primary/20">
-              <AvatarImage src={user.avatar} alt={user.name} />
-              <AvatarFallback className="bg-primary/10 text-primary font-medium">
-                {user.name.slice(0, 2).toUpperCase()}
-              </AvatarFallback>
-            </Avatar>
-          </button>
-        </DialogTrigger>
+      <DialogContent className="sm:max-w-md">
+        <DialogHeader>
+          <DialogTitle>Tu perfil</DialogTitle>
+          <DialogDescription>
+            Gestiona tu cuenta y preferencias
+          </DialogDescription>
+        </DialogHeader>
         
-        <DialogContent className="sm:max-w-md">
-          <DialogHeader>
-            <DialogTitle className="flex items-center gap-2">
-              <Settings className="w-5 h-5 text-primary" />
-              Mi perfil
-            </DialogTitle>
-            <DialogDescription>
-              Gestiona tu información personal y preferencias
-            </DialogDescription>
-          </DialogHeader>
-          
-          <Card>
-            <CardHeader className="pb-3">
-              <div className="flex items-center gap-4">
-                <div className="relative">
-                  <Avatar className="w-16 h-16 border-4 border-primary/20">
-                    <AvatarImage src={user.avatar} alt={user.name} />
-                    <AvatarFallback className="bg-primary/10 text-primary font-bold text-lg">
-                      {user.name.slice(0, 2).toUpperCase()}
-                    </AvatarFallback>
-                  </Avatar>
-                  <label className="absolute -bottom-1 -right-1 w-6 h-6 bg-primary text-primary-foreground rounded-full flex items-center justify-center cursor-pointer hover:bg-primary/90 transition-colors">
-                    <Upload className="w-3 h-3" />
-                    <input
-                      type="file"
-                      accept="image/*"
-                      onChange={handleImageUpload}
-                      className="hidden"
-                    />
-                  </label>
-                </div>
-                <div>
-                  <CardTitle className="text-lg">{user.name}</CardTitle>
-                  <CardDescription>{user.email}</CardDescription>
-                </div>
-              </div>
-            </CardHeader>
+        <div className="space-y-6 py-4">
+          {/* Avatar Section */}
+          <div className="flex flex-col items-center gap-4">
+            <div className="relative">
+              <Avatar className="h-24 w-24 border-4 border-primary/20">
+                <AvatarImage src={profile?.avatar_url || undefined} alt={displayName} />
+                <AvatarFallback className="bg-primary/10 text-primary text-2xl font-medium">
+                  {initials}
+                </AvatarFallback>
+              </Avatar>
+              <label className="absolute bottom-0 right-0 p-2 bg-primary rounded-full cursor-pointer hover:bg-primary/90 transition-colors">
+                {isUploading ? (
+                  <Loader2 className="h-4 w-4 text-primary-foreground animate-spin" />
+                ) : (
+                  <Camera className="h-4 w-4 text-primary-foreground" />
+                )}
+                <input
+                  type="file"
+                  accept="image/*"
+                  className="hidden"
+                  onChange={handleAvatarUpload}
+                  disabled={isUploading}
+                />
+              </label>
+            </div>
             
-            <CardContent className="space-y-4">
-              <div className="flex items-center justify-between">
-                <span className="text-sm font-medium">Estado</span>
-                <Badge variant="secondary" className="bg-green-100 text-green-800">
-                  Conectada
-                </Badge>
-              </div>
-              
-              <div className="flex items-center justify-between">
-                <span className="text-sm font-medium">Miembro desde</span>
-                <span className="text-sm text-muted-foreground">
-                  {new Date().toLocaleDateString('es-ES')}
-                </span>
-              </div>
-              
-              <Button 
-                variant="outline" 
-                onClick={handleLogout}
-                className="w-full flex items-center gap-2"
-              >
-                <LogOut className="w-4 h-4" />
-                Cerrar sesión
-              </Button>
-            </CardContent>
-          </Card>
-        </DialogContent>
-      </Dialog>
-    </div>
+            <div className="text-center">
+              <h3 className="font-semibold text-lg">{displayName}</h3>
+              <p className="text-sm text-muted-foreground">{user.email}</p>
+              {profile?.relationship_level && (
+                <p className="text-xs text-muted-foreground mt-1">
+                  Nivel: {profile.relationship_level}
+                </p>
+              )}
+            </div>
+          </div>
+
+          {/* Actions */}
+          <div className="space-y-2">
+            <Button
+              variant="outline"
+              className="w-full justify-start gap-2"
+              onClick={() => {
+                setIsOpen(false);
+                navigate('/perfil');
+              }}
+            >
+              <Settings className="h-4 w-4" />
+              Configuración
+            </Button>
+            
+            <Button
+              variant="outline"
+              className="w-full justify-start gap-2 text-destructive hover:text-destructive"
+              onClick={handleLogout}
+            >
+              <LogOut className="h-4 w-4" />
+              Cerrar sesión
+            </Button>
+          </div>
+        </div>
+      </DialogContent>
+    </Dialog>
   );
-};
+}

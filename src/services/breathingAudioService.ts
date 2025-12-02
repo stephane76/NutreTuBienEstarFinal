@@ -1,4 +1,4 @@
-import { supabase } from '@/lib/supabase';
+import { supabase } from '@/integrations/supabase/client';
 
 // Script de respiración guiada de 3 minutos
 export const breathingGuidanceScript = `

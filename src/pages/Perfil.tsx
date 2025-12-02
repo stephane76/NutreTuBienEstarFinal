@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Avatar } from '@/components/Avatar';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -15,11 +16,22 @@ import {
   BarChart3,
   Heart,
   Calendar,
-  Target
+  Target,
+  Save,
+  Loader2
 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { useAuth } from '@/hooks/useAuth';
 
 export default function Perfil() {
+  const navigate = useNavigate();
+  const { user, profile, updateProfile, loading } = useAuth();
+  const { toast } = useToast();
+  
+  const [nombre, setNombre] = useState('');
+  const [objetivo, setObjetivo] = useState('');
+  const [isSaving, setIsSaving] = useState(false);
+  
   const [notifications, setNotifications] = useState({
     dailyReminder: true,
     emotionalCheck: true,
@@ -33,7 +45,20 @@ export default function Perfil() {
     analytics: true
   });
 
-  const { toast } = useToast();
+  // Load profile data
+  useEffect(() => {
+    if (profile) {
+      setNombre(profile.name || '');
+      setObjetivo(profile.main_goal || '');
+    }
+  }, [profile]);
+
+  // Redirect if not logged in
+  useEffect(() => {
+    if (!loading && !user) {
+      navigate('/auth');
+    }
+  }, [user, loading, navigate]);
 
   const estadisticas = [
     { label: 'Días registrando', valor: '12', icono: Calendar, color: 'primary' },
@@ -41,6 +66,31 @@ export default function Perfil() {
     { label: 'Tests completados', valor: '8', icono: Target, color: 'warning' },
     { label: 'Recursos utilizados', valor: '15', icono: Heart, color: 'success' }
   ];
+
+  const handleSaveProfile = async () => {
+    setIsSaving(true);
+    try {
+      const { error } = await updateProfile({
+        name: nombre,
+        main_goal: objetivo
+      });
+
+      if (error) {
+        toast({
+          title: "Error",
+          description: "No se pudo guardar los cambios",
+          variant: "destructive"
+        });
+      } else {
+        toast({
+          title: "Perfil actualizado",
+          description: "Tus cambios se han guardado correctamente"
+        });
+      }
+    } finally {
+      setIsSaving(false);
+    }
+  };
 
   const handleExportData = () => {
     toast({
@@ -57,6 +107,14 @@ export default function Perfil() {
     });
   };
 
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-background-subpage">
+        <Loader2 className="h-8 w-8 animate-spin text-primary" />
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-background-subpage pb-20">
       <div className="px-6 py-6 space-y-6">
@@ -71,7 +129,7 @@ export default function Perfil() {
 
         <Avatar 
           mood="celebrating" 
-          message="¡Me alegra ver tu progreso! Aquí puedes ajustar todo a tu medida."
+          message={`¡Hola${nombre ? `, ${nombre}` : ''}! Me alegra ver tu progreso. Aquí puedes ajustar todo a tu medida.`}
         />
 
         {/* User Info */}
@@ -84,11 +142,23 @@ export default function Perfil() {
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="space-y-2">
+              <Label htmlFor="email">Email</Label>
+              <Input 
+                id="email"
+                value={user?.email || ''}
+                disabled
+                className="bg-muted/50"
+              />
+            </div>
+            
+            <div className="space-y-2">
               <Label htmlFor="nombre">Nombre preferido</Label>
               <Input 
                 id="nombre"
                 placeholder="¿Cómo te gustaría que te llamemos?" 
                 className="bg-background/50"
+                value={nombre}
+                onChange={(e) => setNombre(e.target.value)}
               />
             </div>
             
@@ -98,8 +168,37 @@ export default function Perfil() {
                 id="objetivo"
                 placeholder="Ej: Mejorar mi relación con la comida" 
                 className="bg-background/50"
+                value={objetivo}
+                onChange={(e) => setObjetivo(e.target.value)}
               />
             </div>
+
+            {profile?.relationship_level && (
+              <div className="space-y-2">
+                <Label>Nivel de relación con la comida</Label>
+                <p className="text-sm text-muted-foreground capitalize p-2 bg-muted/30 rounded">
+                  {profile.relationship_level}
+                </p>
+              </div>
+            )}
+
+            <Button 
+              onClick={handleSaveProfile}
+              disabled={isSaving}
+              className="w-full"
+            >
+              {isSaving ? (
+                <>
+                  <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                  Guardando...
+                </>
+              ) : (
+                <>
+                  <Save className="w-4 h-4 mr-2" />
+                  Guardar cambios
+                </>
+              )}
+            </Button>
           </CardContent>
         </Card>
 

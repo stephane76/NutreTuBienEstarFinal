@@ -3,10 +3,12 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { AuthProvider } from "@/hooks/useAuth";
 import MainMenu from "./pages/MainMenu";
 import NewDiario from "./pages/NewDiario";
 import NewCrisis from "./pages/NewCrisis";
 import Onboarding from "./pages/Onboarding";
+import Auth from "./pages/Auth";
 import Dashboard from "./pages/Dashboard";
 import DiarioEmocional from "./pages/DiarioEmocional";
 import RegistroAlimentario from "./pages/RegistroAlimentario";
@@ -39,47 +41,50 @@ const queryClient = new QueryClient();
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <div className="min-h-screen bg-background">
-          <CrisisButton />
-          <PersistentFAB />
-          <Routes>
-            <Route path="/" element={<MainMenu />} />
-            <Route path="/registrar" element={<Registrar />} />
-            <Route path="/diario-emocional" element={<NewDiario />} />
-            <Route path="/apoyo" element={<TherapistChat />} />
-            <Route path="/comunidad" element={<Comunidad />} />
-            <Route path="/recursos" element={<Recursos />} />
-            <Route path="/crisis" element={<CrisisSupport />} />
-            <Route path="/onboarding" element={<Onboarding />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/registro-alimentario" element={<RegistroAlimentario />} />
-            <Route path="/check-in" element={<CheckIn />} />
-            <Route path="/check-in-diario" element={<CheckInDiario />} />
-            <Route path="/pausa-consciente" element={<PausaConsciente />} />
-            <Route path="/comer-con-cuidado" element={<ComerConCuidado />} />
-            <Route path="/laboratorio" element={<Laboratorio />} />
-            <Route path="/ia-companion" element={<IACompanion />} />
-            <Route path="/progreso" element={<MiProgreso />} />
-            <Route path="/perfil" element={<Perfil />} />
-            <Route path="/cuestionarios" element={<Cuestionarios />} />
-            <Route path="/talleres" element={<Talleres />} />
-            <Route path="/pausa" element={<Pausa />} />
-            <Route path="/detector-hambre" element={<DetectorHambre />} />
-            <Route path="/tca-module" element={<TCAModule />} />
-            <Route path="/juegos" element={<JuegosPage />} />
-            {/* Legacy routes for backward compatibility */}
-            <Route path="/diario" element={<DiarioEmocional />} />
-            <Route path="/detector" element={<DetectorHambre />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-          <BottomNavigation />
-        </div>
-      </BrowserRouter>
-    </TooltipProvider>
+    <AuthProvider>
+      <TooltipProvider>
+        <Toaster />
+        <Sonner />
+        <BrowserRouter>
+          <div className="min-h-screen bg-background">
+            <CrisisButton />
+            <PersistentFAB />
+            <Routes>
+              <Route path="/" element={<MainMenu />} />
+              <Route path="/auth" element={<Auth />} />
+              <Route path="/registrar" element={<Registrar />} />
+              <Route path="/diario-emocional" element={<NewDiario />} />
+              <Route path="/apoyo" element={<TherapistChat />} />
+              <Route path="/comunidad" element={<Comunidad />} />
+              <Route path="/recursos" element={<Recursos />} />
+              <Route path="/crisis" element={<CrisisSupport />} />
+              <Route path="/onboarding" element={<Onboarding />} />
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/registro-alimentario" element={<RegistroAlimentario />} />
+              <Route path="/check-in" element={<CheckIn />} />
+              <Route path="/check-in-diario" element={<CheckInDiario />} />
+              <Route path="/pausa-consciente" element={<PausaConsciente />} />
+              <Route path="/comer-con-cuidado" element={<ComerConCuidado />} />
+              <Route path="/laboratorio" element={<Laboratorio />} />
+              <Route path="/ia-companion" element={<IACompanion />} />
+              <Route path="/progreso" element={<MiProgreso />} />
+              <Route path="/perfil" element={<Perfil />} />
+              <Route path="/cuestionarios" element={<Cuestionarios />} />
+              <Route path="/talleres" element={<Talleres />} />
+              <Route path="/pausa" element={<Pausa />} />
+              <Route path="/detector-hambre" element={<DetectorHambre />} />
+              <Route path="/tca-module" element={<TCAModule />} />
+              <Route path="/juegos" element={<JuegosPage />} />
+              {/* Legacy routes for backward compatibility */}
+              <Route path="/diario" element={<DiarioEmocional />} />
+              <Route path="/detector" element={<DetectorHambre />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+            <BottomNavigation />
+          </div>
+        </BrowserRouter>
+      </TooltipProvider>
+    </AuthProvider>
   </QueryClientProvider>
 );
 

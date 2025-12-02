@@ -1,9 +1,11 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Heart, Sparkles, Shield } from 'lucide-react';
+import { Heart, Sparkles, Shield, Loader2 } from 'lucide-react';
+import { useAuth } from '@/hooks/useAuth';
+import { useToast } from '@/hooks/use-toast';
 
 const relationshipLevels = [
   {
@@ -31,9 +33,27 @@ const relationshipLevels = [
 
 export default function Onboarding() {
   const navigate = useNavigate();
+  const { user, profile, updateProfile, loading } = useAuth();
+  const { toast } = useToast();
   const [currentStep, setCurrentStep] = useState(0);
   const [selectedLevel, setSelectedLevel] = useState<string>('');
   const [userName, setUserName] = useState('');
+  const [isSaving, setIsSaving] = useState(false);
+
+  // Redirect if not logged in
+  useEffect(() => {
+    if (!loading && !user) {
+      navigate('/auth');
+    }
+  }, [user, loading, navigate]);
+
+  // Pre-fill with existing profile data
+  useEffect(() => {
+    if (profile) {
+      if (profile.name) setUserName(profile.name);
+      if (profile.relationship_level) setSelectedLevel(profile.relationship_level);
+    }
+  }, [profile]);
 
   const steps = [
     {
@@ -132,15 +152,40 @@ export default function Onboarding() {
     }
   ];
 
-  const nextStep = () => {
+  const nextStep = async () => {
     if (currentStep < steps.length - 1) {
       setCurrentStep(currentStep + 1);
     } else {
-      // Guardar datos y navegar al dashboard
-      localStorage.setItem('userOnboarded', 'true');
-      localStorage.setItem('userName', userName);
-      localStorage.setItem('relationshipLevel', selectedLevel);
-      navigate('/');
+      // Save profile data to database
+      setIsSaving(true);
+      try {
+        const { error } = await updateProfile({
+          name: userName,
+          relationship_level: selectedLevel,
+          main_goal: 'Mejorar mi relación con la comida'
+        });
+
+        if (error) {
+          toast({
+            title: 'Error',
+            description: 'No se pudo guardar tu perfil. Intenta de nuevo.',
+            variant: 'destructive'
+          });
+        } else {
+          // Also save to localStorage for backward compatibility
+          localStorage.setItem('userOnboarded', 'true');
+          localStorage.setItem('userName', userName);
+          localStorage.setItem('relationshipLevel', selectedLevel);
+          
+          toast({
+            title: '¡Perfil guardado!',
+            description: `Bienvenida, ${userName}. Tu viaje comienza ahora.`
+          });
+          navigate('/');
+        }
+      } finally {
+        setIsSaving(false);
+      }
     }
   };
 
@@ -149,6 +194,14 @@ export default function Onboarding() {
     if (currentStep === 2) return selectedLevel !== '';
     return true;
   };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-background-subpage">
+        <Loader2 className="h-8 w-8 animate-spin text-primary" />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-background-subpage p-4 flex items-center">
@@ -175,16 +228,24 @@ export default function Onboarding() {
                 variant="outline"
                 onClick={() => setCurrentStep(currentStep - 1)}
                 className="flex-1 h-12 font-body"
+                disabled={isSaving}
               >
                 Anterior
               </Button>
             )}
             <Button
               onClick={nextStep}
-              disabled={!canProceed()}
+              disabled={!canProceed() || isSaving}
               className="flex-1 h-12 bg-gradient-primary text-white font-body font-medium shadow-warm transition-all hover:shadow-glow disabled:opacity-50"
             >
-              {currentStep === steps.length - 1 ? 'Comenzar mi viaje' : 'Continuar'}
+              {isSaving ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Guardando...
+                </>
+              ) : (
+                currentStep === steps.length - 1 ? 'Comenzar mi viaje' : 'Continuar'
+              )}
             </Button>
           </div>
         </Card>
