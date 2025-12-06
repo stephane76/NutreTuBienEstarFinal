@@ -34,6 +34,8 @@ import JuegosPage from "./pages/JuegosPage";
 import Suscripcion from "./pages/Suscripcion";
 import SuscripcionWeb from "./pages/SuscripcionWeb";
 import SubscriptionRouter from "./pages/SubscriptionRouter";
+import SubscriptionSuccess from "./pages/SubscriptionSuccess";
+import SubscriptionCancel from "./pages/SubscriptionCancel";
 import NotFound from "./pages/NotFound";
 import { BottomNavigation } from "./components/BottomNavigation";
 import { CrisisButton } from "./components/CrisisButton";
@@ -81,6 +83,8 @@ const App = () => (
               <Route path="/planes" element={<SubscriptionRouter />} />
               <Route path="/suscripcion" element={<Suscripcion />} />
               <Route path="/suscripcion-web" element={<SuscripcionWeb />} />
+              <Route path="/subscription/success" element={<SubscriptionSuccess />} />
+              <Route path="/subscription/cancel" element={<SubscriptionCancel />} />
               {/* Legacy routes for backward compatibility */}
               <Route path="/diario" element={<DiarioEmocional />} />
               <Route path="/detector" element={<DetectorHambre />} />
