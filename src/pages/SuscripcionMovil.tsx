@@ -5,10 +5,12 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import { useSubscription, SubscriptionTier } from '@/hooks/useSubscription';
+import { useRevenueCat } from '@/hooks/useRevenueCat';
 import { useAuth } from '@/hooks/useAuth';
 import { BackButton } from '@/components/BackButton';
-import { Check, Crown, Sparkles, Zap, ChefHat, Headphones, Users, BarChart3, Wind, Loader2 } from 'lucide-react';
+import { Check, Crown, Sparkles, Zap, ChefHat, Headphones, Users, BarChart3, Wind, Loader2, RotateCcw } from 'lucide-react';
 import { toast } from 'sonner';
+import { PurchasesPackage } from '@revenuecat/purchases-capacitor';
 
 const tierIcons = {
   FREE: Zap,
@@ -22,21 +24,38 @@ const tierColors = {
   PREMIUM: 'border-accent'
 };
 
-export default function Suscripcion() {
+// Mapping from RevenueCat package identifiers to tiers
+const packageToTier: Record<string, SubscriptionTier> = {
+  'basico': 'BASIC',
+  'basic_monthly': 'BASIC',
+  'monthly_basic': 'BASIC',
+  'premium': 'PREMIUM',
+  'premium_monthly': 'PREMIUM',
+  'monthly_premium': 'PREMIUM'
+};
+
+export default function SuscripcionMovil() {
   const navigate = useNavigate();
   const { user } = useAuth();
-  const { subscription, loading, getTierInfo, TIER_INFO } = useSubscription();
-  const [selectedTier, setSelectedTier] = useState<SubscriptionTier | null>(null);
+  const { subscription, loading: subscriptionLoading, getTierInfo, TIER_INFO } = useSubscription();
+  const { isAvailable, isLoading: rcLoading, offerings, purchase, restore } = useRevenueCat();
+  const [purchasing, setPurchasing] = useState<string | null>(null);
+  const [restoring, setRestoring] = useState(false);
 
   if (!user) {
     navigate('/auth');
     return null;
   }
 
+  const loading = subscriptionLoading || rcLoading;
+
   if (loading) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
-        <Loader2 className="w-8 h-8 animate-spin text-primary" />
+        <div className="text-center">
+          <Loader2 className="w-8 h-8 animate-spin text-primary mx-auto" />
+          <p className="text-muted-foreground mt-2">Cargando planes...</p>
+        </div>
       </div>
     );
   }
@@ -44,56 +63,41 @@ export default function Suscripcion() {
   const currentTier = subscription?.tier || 'FREE';
   const currentTierInfo = getTierInfo(currentTier);
 
-  const handleUpgrade = async (tier: SubscriptionTier) => {
-    if (tier === currentTier) {
-      toast.info('Ya tienes este plan activo');
-      return;
-    }
-    
-    setSelectedTier(tier);
-    
-    // RevenueCat integration for mobile
-    // Check if RevenueCat is available (Capacitor plugin)
-    const revenueCat = (window as any).RevenueCat;
-    
-    if (revenueCat) {
-      try {
-        // Get offerings from RevenueCat
-        const offerings = await revenueCat.getOfferings();
-        const currentOffering = offerings.current;
-        
-        if (currentOffering) {
-          const packageId = tier === 'BASIC' ? 'monthly_basic' : 'monthly_premium';
-          const selectedPackage = currentOffering.availablePackages.find(
-            (pkg: any) => pkg.identifier === packageId
-          );
-          
-          if (selectedPackage) {
-            const { customerInfo } = await revenueCat.purchasePackage({ aPackage: selectedPackage });
-            if (customerInfo.entitlements.active[tier.toLowerCase()]) {
-              toast.success(`¡Bienvenida al plan ${tier}!`);
-              // Refresh subscription data
-              window.location.reload();
-            }
-          }
-        }
-      } catch (error: any) {
-        console.error('RevenueCat purchase error:', error);
-        if (error.code !== 'PURCHASE_CANCELLED') {
-          toast.error('Error al procesar la compra. Inténtalo de nuevo.');
-        }
+  // Get packages from RevenueCat offerings
+  const availablePackages = offerings?.current?.availablePackages || [];
+
+  const handlePurchase = async (pkg: PurchasesPackage) => {
+    setPurchasing(pkg.identifier);
+    try {
+      const success = await purchase(pkg);
+      if (success) {
+        // Reload to refresh subscription data
+        window.location.reload();
       }
-    } else {
-      // Fallback for web or if RevenueCat not available
-      toast.info('Para suscribirte desde la app, usa la versión móvil. Para web, visita /suscripcion-web');
+    } finally {
+      setPurchasing(null);
     }
-    
-    setSelectedTier(null);
+  };
+
+  const handleRestore = async () => {
+    setRestoring(true);
+    try {
+      const restored = await restore();
+      if (restored) {
+        window.location.reload();
+      }
+    } finally {
+      setRestoring(false);
+    }
   };
 
   const getUsageProgress = (used: number, total: number) => {
-    if (total === -1) return 100; // Unlimited
+    if (total === -1) return 100;
     return Math.min((used / total) * 100, 100);
+  };
+
+  const getTierFromPackage = (pkg: PurchasesPackage): SubscriptionTier => {
+    return packageToTier[pkg.identifier.toLowerCase()] || 'BASIC';
   };
 
   return (
@@ -103,7 +107,7 @@ export default function Suscripcion() {
         <div className="max-w-lg mx-auto">
           <BackButton />
           <h1 className="text-2xl font-bold text-foreground mt-4">Mi Suscripción</h1>
-          <p className="text-muted-foreground mt-1">Gestiona tu plan y uso</p>
+          <p className="text-muted-foreground mt-1">Gestiona tu plan desde la app</p>
         </div>
       </div>
 
@@ -182,55 +186,147 @@ export default function Suscripcion() {
           </CardContent>
         </Card>
 
-        {/* Available Plans */}
-        <div>
-          <h2 className="text-lg font-semibold mb-4">Planes disponibles</h2>
-          <div className="space-y-4">
-            {(Object.entries(TIER_INFO) as [SubscriptionTier, typeof TIER_INFO.FREE][]).map(([tier, info]) => {
-              const Icon = tierIcons[tier];
-              const isCurrent = tier === currentTier;
-              const isUpgrade = TIER_INFO[tier].priceMonthly > TIER_INFO[currentTier].priceMonthly;
-              
-              return (
-                <Card 
-                  key={tier} 
-                  className={`transition-all ${isCurrent ? 'border-2 ' + tierColors[tier] : 'hover:border-primary/50'}`}
-                >
-                  <CardHeader className="pb-2">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-2">
-                        <Icon className={`w-5 h-5 ${tier === 'PREMIUM' ? 'text-accent' : 'text-primary'}`} />
-                        <CardTitle className="text-base">{info.name}</CardTitle>
+        {/* RevenueCat Packages */}
+        {isAvailable && availablePackages.length > 0 && (
+          <div>
+            <h2 className="text-lg font-semibold mb-4">Planes disponibles</h2>
+            <div className="space-y-4">
+              {availablePackages.map((pkg) => {
+                const tier = getTierFromPackage(pkg);
+                const info = TIER_INFO[tier];
+                const Icon = tierIcons[tier];
+                const isCurrent = tier === currentTier;
+                const isUpgrade = TIER_INFO[tier].priceMonthly > TIER_INFO[currentTier].priceMonthly;
+                const isPurchasing = purchasing === pkg.identifier;
+
+                return (
+                  <Card 
+                    key={pkg.identifier} 
+                    className={`transition-all ${isCurrent ? 'border-2 ' + tierColors[tier] : 'hover:border-primary/50'}`}
+                  >
+                    <CardHeader className="pb-2">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-2">
+                          <Icon className={`w-5 h-5 ${tier === 'PREMIUM' ? 'text-accent' : 'text-primary'}`} />
+                          <CardTitle className="text-base">{info.name}</CardTitle>
+                        </div>
+                        <span className="font-bold text-lg">
+                          {pkg.product.priceString}/mes
+                        </span>
                       </div>
-                      <span className="font-bold text-lg">
-                        {info.priceMonthly === 0 ? 'Gratis' : `${info.price}/mes`}
-                      </span>
-                    </div>
-                  </CardHeader>
-                  <CardContent className="space-y-3">
-                    <ul className="space-y-1">
-                      {info.features.map((feature, i) => (
-                        <li key={i} className="flex items-center gap-2 text-sm text-muted-foreground">
-                          <Check className="w-4 h-4 text-primary flex-shrink-0" />
-                          {feature}
-                        </li>
-                      ))}
-                    </ul>
-                    
-                    <Button 
-                      variant={isCurrent ? 'outline' : tier === 'PREMIUM' ? 'default' : 'secondary'}
-                      className="w-full"
-                      disabled={isCurrent || !isUpgrade}
-                      onClick={() => handleUpgrade(tier)}
-                    >
-                      {isCurrent ? 'Plan actual' : isUpgrade ? `Mejorar a ${info.name}` : 'Plan inferior'}
-                    </Button>
-                  </CardContent>
-                </Card>
-              );
-            })}
+                    </CardHeader>
+                    <CardContent className="space-y-3">
+                      <ul className="space-y-1">
+                        {info.features.map((feature, i) => (
+                          <li key={i} className="flex items-center gap-2 text-sm text-muted-foreground">
+                            <Check className="w-4 h-4 text-primary flex-shrink-0" />
+                            {feature}
+                          </li>
+                        ))}
+                      </ul>
+                      
+                      <Button 
+                        variant={isCurrent ? 'outline' : tier === 'PREMIUM' ? 'default' : 'secondary'}
+                        className="w-full"
+                        disabled={isCurrent || !isUpgrade || isPurchasing}
+                        onClick={() => handlePurchase(pkg)}
+                      >
+                        {isPurchasing ? (
+                          <>
+                            <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                            Procesando...
+                          </>
+                        ) : isCurrent ? (
+                          'Plan actual'
+                        ) : isUpgrade ? (
+                          `Mejorar a ${info.name}`
+                        ) : (
+                          'Plan inferior'
+                        )}
+                      </Button>
+                    </CardContent>
+                  </Card>
+                );
+              })}
+            </div>
           </div>
-        </div>
+        )}
+
+        {/* Fallback: Show static plans if RevenueCat not available */}
+        {!isAvailable && (
+          <div>
+            <h2 className="text-lg font-semibold mb-4">Planes disponibles</h2>
+            <div className="space-y-4">
+              {(Object.entries(TIER_INFO) as [SubscriptionTier, typeof TIER_INFO.FREE][]).map(([tier, info]) => {
+                const Icon = tierIcons[tier];
+                const isCurrent = tier === currentTier;
+                
+                return (
+                  <Card 
+                    key={tier} 
+                    className={`transition-all ${isCurrent ? 'border-2 ' + tierColors[tier] : ''}`}
+                  >
+                    <CardHeader className="pb-2">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-2">
+                          <Icon className={`w-5 h-5 ${tier === 'PREMIUM' ? 'text-accent' : 'text-primary'}`} />
+                          <CardTitle className="text-base">{info.name}</CardTitle>
+                        </div>
+                        <span className="font-bold text-lg">
+                          {info.priceMonthly === 0 ? 'Gratis' : `${info.price}/mes`}
+                        </span>
+                      </div>
+                    </CardHeader>
+                    <CardContent className="space-y-3">
+                      <ul className="space-y-1">
+                        {info.features.map((feature, i) => (
+                          <li key={i} className="flex items-center gap-2 text-sm text-muted-foreground">
+                            <Check className="w-4 h-4 text-primary flex-shrink-0" />
+                            {feature}
+                          </li>
+                        ))}
+                      </ul>
+                      
+                      <Button 
+                        variant={isCurrent ? 'outline' : 'secondary'}
+                        className="w-full"
+                        disabled
+                      >
+                        {isCurrent ? 'Plan actual' : 'Disponible próximamente'}
+                      </Button>
+                    </CardContent>
+                  </Card>
+                );
+              })}
+            </div>
+          </div>
+        )}
+
+        {/* Restore Purchases */}
+        {isAvailable && (
+          <Card className="bg-muted/50">
+            <CardContent className="pt-4">
+              <Button 
+                variant="ghost" 
+                className="w-full"
+                onClick={handleRestore}
+                disabled={restoring}
+              >
+                {restoring ? (
+                  <>
+                    <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                    Restaurando...
+                  </>
+                ) : (
+                  <>
+                    <RotateCcw className="w-4 h-4 mr-2" />
+                    Restaurar compras anteriores
+                  </>
+                )}
+              </Button>
+            </CardContent>
+          </Card>
+        )}
 
         {/* Feature Highlights */}
         <Card>
