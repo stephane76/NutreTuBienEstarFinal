@@ -136,10 +136,10 @@ serve(async (req) => {
       }
     }
 
-    // URLs
-    const origin = req.headers.get('origin') || 'https://lovable.dev';
-    const defaultSuccessUrl = successUrl || `${origin}/suscripcion?success=true&session_id={CHECKOUT_SESSION_ID}`;
-    const defaultCancelUrl = cancelUrl || `${origin}/suscripcion?cancelled=true`;
+    // URLs - Usar dominio público como fallback
+    const origin = req.headers.get('origin') || 'https://nutre-tu-bienestar.lovable.app';
+    const defaultSuccessUrl = successUrl || `${origin}/subscription/success?session_id={CHECKOUT_SESSION_ID}`;
+    const defaultCancelUrl = cancelUrl || `${origin}/subscription/cancel`;
 
     // Crear Checkout Session
     const sessionParams: Record<string, string> = {
