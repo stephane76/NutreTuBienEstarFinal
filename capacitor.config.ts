@@ -4,12 +4,12 @@ const config: CapacitorConfig = {
   appId: 'com.veronica.NutreTuBienestar',
   appName: 'Nutre tu Bienestar',
   webDir: 'dist',
-  server: {
+  //server: {
     // For development: connect to live preview
     // Comment out for production builds
-    url: 'https://6283360e-6121-47a3-8844-5b3a7700e234.lovableproject.com?forceHideBadge=true',
-    cleartext: true
-  },
+    //url: 'https://6283360e-6121-47a3-8844-5b3a7700e234.lovableproject.com?forceHideBadge=true',
+    //cleartext: true
+  //},
   plugins: {
     SplashScreen: {
       launchShowDuration: 2000,

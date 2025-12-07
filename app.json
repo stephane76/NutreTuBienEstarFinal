@@ -1,0 +1,28 @@
+{
+  "expo": {
+    "name": "Nutre tu Bienestar",
+    "slug": "nutre-tu-bienestar",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./public/icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./public/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#C4A86B"
+    },
+    "ios": {
+      "bundleIdentifier": "com.veronica.NutreTuBienestar",
+      "buildNumber": "1"
+    },
+    "android": {
+      "package": "com.veronica.NutreTuBienestar",
+      "versionCode": 1
+    },
+    "extra": {
+      "eas": {
+        "projectId": "f8558139-995f-4ea6-8706-25ed9e192bb3"
+      }
+    }
+  }
+}
