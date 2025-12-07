@@ -1,19 +1,19 @@
 project_id = "zxtcvswfblrzeyclwvfi"
 
 [functions.chatbot-csc]
-verify_jwt = false
+verify_jwt = true
 
 [functions.generate-breathing-audio]
-verify_jwt = false
+verify_jwt = true
 
 [functions.generate-hypnosis-audio]
-verify_jwt = false
+verify_jwt = true
 
 [functions.generate-meditation-audio]
-verify_jwt = false
+verify_jwt = true
 
 [functions.generate-mindful-audio]
-verify_jwt = false
+verify_jwt = true
 
 [functions.subscription-status]
 verify_jwt = false

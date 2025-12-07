@@ -1,10 +1,10 @@
 import React, { useState, useRef, useEffect } from 'react';
+import DOMPurify from 'dompurify';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
-import { Send, Heart, Pause, FileText, Shield, MessageCircle, Brain } from 'lucide-react';
+import { Send, Pause, FileText, Shield, MessageCircle, Brain } from 'lucide-react';
 import { toast } from 'sonner';
 import { chatbotService, type ChatMessage } from '@/services/chatbotService';
 import { useNavigate } from 'react-router-dom';
@@ -42,6 +42,17 @@ const IACompanion: React.FC = () => {
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
+
+  // Sanitize and format message content
+  const formatMessageContent = (content: string): string => {
+    const formatted = content
+      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+      .replace(/\n/g, '<br/>');
+    return DOMPurify.sanitize(formatted, { 
+      ALLOWED_TAGS: ['strong', 'br', 'em', 'b', 'i'],
+      ALLOWED_ATTR: []
+    });
+  };
 
   const sendMessage = async () => {
     if (!newMessage.trim() || isLoading) return;
@@ -186,8 +197,7 @@ const IACompanion: React.FC = () => {
                   <div 
                     className="whitespace-pre-wrap"
                     dangerouslySetInnerHTML={{
-                      __html: message.content.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-                        .replace(/\n/g, '<br/>')
+                      __html: formatMessageContent(message.content)
                     }}
                   />
                   <div className="text-xs opacity-70 mt-1">
