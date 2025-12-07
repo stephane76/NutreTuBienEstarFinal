@@ -6,7 +6,7 @@ workflows:
       vars:
         XCODE_WORKSPACE: "ios/App/App.xcworkspace"
         XCODE_SCHEME: "App"
-      xcode: 15.0
+      xcode: 14.2
       cocoapods: default
     scripts:
       - name: Install npm dependencies
