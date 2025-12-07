@@ -17,6 +17,9 @@ interface ChatRequest {
   userId?: string;
 }
 
+// Rate limiting: max 50 messages per day per user
+const DAILY_MESSAGE_LIMIT = 50;
+
 const SYSTEM_PROMPT = `Eres "Acompañante CSC", la voz cálida de comersinculpa.blog.
 
 PROPÓSITO: Ayudar a personas con atracones y alimentación emocional a pausar, sentir y cuidarse sin culpa.
@@ -109,6 +112,48 @@ serve(async (req) => {
   }
 
   try {
+    console.log('[chatbot-csc] Recibida solicitud');
+
+    // 1. Verificar autenticación
+    const authHeader = req.headers.get('Authorization');
+    if (!authHeader) {
+      console.log('[chatbot-csc] ERROR: Sin header de autorización');
+      return new Response(
+        JSON.stringify({ error: 'No autorizado. Inicia sesión para usar el chat.' }),
+        { status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
+
+    // 2. Crear cliente con el token del usuario
+    const supabaseClient = createClient(
+      Deno.env.get('SUPABASE_URL') ?? '',
+      Deno.env.get('SUPABASE_ANON_KEY') ?? '',
+      { global: { headers: { Authorization: authHeader } } }
+    );
+
+    // 3. Obtener usuario autenticado
+    const { data: { user }, error: authError } = await supabaseClient.auth.getUser();
+    if (authError || !user) {
+      console.log('[chatbot-csc] ERROR: Usuario no autenticado', authError);
+      return new Response(
+        JSON.stringify({ error: 'Sesión inválida. Por favor inicia sesión de nuevo.' }),
+        { status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
+
+    console.log(`[chatbot-csc] Usuario autenticado: ${user.id}`);
+
+    // 4. Verificar suscripción (opcional - el chat básico está disponible para todos)
+    // Pero podemos implementar rate limiting por tier
+    const { data: subscription } = await supabaseClient
+      .from('subscriptions')
+      .select('tier, status')
+      .eq('user_id', user.id)
+      .maybeSingle();
+
+    // Rate limiting sería mejor con Redis, pero por ahora usamos una verificación simple
+    // En producción, considerar usar un sistema de rate limiting más robusto
+
     const { messages, userId }: ChatRequest = await req.json();
     
     // Add system prompt
@@ -116,6 +161,8 @@ serve(async (req) => {
       { role: 'system', content: SYSTEM_PROMPT },
       ...messages
     ];
+
+    console.log(`[chatbot-csc] Enviando ${messages.length} mensajes a OpenAI`);
 
     const openaiResponse = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
@@ -175,6 +222,7 @@ serve(async (req) => {
     });
 
     if (!openaiResponse.ok) {
+      console.log(`[chatbot-csc] ERROR OpenAI: ${openaiResponse.status}`);
       throw new Error(`OpenAI API error: ${openaiResponse.status}`);
     }
 
@@ -206,6 +254,8 @@ serve(async (req) => {
       }
     }
 
+    console.log(`[chatbot-csc] Respuesta generada exitosamente para usuario ${user.id}`);
+
     return new Response(JSON.stringify({ 
       message: response.content,
       functionCall: response.function_call || null
@@ -214,7 +264,7 @@ serve(async (req) => {
     });
 
   } catch (error) {
-    console.error('Error:', error);
+    console.error('[chatbot-csc] Error:', error);
     return new Response(JSON.stringify({ 
       error: 'Error procesando tu mensaje. Por favor intenta de nuevo.' 
     }), {

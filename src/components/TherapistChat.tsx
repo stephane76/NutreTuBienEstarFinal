@@ -7,6 +7,7 @@ import { Badge } from '@/components/ui/badge';
 import { Send, Phone, Video, MoreHorizontal, Paperclip, Smile, Heart, Pause, FileText, AlertTriangle, Shield, MessageCircle } from 'lucide-react';
 import { toast } from 'sonner';
 import { chatbotService, type ChatMessage } from '@/services/chatbotService';
+import DOMPurify from 'dompurify';
 
 // Using ChatMessage from chatbotService instead of local interface
 
@@ -194,8 +195,10 @@ const TherapistChat: React.FC = () => {
                   <div 
                     className="text-sm whitespace-pre-wrap"
                     dangerouslySetInnerHTML={{
-                      __html: message.content.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-                        .replace(/\n/g, '<br/>')
+                      __html: DOMPurify.sanitize(
+                        message.content.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                          .replace(/\n/g, '<br/>')
+                      )
                     }}
                   />
                   <div className="flex items-center justify-between mt-1">
