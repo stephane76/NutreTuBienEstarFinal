@@ -1,8 +1,16 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts"
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2"
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+}
+
+// Límites por tier
+const AUDIO_LIMITS: Record<string, number> = {
+  FREE: 0,
+  BASIC: 10,
+  PREMIUM: -1 // ilimitado
 }
 
 serve(async (req) => {
@@ -11,15 +19,96 @@ serve(async (req) => {
   }
 
   try {
+    // 1. Verificar autenticación
+    const authHeader = req.headers.get('Authorization')
+    if (!authHeader) {
+      console.error('[generate-breathing-audio] No authorization header')
+      return new Response(
+        JSON.stringify({ error: 'No autorizado', message: 'Debes iniciar sesión para generar audio' }),
+        { status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      )
+    }
+
+    // 2. Crear cliente Supabase con token del usuario
+    const supabaseUrl = Deno.env.get('SUPABASE_URL')!
+    const supabaseAnonKey = Deno.env.get('SUPABASE_ANON_KEY')!
+    const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
+
+    const userClient = createClient(supabaseUrl, supabaseAnonKey, {
+      global: { headers: { Authorization: authHeader } }
+    })
+
+    const { data: { user }, error: authError } = await userClient.auth.getUser()
+    if (authError || !user) {
+      console.error('[generate-breathing-audio] Auth error:', authError?.message)
+      return new Response(
+        JSON.stringify({ error: 'No autorizado', message: 'Sesión inválida' }),
+        { status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      )
+    }
+
+    console.log(`[generate-breathing-audio] Usuario autenticado: ${user.id}`)
+
+    // 3. Verificar suscripción y límites (usar service role para leer)
+    const adminClient = createClient(supabaseUrl, supabaseServiceKey)
+    const { data: subscription, error: subError } = await adminClient
+      .from('subscriptions')
+      .select('tier, monthly_audio_count, last_reset_date')
+      .eq('user_id', user.id)
+      .single()
+
+    if (subError || !subscription) {
+      console.error('[generate-breathing-audio] Error obteniendo suscripción:', subError?.message)
+      return new Response(
+        JSON.stringify({ error: 'Error de suscripción', message: 'No se pudo verificar tu suscripción' }),
+        { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      )
+    }
+
+    const limit = AUDIO_LIMITS[subscription.tier] ?? 0
+    const currentCount = subscription.monthly_audio_count ?? 0
+
+    console.log(`[generate-breathing-audio] Tier: ${subscription.tier}, Uso: ${currentCount}/${limit}`)
+
+    // Verificar límite (si no es ilimitado)
+    if (limit !== -1 && currentCount >= limit) {
+      console.warn(`[generate-breathing-audio] Límite alcanzado para usuario ${user.id}`)
+      return new Response(
+        JSON.stringify({ 
+          error: 'LIMIT_REACHED',
+          message: limit === 0 
+            ? 'Tu plan gratuito no incluye generación de audio. Mejora a Básico o Premium.'
+            : `Has alcanzado tu límite de ${limit} audios este mes. Mejora a Premium para audio ilimitado.`,
+          current_tier: subscription.tier,
+          current_count: currentCount,
+          limit: limit,
+          upgrade_required: subscription.tier === 'FREE' ? 'BASIC' : 'PREMIUM'
+        }),
+        { status: 403, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      )
+    }
+
+    // 4. Obtener parámetros de audio
     const { text, voice_id = 'Aria', model_id = 'eleven_multilingual_v2' } = await req.json()
+
+    if (!text) {
+      return new Response(
+        JSON.stringify({ error: 'Texto requerido', message: 'Debes proporcionar el texto para generar audio' }),
+        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      )
+    }
 
     const apiKey = Deno.env.get('ELEVENLABS_API_KEY')
     if (!apiKey) {
-      throw new Error('ElevenLabs API key not configured')
+      console.error('[generate-breathing-audio] ElevenLabs API key no configurada')
+      return new Response(
+        JSON.stringify({ error: 'Configuración inválida', message: 'Servicio de audio no disponible' }),
+        { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      )
     }
 
     // Mapeo de nombres de voces a IDs de ElevenLabs
-    const voiceIdMap: { [key: string]: string } = {
+    const voiceIdMap: Record<string, string> = {
       'Aria': '9BWtsMINqrJLrRacOk9x',
       'Roger': 'CwhRBWXzGAHq8TQ4Fs17',
       'Sarah': 'EXAVITQu4vr4xnSDxMaL',
@@ -29,6 +118,8 @@ serve(async (req) => {
 
     const actualVoiceId = voiceIdMap[voice_id] || voice_id
 
+    // 5. Generar audio con ElevenLabs
+    console.log(`[generate-breathing-audio] Generando audio con voz: ${voice_id}`)
     const response = await fetch(`https://api.elevenlabs.io/v1/text-to-speech/${actualVoiceId}`, {
       method: 'POST',
       headers: {
@@ -49,10 +140,32 @@ serve(async (req) => {
     })
 
     if (!response.ok) {
-      throw new Error(`ElevenLabs API error: ${response.status}`)
+      const errorText = await response.text()
+      console.error('[generate-breathing-audio] ElevenLabs error:', errorText)
+      return new Response(
+        JSON.stringify({ error: 'Error de generación', message: 'No se pudo generar el audio' }),
+        { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      )
+    }
+
+    // 6. Incrementar contador de uso (con service role)
+    const { error: updateError } = await adminClient
+      .from('subscriptions')
+      .update({ 
+        monthly_audio_count: currentCount + 1,
+        updated_at: new Date().toISOString()
+      })
+      .eq('user_id', user.id)
+
+    if (updateError) {
+      console.error('[generate-breathing-audio] Error actualizando contador:', updateError.message)
+      // No fallar la petición, solo loguear
+    } else {
+      console.log(`[generate-breathing-audio] Contador actualizado: ${currentCount + 1}`)
     }
 
     const audioBuffer = await response.arrayBuffer()
+    console.log(`[generate-breathing-audio] Audio generado exitosamente: ${audioBuffer.byteLength} bytes`)
 
     return new Response(audioBuffer, {
       headers: {
@@ -63,13 +176,10 @@ serve(async (req) => {
     })
 
   } catch (error) {
-    console.error('Error:', error)
+    console.error('[generate-breathing-audio] Error:', error)
     return new Response(
-      JSON.stringify({ error: error.message }),
-      {
-        status: 500,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-      },
+      JSON.stringify({ error: error.message || 'Error interno' }),
+      { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     )
   }
 })
