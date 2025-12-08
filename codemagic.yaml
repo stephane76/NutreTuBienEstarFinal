@@ -2,34 +2,51 @@ workflows:
   ios-workflow:
     name: iOS Workflow
     max_build_duration: 120
+
     integrations:
       app_store_connect: NutreTuBienestar_AppStore
+
     environment:
-      ios_signing:
-        distribution_type: app_store
-        bundle_identifier: com.veronica.NutreTuBienestar
       vars:
         XCODE_WORKSPACE: "ios/App/App.xcworkspace"
         XCODE_SCHEME: "App"
         EXPORT_OPTIONS_PLIST: "export_options.plist"
+
       xcode: latest
       cocoapods: default
+
     scripts:
+      - name: Initialize keychain
+        script: |
+          keychain initialize
+
+      - name: Add signing certificate
+        script: |
+          keychain add-cert --certificate "Nutre Tu Bienestar Distribution"
+
+      - name: Add provisioning profile
+        script: |
+          keychain add-profile --profile "NutreToBienestar"
+
       - name: Install npm dependencies
         script: |
           npm install
+
       - name: Capacitor sync
         script: |
           npm run build
           npx cap sync ios
+
       - name: Build ipa for distribution
         script: |
           xcode-project build-ipa \
             --workspace "$XCODE_WORKSPACE" \
             --scheme "$XCODE_SCHEME" \
             --export-options-plist "$EXPORT_OPTIONS_PLIST"
+
     artifacts:
       - build/ios/ipa/*.ipa
+
     publishing:
       email:
         recipients:
