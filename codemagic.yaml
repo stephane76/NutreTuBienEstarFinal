@@ -8,6 +8,7 @@ workflows:
 
     environment:
       ios_signing:
+        # Codemagic va récupérer automatiquement le certificat + profil
         distribution_type: app_store
         bundle_identifier: com.veronica.NutreTuBienestar
 
@@ -20,10 +21,6 @@ workflows:
       cocoapods: default
 
     scripts:
-      - name: Initialize keychain
-        script: |
-          keychain initialize
-
       - name: Install npm dependencies
         script: |
           npm install
@@ -32,6 +29,11 @@ workflows:
         script: |
           npm run build
           npx cap sync ios
+
+      - name: Set up code signing settings on Xcode project
+        script: |
+          # Applique les provisioning profiles au projet Xcode
+          xcode-project use-profiles
 
       - name: Build ipa for distribution
         script: |
