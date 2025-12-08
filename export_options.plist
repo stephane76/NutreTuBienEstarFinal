@@ -10,7 +10,5 @@
     <false/>
     <key>destination</key>
     <string>export</string>
-    <key>signingStyle</key>
-    <string>automatic</string>
 </dict>
 </plist>
