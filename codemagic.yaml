@@ -3,6 +3,9 @@ workflows:
     name: iOS Workflow
     max_build_duration: 60
     environment:
+      ios_signing:
+        distribution_type: app_store
+        bundle_identifier: com.veronica.NutreTuBienestar
       vars:
         XCODE_WORKSPACE: "ios/App/App.xcworkspace"
         XCODE_SCHEME: "App"
@@ -16,8 +19,13 @@ workflows:
         script: |
           npm run build
           npx cap sync ios
-      - name: Set up code signing settings on Xcode project
+      - name: Set up code signing
         script: |
+          keychain initialize
+          app-store-connect fetch-signing-files com.veronica.NutreTuBienestar \
+            --type IOS_APP_STORE \
+            --create
+          keychain add-certificates
           xcode-project use-profiles
       - name: Build ipa for distribution
         script: |
