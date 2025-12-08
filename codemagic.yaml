@@ -11,6 +11,7 @@ workflows:
       vars:
         XCODE_WORKSPACE: "ios/App/App.xcworkspace"
         XCODE_SCHEME: "App"
+        EXPORT_OPTIONS_PLIST: "export_options.plist"
       xcode: latest
       cocoapods: default
     scripts:
@@ -25,7 +26,8 @@ workflows:
         script: |
           xcode-project build-ipa \
             --workspace "$XCODE_WORKSPACE" \
-            --scheme "$XCODE_SCHEME"
+            --scheme "$XCODE_SCHEME" \
+            --export-options-plist "$EXPORT_OPTIONS_PLIST"
     artifacts:
       - build/ios/ipa/*.ipa
     publishing:
