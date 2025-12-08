@@ -1,4 +1,4 @@
-workflows:
+wworkflows:
   ios-workflow:
     name: iOS Workflow
     max_build_duration: 120
@@ -7,6 +7,10 @@ workflows:
       app_store_connect: NutreTuBienestar_AppStore
 
     environment:
+      ios_signing:
+        distribution_type: app_store
+        bundle_identifier: com.veronica.NutreTuBienestar
+
       vars:
         XCODE_WORKSPACE: "ios/App/App.xcworkspace"
         XCODE_SCHEME: "App"
@@ -19,14 +23,6 @@ workflows:
       - name: Initialize keychain
         script: |
           keychain initialize
-
-      - name: Add signing certificate
-        script: |
-          keychain add-cert --certificate "Nutre Tu Bienestar Distribution"
-
-      - name: Add provisioning profile
-        script: |
-          keychain add-profile --profile "NutreToBienestar"
 
       - name: Install npm dependencies
         script: |
